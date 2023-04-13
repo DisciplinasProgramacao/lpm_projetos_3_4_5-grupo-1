@@ -33,5 +33,12 @@ public class Serie {
         audiencia++;
     }
 
+    /**
+     * Retorna a audiencia da serie
+     */
+    public int getAudiencia(){
+        return audiencia;
+    }
+
 }
 
