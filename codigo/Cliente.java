@@ -6,22 +6,65 @@ public class Cliente {
     private List<Serie> listaParaVer;
     private List<Serie> listaJaVistas;
 
-    public adicionarNaLista(Serie serie) {
+    /**
+     * Construtor da classe Cliente
+     * 
+     * @param nomeDeUsuario
+     * @param senha
+     */
+    public Cliente(String nomeDeUsuario, String senha) {
+        this.nomeDeUsuario = nomeDeUsuario;
+        this.senha = senha;
+    }
+
+    /**
+     * 
+     * 
+     * @return the nomeDeUsuario
+     */
+    public void adicionarNaLista(Serie serie) {
         listaParaVer.add(serie);
     }
 
-    public retirarDaLista(String nomeSerie) {
+    public void retirarDaLista(String nomeSerie) {
+        for (Serie serie : listaParaVer)
+            if (serie.getNome().equals(nomeSerie)) {
+                listaParaVer.remove(serie);
+                break;
+            }
     }
 
-    public filtrarPorGenero(String genero) {
+    public List<Serie> filtrarPorGenero(String genero) {
+        List<Serie> listaFiltrada = new ArrayList<Serie>();
+        for (Serie serie : listaParaVer)
+            if (serie.getGenero().equals(genero))
+                listaFiltrada.add(serie);
+        return listaFiltrada;
     }
 
-    public filtrarPorIdioma(String idioma) {
+    public List<Serie> filtrarPorIdioma(String idioma) {
+        List<Serie> listaFiltrada = new ArrayList<Serie>();
+        for (Serie serie : listaParaVer)
+            if (serie.getIdioma().equals(idioma))
+                listaFiltrada.add(serie);
+        return listaFiltrada;
     }
 
-    public filtrarPorQntsEpisodios( int qntsEpisodios) {
+    public List<Serie> filtrarPorQntsEpisodios(int qntsEpisodios) {
+        List<Serie> listaFiltrada = new ArrayList<Serie>();
+        for (Serie serie : listaParaVer)
+            if (serie.getQntsEpisodios() == qntsEpisodios)
+                listaFiltrada.add(serie);
+        return listaFiltrada;
     }
-    
-    public registrarAudiencia( int qntsTemporadas) {
+
+    public void registrarAudiencia(int qntsTemporadas) {
+        for (Serie serie : listaParaVer)
+            if (serie.getQntsTemporadas() == qntsTemporadas) {
+                listaJaVistas.add(serie);
+                listaParaVer.remove(serie);
+                break;
+            }
     }
+
 }
