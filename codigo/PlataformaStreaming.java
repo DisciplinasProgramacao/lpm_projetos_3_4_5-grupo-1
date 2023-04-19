@@ -208,4 +208,87 @@ public class PlataformaStreaming {
             app.salvarArquivos();
     }
 
+    /**************************************************************************************
+     * 
+     * 
+     * 
+     * ÁREA DE LEITURA E ESCRITA DE ARQUIVOS
+     * 
+     * 
+     * 
+     **************************************************************************************/
+
+    /**
+     * Lê os arquivos data/Audiência.csv, data/Séries.csv e data/Espectadores.csv e
+     * os carrega na plataforma de streaming.
+     * 
+     * Espectadores são armazenados da forma: {Nome;Login;Senha}
+     * 
+     * Séries são armazenadas da forma: {IdSerie;Nome;DataDeLançamento}
+     * 
+     * Audiência é armazenada da forma: {Login;F/A;IdSerie}, sendo “F” para lista de
+     * séries a assistir futuramente e “A” para séries já assistidas.
+     */
+    private void lerArquivos() {
+        try {
+            // Lê o arquivo de espectadores
+            Scanner espectadores = new Scanner(new File("data/Espectadores.csv"));
+            while (espectadores.hasNextLine()) {
+                String[] espectador = espectadores.nextLine().split(";");
+                this.adicionarCliente(new Cliente(espectador[0], espectador[2].trim()));
+            }
+            espectadores.close();
+            espectadores = new Scanner(new File("data/Séries.csv"));
+            while (espectadores.hasNextLine()) {
+                String[] série = espectadores.nextLine().split(";");
+                this.adicionarSérie(new Série("Ação", série[1], "English", 10));
+            }
+            espectadores.close();
+            espectadores = new Scanner(new File("data/Audiência.csv"));
+            while (espectadores.hasNextLine()) {
+                String[] audiência = espectadores.nextLine().split(";");
+                if (audiência[1].contains("A"))
+                    this.login(audiência[0].split("/")).registrarAudiência(this.buscarSérie(audiência[2].trim()));
+                else
+                    this.login(audiência[0].split("/")).adicionarNaLista(this.buscarSérie(audiência[2].trim()));
+            }
+            espectadores.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(" ERRO: Arquivo não encontrado." + e.getMessage());
+        }
+
+    }
+
+    /**
+     * Escreve os arquivos data/Audiência.csv, data/Séries.csv e
+     * data/Espectadores.csv e os carrega na plataforma de streaming.
+     * 
+     * Espectadores são armazenados da forma: {Nome;Login;Senha}
+     * 
+     * Séries são armazenadas da forma: {IdSerie;Nome;DataDeLançamento}
+     * 
+     * Audiência é armazenada da forma: {Login;F/A;IdSerie}, sendo “F” para lista de
+     * séries a assistir futuramente e “A” para séries já assistidas.
+     */
+    private void salvarArquivos() {
+        try {
+            FileWriter espectadores = new FileWriter("data/Espectadores.csv");
+            for (Cliente cliente : this.clientes)
+                espectadores.write(cliente.toString() + "\n");
+            espectadores.close();
+            espectadores = new FileWriter("data/Séries.csv");
+            for (Série série : this.series)
+                espectadores.write(série.toString() + "\n");
+            espectadores.close();
+            espectadores = new FileWriter("data/Audiência.csv");
+            for (Cliente cliente : this.clientes)
+                for (String paraVerEJáVista[] : cliente.audiências())
+                    for (String átomo : paraVerEJáVista)
+                        espectadores.write(átomo + "\n");
+            espectadores.close();
+        } catch (IOException e) {
+            System.out.println(" ERRO: Arquivo não encontrado." + e.getMessage());
+        }
+    }
+
 }
