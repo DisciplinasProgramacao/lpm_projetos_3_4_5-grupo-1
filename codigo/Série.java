@@ -1,106 +1,33 @@
+import java.time.LocalDate;
+
 /**
- * Classe Serie, armazena os dados de uma sêrie.
+ * Classe Série, armazena os dados de uma série, extende a classe Mídia.
  */
-public class Série {
-
-    /** Array de strings que armazena os gêneros da sêrie */
-    private static final String[] GENÊROS = { "Ação", "Aventura", "Comédia", "Drama", "Ficção Científica", "Romance",
-            "Suspense", "Terror" };
-
-    /** Nome da sêrie */
-    private String nome,
-
-            /** Gênero da sêrie */
-            gênero,
-
-            /** Idioma da sêrie */
-            idioma;
-
-    /** Total de episodios da sêrie */
-    private int quantidadeEpisódios,
-
-            /** Total de audiência da sêrie */
-            audiência;
+public class Série extends Mídia {
+    /** Quantidade de episódios da série */
+    private int qntEp;
 
     /**
-     * Construtor da classe Serie
+     * Construtor da classe Série
      * 
-     * @param gênero gênero da sêrie
-     * @param nome   nome da sêrie
-     * @param idioma idioma da sêrie
-     * @param qntEp  quantidade de episodios da sêrie
+     * @param id     id da série
+     * @param gênero gênero da série
+     * @param nome   nome da série
+     * @param idioma idioma da série
+     * @param qntEp  quantidade de episodios da série
      */
-    public Série(String gênero, String nome, String idioma, int qntEp) {
-        this.gênero = gênero;
-        this.nome = nome;
-        this.idioma = idioma;
-        this.quantidadeEpisódios = qntEp;
-        this.audiência = 0;
+    public Série(int id, String gênero, String nome, String idioma, LocalDate dataLançamento, int qntEp) {
+        super(id, gênero, nome, idioma, dataLançamento);
+        this.qntEp = qntEp;
     }
 
     /**
-     * Adiciona uma audiência a série
-     */
-    public void registrarAudiência() {
-        audiência++;
-    }
-
-    /**
-     * Verifica se a sêrie possui o nome passado como parâmetro
+     * Retorna a quantidade de episódios da série
      * 
-     * @param nome a ser verificado
-     * @return TRUE se a série possui o nome, FALSE caso contrário
+     * @return quantidade de episódios da série
      */
-    public boolean temNome(String nome) {
-        return this.nome.equals(nome);
-    }
-
-    /**
-     * Verifica se a sêrie possui o gênero passado como parâmetro
-     * 
-     * @param gênero a ser verificado
-     * @return TRUE se a série possui o gênero, FALSE caso contrário
-     */
-    public boolean possuiGênero(String gênero) {
-        return this.gênero.equals(gênero);
-    }
-
-    /**
-     * Verifica se a sêrie possui o idioma passado como parâmetro
-     * 
-     * @param idioma a ser verificado
-     * @return TRUE se a sêrie possui o idioma, FALSE caso contrario
-     */
-    public boolean possuiIdioma(String idioma) {
-        return this.idioma.equals(idioma);
-    }
-
-    /**
-     * Verifica se a sêrie possui a quantidade de episodios passada como parâmetro
-     * 
-     * @param qntEp a ser verificado
-     * @return TRUE se a sêrie possui a quantidade de episodios, FALSE caso
-     *         contrario
-     */
-    public boolean possuiEpisódios(int qntEp) {
-        return this.quantidadeEpisódios == qntEp;
-    }
-
-    /**
-     * Converte o objeto em uma String no formato: {IdSerie;Nome;DataDeLançamento}
-     */
-    @Override
-    public String toString() {
-        return nome + ";" + nome + ";" + "10";
-    }
-
-    /**
-     * Retorna o nome da série, usado em {@link Cliente#audiências()}
-     * 
-     * @return nome da série
-     */
-    public String getNome() {
-        return nome;
+    public int getQntEp() {
+        return this.qntEp;
     }
 
 }
