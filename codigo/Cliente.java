@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -10,6 +9,9 @@ public class Cliente {
     /** Nome de usuário do cliente */
     private String nomeDeUsuário,
 
+            /** Login do cliente */
+            login,
+
             /** Senha do cliente */
             senha;
 
@@ -17,7 +19,7 @@ public class Cliente {
     private List<Série> listaParaVer,
 
             /** Lista de séries vistas */
-            listaJaVistas;
+            listaJáVistas;
 
     /**
      * Construtor da classe Cliente
@@ -25,11 +27,12 @@ public class Cliente {
      * @param nomeDeUsuário nome de usuário do cliente
      * @param senha         senha do cliente
      */
-    public Cliente(String nomeDeUsuário, String senha) {
+    public Cliente(String nomeDeUsuário, String login, String senha) {
         this.nomeDeUsuário = nomeDeUsuário;
+        this.login = login;
         this.senha = senha;
-        this.listaParaVer = new ArrayList<Série>();
-        this.listaJaVistas = new ArrayList<Série>();
+        this.listaParaVer = new Stack<Série>();
+        this.listaJáVistas = new Stack<Série>();
     }
 
     /**
@@ -38,7 +41,17 @@ public class Cliente {
      * @param série a ser adicionada
      */
     public void adicionarNaLista(Série série) {
-        listaParaVer.add(série);
+        this.listaParaVer.add(série);
+    }
+
+    /**
+     * Adiciona uma série na lista de séries já vistas
+     * 
+     * @param série a ser adicionada
+     */
+    public void registrarAudiência(Série série) {
+        this.listaJáVistas.add(série);
+        série.registrarAudiência();
     }
 
     /**
@@ -48,7 +61,7 @@ public class Cliente {
      */
     public void retirarDaLista(String nomeSérie) {
         for (Série série : listaParaVer)
-            if (série.temNome(nomeSérie)) {
+            if (série.getNome().equals(nomeSérie)) {
                 listaParaVer.remove(série);
                 break;
             }
@@ -63,7 +76,7 @@ public class Cliente {
     public List<Série> filtrarPorGênero(String gênero) {
         List<Série> listaFiltrada = new Stack<Série>();
         for (Série série : listaParaVer)
-            if (série.possuiGênero(gênero))
+            if (série.getGênero().equals(gênero))
                 listaFiltrada.add(série);
         return listaFiltrada;
     }
@@ -77,7 +90,7 @@ public class Cliente {
     public List<Série> filtrarPorIdioma(String idioma) {
         List<Série> listaFiltrada = new Stack<Série>();
         for (Série série : listaParaVer)
-            if (série.possuiIdioma(idioma))
+            if (série.getIdioma().equals(idioma))
                 listaFiltrada.add(série);
         return listaFiltrada;
     }
@@ -88,10 +101,10 @@ public class Cliente {
      * @param qntsEpisódios quantidade de episódios a ser filtrada
      * @return lista de séries filtrada
      */
-    public List<Série> filtrarPorQntsEpisódios(int qntsEpisódios) {
-        List<Série> listaFiltrada = new ArrayList<Série>();
+    public List<Série> filtrarPorQntEpisódios(int qntsEpisódios) {
+        List<Série> listaFiltrada = new Stack<Série>();
         for (Série série : listaParaVer)
-            if (série.possuiEpisódios(qntsEpisódios))
+            if (série.getQntEp() == qntsEpisódios)
                 listaFiltrada.add(série);
         return listaFiltrada;
     }
@@ -99,13 +112,11 @@ public class Cliente {
     /**
      * Verifica se o cliente possui o nome de usuário passado como parâmetro
      * 
-     * @param nomeDeUsuário a ser verificado
+     * @param login a ser verificado
      * @return TRUE se o cliente possui o nome de usuário, FALSE caso contrário
      */
-    public boolean loginUser(String nomeDeUsuário) {
-        if (this.nomeDeUsuário.equals(nomeDeUsuário))
-            return true;
-        return false;
+    public boolean loginUser(String login) {
+        return this.login.equals(login);
     }
 
     /**
@@ -119,39 +130,39 @@ public class Cliente {
     }
 
     /**
-     * Adiciona uma série na lista de séries já vistas
-     * 
-     * @param série a ser adicionada
-     */
-    public void registrarAudiência(Série série) {
-        this.listaJaVistas.add(série);
-    }
-
-    /**
      * Converte o objeto em uma String no formato: {Nome;Login;Senha}
      * 
      * @return String com os dados do cliente
      */
     @Override
     public String toString() {
-        return this.nomeDeUsuário + ";" + this.nomeDeUsuário + ";" + this.senha;
+        return this.nomeDeUsuário + ";" + this.login + ";" + this.senha;
     }
 
     /**
      * Retorna uma matriz de Strings com as audiências do cliente, o primeiro array
      * para séries a ver e o segundo para séries ja vistas
+     * Audiência é armazenada da forma: {Login;F/A;IdSerie}, sendo “F” para lista de
+     * séries a assistir futuramente e “A” para séries já assistidas.
      * 
      * @return matriz de Strings com todas as audiências do cliente
      */
-    public String[][] audiências() {
-        String[][] audiências = new String[2][];
-        audiências[0] = new String[listaParaVer.size()];
-        audiências[1] = new String[listaJaVistas.size()];
-        for (int i = 0; i < listaParaVer.size(); i++)
-            audiências[0][i] = this.nomeDeUsuário + "/" + this.senha + ";" + "F" + ";" + listaParaVer.get(i).getNome();
-        for (int i = 0; i < listaJaVistas.size(); i++)
-            audiências[1][i] = this.nomeDeUsuário + "/" + this.senha + ";" + "A" + ";" + listaJaVistas.get(i).getNome();
+    public String[] audiências() {
+        int paraVerSize = listaParaVer.size(),
+                sizeTotal = paraVerSize + listaJáVistas.size();
+        String[] audiências = new String[sizeTotal];
+
+        for (int i = 0; i < paraVerSize; i++)
+            audiências[i] = this.login + "/" + this.senha + ";" + "F" + ";" + listaParaVer.get(i).getID();
+
+        for (int i = paraVerSize; i < sizeTotal; i++)
+            audiências[i] = this.login + "/" + this.senha + ";" + "A" + ";" + listaJáVistas.get(i).getID();
+
         return audiências;
+    }
+
+    public String getLogin() {
+        return this.login;
     }
 
 }
