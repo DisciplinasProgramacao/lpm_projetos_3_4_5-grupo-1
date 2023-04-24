@@ -1,5 +1,13 @@
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Stack;
 
 /**
  * Clase que representa uma plataforma de streaming.
@@ -9,13 +17,16 @@ public class PlataformaStreaming {
     /** Nome da plataforma de streaming */
     private String nome;
 
-    /** Nome da plataforma */
-    private HashSet<Série> series;
+    /** Séries da plataforma */
+    private HashMap<Integer, Série> séries;
+
+    /** Filmes da plataforma */
+    private HashMap<Integer, Filme> filmes;
 
     /** Clientes da plataforma */
-    private HashSet<Cliente> clientes;
+    private HashMap<String, Cliente> clientes;
 
-    /** Cliente atual */
+    /** Cliente atual, sem uso. */
     private Cliente clienteAtual;
 
     /**
@@ -25,90 +36,55 @@ public class PlataformaStreaming {
      */
     public PlataformaStreaming(String nome) {
         this.nome = nome;
-        this.series = new HashSet<Série>();
-        this.clientes = new HashSet<Cliente>();
-        this.clienteAtual = null;
+        this.séries = new HashMap<Integer, Série>();
+        this.filmes = new HashMap<Integer, Filme>();
+        this.clientes = new HashMap<String, Cliente>();
+        this.logOff();
     }
 
     /**
      * Executa o login de um cliente.
      * 
-     * @param nome_senha Nome de usuário e senha do cliente.
+     * @param nome Nome de usuário do cliente.
      * @return O cliente se o login for bem sucedido, NULL caso contrário.
      */
-    public Cliente login(String[] nome_senha) {
-        for (Cliente cliente : this.clientes) // itera sobre o HashSet
-            // verifica se o cliente possui o nome de usuário e se a senha está correta
-            if (cliente.loginUser(nome_senha[0]) && cliente.loginPassword(nome_senha[1])) {
-                this.clienteAtual = cliente;
-                return cliente;
-            }
-        return null; // se não encontrar nenhum cliente com o nome de usuário, retorna null
+    public Cliente login(String user) {
+        return (clienteAtual = clientes.get(user)); // se não encontrar cliente com o nome de usuário, retorna null
     }
 
     /**
-     * Adiciona um cliente na plataforma de streaming.
+     * Desloga o cliente atual.
+     */
+    public void logOff() {
+        this.clienteAtual = null;
+    }
+
+    /**
+     * Adiciona uma série na plataforma de streaming.
      * 
      * @param série nova série a ser adicionada.
      */
     public void adicionarSérie(Série série) {
-        this.series.add(série);
+        this.séries.put(série.getID(), série);
+    }
+
+    /**
+     * Adiciona um filme na plataforma de streaming.
+     * 
+     * @param filme nova filme a ser adicionada.
+     */
+    public void adicionarFilme(Filme filme) {
+        this.filmes.put(filme.getID(), filme);
     }
 
     /**
      * Adiciona um cliente na plataforma de streaming.
      * 
      * @param cliente novo cliente a ser adicionado.
+     * @return O cliente adicionado.
      */
     public void adicionarCliente(Cliente cliente) {
-        this.clientes.add(cliente);
-    }
-
-    /**
-     * Retorna uma lista com todas as séries da plataforma de streaming
-     * participantes de um determinado gênero.
-     * 
-     * @param gênero gênero das séries a serem filtradas
-     * @return Lista com as séries do gênero passado como parâmetro
-     */
-    public List<Série> filtarPorGênero(String gênero) {
-        List<Série> seriesFiltradas = new Stack<Série>();
-        for (Série série : this.series)
-            if (série.possuiGênero(gênero))
-                seriesFiltradas.add(série);
-        return seriesFiltradas;
-    }
-
-    /**
-     * Retorna uma lista com todas as séries da plataforma de streaming
-     * que possuem um determinado idioma.
-     * 
-     * @param idioma idioma das séries a serem filtradas
-     * @return Lista com as séries do idioma passado como parâmetro
-     */
-    public List<Série> filtarPorIdioma(String idioma) {
-        List<Série> seriesFiltradas = new Stack<Série>();
-        for (Série série : this.series)
-            if (série.possuiIdioma(idioma))
-                seriesFiltradas.add(série);
-        return seriesFiltradas;
-    }
-
-    /**
-     * Retorna uma lista com todas as séries da plataforma de streaming
-     * que possuem uma determinada quantidade de episódios.
-     * 
-     * @param quantidadeEpisódios quantidade de episódios das séries a serem
-     *                            filtrados
-     * @return Lista com as séries com a quantidade de episódios passada como
-     *         parâmetro
-     */
-    public List<Série> filtarPorQntEpisódios(int quantidadeEpisódios) {
-        List<Série> seriesFiltradas = new Stack<Série>();
-        for (Série série : this.series)
-            if (série.possuiEpisódios(quantidadeEpisódios))
-                seriesFiltradas.add(série);
-        return seriesFiltradas;
+        this.clientes.put(cliente.getLogin(), cliente);
     }
 
     /**
@@ -120,24 +96,67 @@ public class PlataformaStreaming {
      * @param senha     senha do cliente que assistiu a série.
      * @param completou se o cliente assistiu a série por completo.
      */
-    public void registrarAudiência(Série série, String login, String senha, boolean completou) {
-        if (série != null)
-            try {
-                if (completou)
-                    this.login(new String[] { login, senha }).adicionarNaLista(série);
-                else
-                    this.login(new String[] { login, senha }).registrarAudiência(série);
-                return;
-            } catch (NullPointerException e) {
-            }
-        System.out.println("Login ou senha incorretos");
+    public void registrarAudiência(boolean completou, Série série) {
+        if (série == null) {
+            System.out.println("Série não encontrada");
+            return;
+        }
+        try {
+            if (completou)
+                clienteAtual.adicionarNaLista(série);
+            else
+                clienteAtual.registrarAudiência(série);
+        } catch (NullPointerException e) {
+            System.out.println("Login ou senha incorretos");
+        }
     }
 
     /**
-     * Desloga o cliente atual.
+     * Retorna uma lista com todas as séries de um cliente participantes de um
+     * determinado gênero.
+     * 
+     * @param gênero gênero das séries a serem filtradas
+     * @return Lista com as séries do gênero passado como parâmetro
      */
-    public void logOff() {
-        this.clienteAtual = null;
+    public List<Série> filtarPorGênero(String gênero) {
+        if (clienteAtual == null) {
+            System.out.println("Nenhum cliente logado");
+            return new Stack<Série>();
+        }
+        return clienteAtual.filtrarPorGênero(gênero);
+
+    }
+
+    /**
+     * Retorna uma lista com todas as séries de um cliente que possuem um
+     * determinado idioma.
+     * 
+     * @param idioma idioma das séries a serem filtradas
+     * @return Lista com as séries do idioma passado como parâmetro
+     */
+    public List<Série> filtarPorIdioma(String idioma) {
+        if (clienteAtual == null) {
+            System.out.println("Nenhum cliente logado");
+            return new Stack<Série>();
+        }
+        return clienteAtual.filtrarPorIdioma(idioma);
+    }
+
+    /**
+     * Retorna uma lista com todas as séries de um cliente que possuem uma
+     * determinada quantidade de episódios.
+     * 
+     * @param quantidadeEpisódios quantidade de episódios das séries a serem
+     *                            filtrados
+     * @return Lista com as séries com a quantidade de episódios passada como
+     *         parâmetro
+     */
+    public List<Série> filtarPorQntEpisódios(int quantidadeEpisódios) {
+        if (clienteAtual == null) {
+            System.out.println("Nenhum cliente logado");
+            return new Stack<Série>();
+        }
+        return clienteAtual.filtrarPorQntEpisódios(quantidadeEpisódios);
     }
 
     /**
@@ -146,11 +165,8 @@ public class PlataformaStreaming {
      * @param nomeSérie nome da série a ser buscada.
      * @return Série com o nome passado como parâmetro, NULL caso não exista.
      */
-    public Série buscarSérie(String nomeSérie) {
-        for (Série série : this.series)
-            if (série.temNome(nomeSérie))
-                return série;
-        return null;
+    public Série buscarSérie(int idSérie) {
+        return séries.get(idSérie);
     }
 
     /**
@@ -169,43 +185,48 @@ public class PlataformaStreaming {
                     app.salvarArquivos();
                     break;
                 case 3:
-                    app.adicionarCliente(new Cliente(
-                            System.console().readLine(" Nome: "),
-                            System.console().readLine(" Senha: ") //
-                    ));
+                    app.filtarPorGênero(System.console().readLine(" Gênero: ")).forEach(System.out::println);
                     break;
                 case 4:
-                    app.adicionarSérie(new Série(
-                            "Ação",
-                            System.console().readLine(" Nome: "),
-                            "English",
-                            10 //
-                    ));
+                    app.filtarPorIdioma(System.console().readLine(" Idioma: ")).forEach(System.out::println);
                     break;
                 case 5:
-                    app.registrarAudiência(
-                            app.buscarSérie(System.console().readLine(" Nome da Série: ")),
-                            System.console().readLine(" Login: "),
-                            System.console().readLine(" Senha: "),
-                            System.console().readLine(" A mídia já foi assistida? (s/n)").contains("s") //
-                    );
-                    break; /* @formatter:off
+                    app.filtarPorQntEpisódios(Utilitários.lerInt(" Quantidade de episódios: "))
+                            .forEach(System.out::println);
+                    break;
                 case 6:
-                    app.filtrarPorGênero();
+                    System.out.println(app);
                     break;
                 case 7:
-                    app.filtrarPorIdioma();
+                    app.login(System.console().readLine(" Login: "));
                     break;
                 case 8:
-                    app.filtrarPorQntEpisódios();
-                    break; @formatter:on */
+                    app.logOff();
+                    break;
                 case 9:
+                    System.out.println(app.buscarSérie(
+                            Utilitários.lerInt(" ID da série: ") //
+                    ));
+                    break;
+                case 10:
                     break app;
                 default:
-                    System.out.println(" ERRO: Opção inválida.");
+                    System.out.println(" Opção inválida, tente novamente.");
             }
         if (System.console().readLine(" Deseja salvar os arquivos? (s/n)").contains("s"))
             app.salvarArquivos();
+    }
+
+    /**
+     * Retorna uma string que representa a plataforma de streaming com o nome e
+     * número de séries e clientes cadastrados.
+     * 
+     * @return String que representa a plataforma de streaming.
+     */
+    @Override
+    public String toString() {
+        return " Há " + this.séries.size() + " séries cadastradas na plataforma " + this.nome + " e "
+                + this.clientes.size() + " clientes cadastrados.";
     }
 
     /**************************************************************************************
@@ -230,6 +251,7 @@ public class PlataformaStreaming {
      * séries a assistir futuramente e “A” para séries já assistidas.
      */
     private void lerArquivos() {
+        String tmp = null; // usada para remover os caracteres invisíveis nos arquivos dados pelo professor
         try {
             // Lê o arquivo de espectadores
             Scanner espectadores = new Scanner(new File("data/Espectadores.csv"));
@@ -252,9 +274,10 @@ public class PlataformaStreaming {
                 else
                     this.login(audiência[0].split("/")).adicionarNaLista(this.buscarSérie(audiência[2].trim()));
             }
-            espectadores.close();
+            this.logOff();
+            leitor.close();
         } catch (FileNotFoundException e) {
-            System.out.println(" ERRO: Arquivo não encontrado." + e.getMessage());
+            System.out.println(" Arquivo data/Audiência.csv não encontrado.");
         }
 
     }
@@ -273,18 +296,17 @@ public class PlataformaStreaming {
     private void salvarArquivos() {
         try {
             FileWriter espectadores = new FileWriter("data/Espectadores.csv");
-            for (Cliente cliente : this.clientes)
-                espectadores.write(cliente.toString() + "\n");
+            for (Cliente cliente : this.clientes.values())
+                espectadores.write(cliente + "\n");
             espectadores.close();
             espectadores = new FileWriter("data/Séries.csv");
-            for (Série série : this.series)
-                espectadores.write(série.toString() + "\n");
+            for (Série série : this.séries.values())
+                espectadores.write(série.toFile() + "\n");
             espectadores.close();
             espectadores = new FileWriter("data/Audiência.csv");
-            for (Cliente cliente : this.clientes)
-                for (String paraVerEJáVista[] : cliente.audiências())
-                    for (String átomo : paraVerEJáVista)
-                        espectadores.write(átomo + "\n");
+            for (Cliente cliente : this.clientes.values())
+                for (String paraVerEJáVista : cliente.audiências())
+                    espectadores.write(paraVerEJáVista + "\n");
             espectadores.close();
         } catch (IOException e) {
             System.out.println(" ERRO: Arquivo não encontrado." + e.getMessage());
