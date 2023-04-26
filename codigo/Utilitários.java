@@ -6,7 +6,7 @@ public class Utilitários {
     /**
      * Método que lê um inteiro do console.
      * 
-     * @param mensagem mensagem a ser exibida ao usuário.
+     * @param mensagem a ser exibida ao usuário.
      * @return inteiro lido do console.
      */
     public static int lerInt(String mensagem) {
@@ -25,15 +25,16 @@ public class Utilitários {
     public static int menu() {
         return lerInt("\n 1 - Ler Arquivos\n" +
                 " 2 - Salvar Arquivos\n" +
-                " 3 - Cadastrar Cliente\n" +
-                " 4 - Cadastrar Série\n" +
-                " 5 - Adicionar Audiência já vista\n" + /* @formatter:off
-                " 6 - Filtrar por Gênero\n" +
-                " 7 - Filtrar por Idioma\n" +
-                " 8 - Filtrar por Quantidade de Episódios\n" + @formatter:on */
-                " 9 - Sair\n\n" +
+                " 3 - Filtrar por Gênero\n" +
+                " 4 - Filtrar por Idioma\n" +
+                " 5 - Filtrar por Quantidade de Episódios\n" +
+                " 6 - Printar info do sistema\n" +
+                " 7 - Login\n" +
+                " 8 - Logout\n" +
+                " 9 - Buscar Série\n" +
+                " 10 - Sair\n\n" +
                 " Digite uma opção: ");
 
     }
-    
+
 }
