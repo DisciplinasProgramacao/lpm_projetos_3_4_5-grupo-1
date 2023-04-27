@@ -62,7 +62,7 @@ public class Cliente {
     public void retirarDaLista(String nomeSérie) {
         for (Série série : listaParaVer)
             if (série.getNome().equals(nomeSérie)) {
-                listaParaVer.remove(série);
+                this.listaParaVer.remove(série);
                 break;
             }
     }
@@ -75,7 +75,7 @@ public class Cliente {
      */
     public List<Série> filtrarPorGênero(String gênero) {
         List<Série> listaFiltrada = new Stack<Série>();
-        for (Série série : listaParaVer)
+        for (Série série : this.listaParaVer)
             if (série.getGênero().equals(gênero))
                 listaFiltrada.add(série);
         return listaFiltrada;
@@ -89,7 +89,7 @@ public class Cliente {
      */
     public List<Série> filtrarPorIdioma(String idioma) {
         List<Série> listaFiltrada = new Stack<Série>();
-        for (Série série : listaParaVer)
+        for (Série série : this.listaParaVer)
             if (série.getIdioma().equals(idioma))
                 listaFiltrada.add(série);
         return listaFiltrada;
@@ -103,7 +103,7 @@ public class Cliente {
      */
     public List<Série> filtrarPorQntEpisódios(int qntsEpisódios) {
         List<Série> listaFiltrada = new Stack<Série>();
-        for (Série série : listaParaVer)
+        for (Série série : this.listaParaVer)
             if (série.getQntEp() == qntsEpisódios)
                 listaFiltrada.add(série);
         return listaFiltrada;
@@ -148,15 +148,16 @@ public class Cliente {
      * @return matriz de Strings com todas as audiências do cliente
      */
     public String[] audiências() {
-        int paraVerSize = listaParaVer.size(),
-                sizeTotal = paraVerSize + listaJáVistas.size();
+        int paraVerSize = this.listaParaVer.size(),
+                sizeTotal = paraVerSize + this.listaJáVistas.size();
         String[] audiências = new String[sizeTotal];
 
         for (int i = 0; i < paraVerSize; i++)
-            audiências[i] = this.login + "/" + this.senha + ";" + "F" + ";" + listaParaVer.get(i).getID();
+            audiências[i] = this.login + "/" + this.senha + ";" + "F" + ";" + this.listaParaVer.get(i).getID();
 
         for (int i = paraVerSize; i < sizeTotal; i++)
-            audiências[i] = this.login + "/" + this.senha + ";" + "A" + ";" + listaJáVistas.get(i).getID();
+            audiências[i] = this.login + "/" + this.senha + ";" + "A" + ";"
+                    + this.listaJáVistas.get(i - paraVerSize).getID();
 
         return audiências;
     }

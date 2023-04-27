@@ -1,130 +1,112 @@
-﻿3459;Light;14/09/2016
-3460;Clear;14/09/2017
-3462;Pink is the new White;20/09/2018
-3465;Pink is the new Blue;27/09/2019
-3465;Pink is the new Green;27/09/2020
-3474;Pink is the new Pink;14/10/2018
-3474;Pink is the new Yellow;03/10/2019
-3481;Pink is the new Red;12/10/2020
-3489;Yellow County;14/09/2016
-3493;Red County;31/08/2017
-3496;Blue County;09/09/2018
-3496;Golden County;18/09/2019
-3496;Green County;07/09/2020
-3502;Yellow Lotus;14/03/2019
-3502;Red Lotus;18/03/2020
-3509;Blue Lotus;14/06/2015
-3514;Golden Lotus;05/06/2016
-3514;Green Lotus;29/05/2017
-3518;Enemies;16/05/2018
-3524;The Walking Trees;24/05/2019
-3524;The Walking Dread;23/05/2020
-3527;The Walking Flumes;14/08/2016
-3531;The Walking Goodies;26/08/2017
-3533;The Walking Cats;22/08/2018
-3536;The Walking Robots;08/08/2019
-3540;The Walking Pretenders;28/07/2020
-3547;The Walking Peaks;14/05/2016
-3554;The Walking Minds;16/05/2017
-3556;The Walking Bubbles;01/05/2018
-3557;Game of Trees;14/05/2019
-3560;Game of Flumes;20/05/2020
-3570;Game of Goodies;14/04/2017
-3576;Game of Cats;03/04/2018
-3578;Game of Robots;03/04/2019
-3583;Game of Minds;08/04/2020
-3586;Game of Bubbles;14/01/2011
-3586;A Tree Game;30/12/2011
-3590;A Flume Game;22/12/2012
-3590;A Dread Game;13/12/2013
-3590;A Cat Game;10/12/2014
-3592;A Robot Game;24/12/2015
-3598;A Mind Game;12/12/2016
-3598;A Bubble Game;06/12/2017
-3604;The Call of the Trees;15/12/2018
-3605;The Call of the Flumes;01/12/2019
-3616;The Call of the Goodies;14/12/2018
-3617;The Call of the Sinks;15/12/2019
-3624;The Call of the Cats;05/12/2020
-3632;The Call of the Robots;14/12/2015
-3637;The Call of the Pretender;25/12/2016
-3640;The Call of the Minds;26/12/2017
-3642;The Call of the Bubbles;14/12/2018
-3646;Fixing Trees;25/12/2019
-3647;Fixing Flumes;07/01/2021
-3650;Fixing Goodies;14/02/2017
-3650;Fixing Cats;27/02/2018
-3657;Fixing Robots;01/03/2019
-3661;Fixing Pretenders;13/03/2020
-3670;Fixing Bubbles;14/08/2017
-3674;Nihon Trees;21/08/2018
-3675;Nihon Flumes;16/08/2019
-3680;Nihon Goodies;25/08/2020
-3682;Nihon Sinks;14/03/2020
-3695;Nihon Cats;14/06/2018
-3698;Nihon Robots;22/06/2019
-3705;Nihon Pretender;05/07/2020
-3714;Nihon Peaks;14/02/2020
-3721;Nihon Minds;14/02/2019
-3725;Nihon Bubbles;14/02/2020
-3734;East Trees;14/03/2016
-3736;East Flumes;28/02/2017
-3738;East Goodies;18/02/2018
-3743;East Sinks;01/03/2019
-3749;East Cats;28/02/2020
-3754;East Robots;14/04/2018
-3761;East Pretender;16/04/2019
-3764;East Peaks;12/04/2020
-3773;East Minds;14/11/2012
-3775;East Bubbles;25/11/2013
-3775;Fear of Trees;10/11/2014
-3778;Fear of Flumes;12/11/2015
-3783;Fear of Goodies;23/11/2016
-3785;Fear of Sinks;28/11/2017
-3791;Fear of Cats;12/12/2018
-3793;Fear of Robots;25/12/2019
-3793;Fear of Peaks;10/12/2020
-3801;Fear of Bubbles;14/09/2012
-3803;Those are Trees;09/09/2013
-3804;Those are Flumes;13/09/2014
-3811;Those are Goodies;17/09/2015
-3815;Those are Sinks;27/09/2016
-3816;Those are Cats;22/09/2017
-3823;Those are Robots;17/09/2018
-3824;Those are Bubbles;21/09/2019
-3830;Los Angeles Trees;11/09/2020
-3840;Los Angeles Flumes;14/05/2019
-3845;Los Angeles Goodies;11/05/2020
-3851;Los Angeles Sinks;14/05/2020
-3857;Los Angeles Cats;14/04/2019
-3863;Los Angeles Robots;19/04/2020
-3873;Los Angeles Pretender;14/06/2014
-3877;Los Angeles Peaks;24/06/2015
-3884;Los Angeles Minds;21/06/2016
-3887;Los Angeles Bubbles;18/06/2017
-3887;Master Trees;16/06/2018
-3890;Master Flumes;22/06/2019
-3894;Master Goodies;12/06/2020
-3906;Master Cats;14/03/2019
-3910;Master Robots;18/03/2020
-3917;Master Pretenders;14/04/2014
-3920;Master Peaks;26/04/2015
-3920;Master Minds;28/04/2016
-3920;Master Bubbles;17/04/2017
-3926;The Last of Trees;02/04/2018
-3930;The Last of Flumes;25/03/2019
-3932;The Last of Goodies;03/04/2020
-3936;The Last of Cats;14/07/2015
-3941;The Last of Robots;18/07/2016
-3948;The Last of Pretenders;26/07/2017
-3954;The Last of Peaks;07/08/2018
-3961;The Last of Minds;02/08/2019
-3961;The Last of Bubbles;10/08/2020
-3973;Shoreman;14/10/2012
-3979;Treeman;04/10/2013
-3982;Catman;17/10/2014
-3983;Robotman;26/10/2015
-3989;Mindman;07/11/2016
-3993;Bubbleman;31/10/2017
-4000;Lost and Found;26/10/2018
-4006;The Romanos;07/11/2019
+3840;Los Angeles Flumes;2019-05-14
+3586;A Tree Game;2011-12-30
+3845;Los Angeles Goodies;2020-05-11
+3590;A Cat Game;2014-12-10
+3592;A Robot Game;2015-12-24
+3851;Los Angeles Sinks;2020-05-14
+3598;A Bubble Game;2017-12-06
+3857;Los Angeles Cats;2019-04-14
+3604;The Call of the Trees;2018-12-15
+3605;The Call of the Flumes;2019-12-01
+3863;Los Angeles Robots;2020-04-19
+3616;The Call of the Goodies;2018-12-14
+3617;The Call of the Sinks;2019-12-15
+3873;Los Angeles Pretender;2014-06-14
+3877;Los Angeles Peaks;2015-06-24
+3624;The Call of the Cats;2020-12-05
+3884;Los Angeles Minds;2016-06-21
+3887;Master Trees;2018-06-16
+3632;The Call of the Robots;2015-12-14
+3890;Master Flumes;2019-06-22
+3637;The Call of the Pretender;2016-12-25
+3894;Master Goodies;2020-06-12
+3640;The Call of the Minds;2017-12-26
+3642;The Call of the Bubbles;2018-12-14
+3646;Fixing Trees;2019-12-25
+3647;Fixing Flumes;2021-01-07
+3650;Fixing Cats;2018-02-27
+3906;Master Cats;2019-03-14
+3910;Master Robots;2020-03-18
+3657;Fixing Robots;2019-03-01
+3661;Fixing Pretenders;2020-03-13
+3917;Master Pretenders;2014-04-14
+3920;Master Bubbles;2017-04-17
+3670;Fixing Bubbles;2017-08-14
+3926;The Last of Trees;2018-04-02
+3674;Nihon Trees;2018-08-21
+3930;The Last of Flumes;2019-03-25
+3675;Nihon Flumes;2019-08-16
+3932;The Last of Goodies;2020-04-03
+3680;Nihon Goodies;2020-08-25
+3936;The Last of Cats;2015-07-14
+3682;Nihon Sinks;2020-03-14
+3941;The Last of Robots;2016-07-18
+3948;The Last of Pretenders;2017-07-26
+3695;Nihon Cats;2018-06-14
+3698;Nihon Robots;2019-06-22
+3954;The Last of Peaks;2018-08-07
+3705;Nihon Pretender;2020-07-05
+3961;The Last of Bubbles;2020-08-10
+3714;Nihon Peaks;2020-02-14
+3459;Light;2016-09-14
+3460;Clear;2017-09-14
+3973;Shoreman;2012-10-14
+3462;Pink is the new White;2018-09-20
+3465;Pink is the new Green;2020-09-27
+3721;Nihon Minds;2019-02-14
+3979;Treeman;2013-10-04
+3725;Nihon Bubbles;2020-02-14
+3982;Catman;2014-10-17
+3983;Robotman;2015-10-26
+3474;Pink is the new Yellow;2019-10-03
+3989;Mindman;2016-11-07
+3734;East Trees;2016-03-14
+3736;East Flumes;2017-02-28
+3481;Pink is the new Red;2020-10-12
+3993;Bubbleman;2017-10-31
+3738;East Goodies;2018-02-18
+3743;East Sinks;2019-03-01
+4000;Lost and Found;2018-10-26
+3489;Yellow County;2016-09-14
+3493;Red County;2017-08-31
+3749;East Cats;2020-02-28
+4006;The Romanos;2019-11-07
+3496;Green County;2020-09-07
+3754;East Robots;2018-04-14
+3502;Red Lotus;2020-03-18
+3761;East Pretender;2019-04-16
+3764;East Peaks;2020-04-12
+3509;Blue Lotus;2015-06-14
+3514;Green Lotus;2017-05-29
+3773;East Minds;2012-11-14
+3518;Enemies;2018-05-16
+3775;Fear of Trees;2014-11-10
+3778;Fear of Flumes;2015-11-12
+3524;The Walking Dread;2020-05-23
+3527;The Walking Flumes;2016-08-14
+3783;Fear of Goodies;2016-11-23
+3785;Fear of Sinks;2017-11-28
+3531;The Walking Goodies;2017-08-26
+3533;The Walking Cats;2018-08-22
+3791;Fear of Cats;2018-12-12
+3536;The Walking Robots;2019-08-08
+3793;Fear of Peaks;2020-12-10
+3540;The Walking Pretenders;2020-07-28
+3801;Fear of Bubbles;2012-09-14
+3547;The Walking Peaks;2016-05-14
+3803;Those are Trees;2013-09-09
+3804;Those are Flumes;2014-09-13
+3554;The Walking Minds;2017-05-16
+3811;Those are Goodies;2015-09-17
+3556;The Walking Bubbles;2018-05-01
+3557;Game of Trees;2019-05-14
+3815;Those are Sinks;2016-09-27
+3560;Game of Flumes;2020-05-20
+3816;Those are Cats;2017-09-22
+3823;Those are Robots;2018-09-17
+3824;Those are Bubbles;2019-09-21
+3570;Game of Goodies;2017-04-14
+3830;Los Angeles Trees;2020-09-11
+3576;Game of Cats;2018-04-03
+3578;Game of Robots;2019-04-03
+3583;Game of Minds;2020-04-08

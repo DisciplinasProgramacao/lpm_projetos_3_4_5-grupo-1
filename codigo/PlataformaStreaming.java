@@ -49,7 +49,7 @@ public class PlataformaStreaming {
      * @return O cliente se o login for bem sucedido, NULL caso contrário.
      */
     public Cliente login(String user) {
-        return (clienteAtual = clientes.get(user)); // se não encontrar cliente com o nome de usuário, retorna null
+        return (this.clienteAtual = this.clientes.get(user)); // se não encontrar cliente com o nome de usuário, retorna null
     }
 
     /**
@@ -103,9 +103,9 @@ public class PlataformaStreaming {
         }
         try {
             if (completou)
-                clienteAtual.adicionarNaLista(série);
+                this.clienteAtual.adicionarNaLista(série);
             else
-                clienteAtual.registrarAudiência(série);
+                this.clienteAtual.registrarAudiência(série);
         } catch (NullPointerException e) {
             System.out.println("Login ou senha incorretos");
         }
@@ -119,11 +119,11 @@ public class PlataformaStreaming {
      * @return Lista com as séries do gênero passado como parâmetro
      */
     public List<Série> filtarPorGênero(String gênero) {
-        if (clienteAtual == null) {
+        if (this.clienteAtual == null) {
             System.out.println("Nenhum cliente logado");
             return new Stack<Série>();
         }
-        return clienteAtual.filtrarPorGênero(gênero);
+        return this.clienteAtual.filtrarPorGênero(gênero);
 
     }
 
@@ -135,11 +135,11 @@ public class PlataformaStreaming {
      * @return Lista com as séries do idioma passado como parâmetro
      */
     public List<Série> filtarPorIdioma(String idioma) {
-        if (clienteAtual == null) {
+        if (this.clienteAtual == null) {
             System.out.println("Nenhum cliente logado");
             return new Stack<Série>();
         }
-        return clienteAtual.filtrarPorIdioma(idioma);
+        return this.clienteAtual.filtrarPorIdioma(idioma);
     }
 
     /**
@@ -152,11 +152,11 @@ public class PlataformaStreaming {
      *         parâmetro
      */
     public List<Série> filtarPorQntEpisódios(int quantidadeEpisódios) {
-        if (clienteAtual == null) {
+        if (this.clienteAtual == null) {
             System.out.println("Nenhum cliente logado");
             return new Stack<Série>();
         }
-        return clienteAtual.filtrarPorQntEpisódios(quantidadeEpisódios);
+        return this.clienteAtual.filtrarPorQntEpisódios(quantidadeEpisódios);
     }
 
     /**
@@ -166,7 +166,7 @@ public class PlataformaStreaming {
      * @return Série com o nome passado como parâmetro, NULL caso não exista.
      */
     public Série buscarSérie(int idSérie) {
-        return séries.get(idSérie);
+        return this.séries.get(idSérie);
     }
 
     /**
@@ -251,27 +251,20 @@ public class PlataformaStreaming {
      * séries a assistir futuramente e “A” para séries já assistidas.
      */
     private void lerArquivos() {
-        String tmp = null; // usada para remover os caracteres invisíveis nos arquivos dados pelo professor
         try {
             /**************** Espectadores ****************/
             Scanner leitor = new Scanner(new File("data/Espectadores.csv")).useDelimiter(";|\\n");
-
-            // arquivo dado pelo professor é problemático, toda nova linha tem um caractere invisível no fim, sendo que ele também aparece no início do arquivo, por isso esta linha extra @formatter:off
-            this.adicionarCliente(new Cliente(leitor.next().substring(1), leitor.next(), (tmp=leitor.next()).substring(0, tmp.length() - 1))); // @formatter:on
 
             while (leitor.hasNextLine())
                 this.adicionarCliente(new Cliente(
                         leitor.next(), // Nome
                         leitor.next(), // Login
-                        (tmp = leitor.next()).substring(0, tmp.length() - 1) // Senha
+                        leitor.next() // Senha
                 ));
             leitor.close();
 
             /**************** Séries ****************/
             leitor = new Scanner(new File("data/Séries.csv")).useDelimiter(";|\\n");
-
-            // novamente, arquivo dado pelo professor é problemático @formatter:off
-            this.adicionarSérie(new Série(Integer.parseInt(leitor.next().substring(1)), "Ação", leitor.next(), "English", LocalDate.parse(leitor.next().substring(0, 10), DateTimeFormatter.ofPattern("dd/MM/yyyy")), 10)); // @formatter:on
 
             while (leitor.hasNextLine())
                 this.adicionarSérie(new Série(
@@ -279,16 +272,13 @@ public class PlataformaStreaming {
                         "Ação", // Gênero
                         leitor.next(), // Nome
                         "English", // Idioma
-                        LocalDate.parse(leitor.next().substring(0, 10), DateTimeFormatter.ofPattern("dd/MM/yyyy")), // DataDeLançamento
+                        LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), // DataDeLançamento
                         10 // Quantidade de episódios
                 ));
             leitor.close();
 
             /**************** Filmes ****************/
             leitor = new Scanner(new File("data/Filmes.csv")).useDelimiter(";|\\n");
-
-            // novamente, arquivo dado pelo professor é problemático @formatter:off
-            this.adicionarFilme(new Filme(Integer.parseInt(leitor.next().substring(1)), "Ação", leitor.next(), "English", LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), Integer.parseInt((tmp = leitor.next()).substring(0, tmp.length() -1)))); // @formatter:on
 
             while (leitor.hasNext())
                 this.adicionarFilme(new Filme(
@@ -297,23 +287,20 @@ public class PlataformaStreaming {
                         leitor.next(), // Nome
                         "English", // Idioma
                         LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), // DataDeLançamento
-                        Integer.parseInt((tmp = leitor.next()).substring(0, tmp.length() - 1)) // duração
+                        Integer.parseInt(leitor.next()) // duração
                 ));
             leitor.close();
 
             /**************** Audiência ****************/
             leitor = new Scanner(new File("data/Audiência.csv")).useDelimiter(";|\\n");
 
-            // novamente, arquivo dado pelo professor é problemático
-            clienteAtual = this.login(leitor.next().substring(1));
-            this.registrarAudiência(leitor.next().charAt(0) == 'A',
-                    this.buscarSérie(Integer.parseInt(leitor.next().substring(0, 4))));
-
             while (leitor.hasNextLine()) {
-                clienteAtual = this.login(leitor.next());
+                this.clienteAtual = this.login(leitor.next());
                 this.registrarAudiência(
                         leitor.next().charAt(0) == 'A', // Se a série já foi assistida
-                        this.buscarSérie(Integer.parseInt(leitor.next().substring(0, 4))) // Busca a série pelo ID
+                        this.buscarSérie(
+                                Integer.parseInt(leitor.next()) // Busca a série pelo ID
+                        ) //
                 );
             }
             this.logOff();
