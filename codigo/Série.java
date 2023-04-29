@@ -14,6 +14,7 @@ public class Série extends Mídia {
      * @param gênero gênero da série
      * @param nome   nome da série
      * @param idioma idioma da série
+     * @param dataLançamento  data de lançamento da série
      * @param qntEp  quantidade de episodios da série
      */
     public Série(int id, String gênero, String nome, String idioma, LocalDate dataLançamento, int qntEp) {
