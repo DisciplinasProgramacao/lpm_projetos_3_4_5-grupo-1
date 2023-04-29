@@ -16,7 +16,7 @@ public class Cliente {
             senha;
 
     /** Lista de séries para ver */
-    private List<Série> listaParaVer,
+    private List<Mídia> listaParaVer,
 
             /** Lista de séries vistas */
             listaJáVistas;
@@ -25,44 +25,45 @@ public class Cliente {
      * Construtor da classe Cliente
      * 
      * @param nomeDeUsuário nome de usuário do cliente
+     * @param login         login do cliente
      * @param senha         senha do cliente
      */
     public Cliente(String nomeDeUsuário, String login, String senha) {
         this.nomeDeUsuário = nomeDeUsuário;
         this.login = login;
         this.senha = senha;
-        this.listaParaVer = new Stack<Série>();
-        this.listaJáVistas = new Stack<Série>();
+        this.listaParaVer = new Stack<Mídia>();
+        this.listaJáVistas = new Stack<Mídia>();
     }
 
     /**
-     * Adiciona uma série na lista de séries para ver
+     * Adiciona uma mídia na lista de séries para ver
      * 
-     * @param série a ser adicionada
+     * @param mídia a ser adicionada
      */
-    public void adicionarNaLista(Série série) {
-        this.listaParaVer.add(série);
+    public void adicionarNaLista(Mídia mídia) {
+        this.listaParaVer.add(mídia);
     }
 
     /**
-     * Adiciona uma série na lista de séries já vistas
+     * Adiciona uma mídia na lista de séries já vistas
      * 
-     * @param série a ser adicionada
+     * @param mídia a ser adicionada
      */
-    public void registrarAudiência(Série série) {
-        this.listaJáVistas.add(série);
-        série.registrarAudiência();
+    public void registrarAudiência(Mídia mídia) {
+        this.listaJáVistas.add(mídia);
+        mídia.registrarAudiência();
     }
 
     /**
-     * Remove uma série da lista de séries para ver
+     * Remove uma mídia da lista de séries para ver
      * 
-     * @param nomeSérie nome da série a ser removida
+     * @param nomeMídia nome da mídia a ser removida
      */
-    public void retirarDaLista(String nomeSérie) {
-        for (Série série : listaParaVer)
-            if (série.getNome().equals(nomeSérie)) {
-                this.listaParaVer.remove(série);
+    public void retirarDaLista(String nomeMídia) {
+        for (Mídia mídia : listaParaVer)
+            if (mídia.getNome().equals(nomeMídia)) {
+                this.listaParaVer.remove(mídia);
                 break;
             }
     }
@@ -73,11 +74,11 @@ public class Cliente {
      * @param gênero a ser filtrado
      * @return lista de séries filtrada
      */
-    public List<Série> filtrarPorGênero(String gênero) {
-        List<Série> listaFiltrada = new Stack<Série>();
-        for (Série série : this.listaParaVer)
-            if (série.getGênero().equals(gênero))
-                listaFiltrada.add(série);
+    public List<Mídia> filtrarPorGênero(String gênero) {
+        List<Mídia> listaFiltrada = new Stack<Mídia>();
+        for (Mídia mídia : this.listaParaVer)
+            if (mídia.getGênero().equals(gênero))
+                listaFiltrada.add(mídia);
         return listaFiltrada;
     }
 
@@ -87,11 +88,11 @@ public class Cliente {
      * @param idioma a ser filtrado
      * @return lista de séries filtrada
      */
-    public List<Série> filtrarPorIdioma(String idioma) {
-        List<Série> listaFiltrada = new Stack<Série>();
-        for (Série série : this.listaParaVer)
-            if (série.getIdioma().equals(idioma))
-                listaFiltrada.add(série);
+    public List<Mídia> filtrarPorIdioma(String idioma) {
+        List<Mídia> listaFiltrada = new Stack<Mídia>();
+        for (Mídia mídia : this.listaParaVer)
+            if (mídia.getIdioma().equals(idioma))
+                listaFiltrada.add(mídia);
         return listaFiltrada;
     }
 
@@ -103,20 +104,31 @@ public class Cliente {
      */
     public List<Série> filtrarPorQntEpisódios(int qntsEpisódios) {
         List<Série> listaFiltrada = new Stack<Série>();
-        for (Série série : this.listaParaVer)
-            if (série.getQntEp() == qntsEpisódios)
-                listaFiltrada.add(série);
+        for (Mídia mídia : this.listaParaVer) {
+            if (mídia instanceof Série) {
+                Série série = (Série) mídia;
+                if (série.getQntEp() == qntsEpisódios)
+                    listaFiltrada.add(série);
+            }
+        }
         return listaFiltrada;
     }
 
     /**
-     * Verifica se o cliente possui o nome de usuário passado como parâmetro
+     * Filtra a lista de filmes para ver por duração
      * 
-     * @param login a ser verificado
-     * @return TRUE se o cliente possui o nome de usuário, FALSE caso contrário
+     * @param duração a ser filtrada
+     * @return lista de filmes filtrada
      */
-    public boolean loginUser(String login) {
-        return this.login.equals(login);
+    public List<Filme> filtrarPorDuração(int duração) {
+        List<Filme> listaFiltrada = new Stack<Filme>();
+        for (Mídia mídia : this.listaParaVer)
+            if (mídia instanceof Filme) {
+                Filme filme = (Filme) mídia;
+                if (filme.getDuração() == duração)
+                    listaFiltrada.add(filme);
+            }
+        return listaFiltrada;
     }
 
     /**
@@ -140,12 +152,13 @@ public class Cliente {
     }
 
     /**
-     * Retorna uma matriz de Strings com as audiências do cliente, o primeiro array
-     * para séries a ver e o segundo para séries ja vistas
+     * Retorna um array de Strings com as audiências do cliente, a primeira parte do
+     * array para séries a ver e a segunda para séries ja vistas
+     *
      * Audiência é armazenada da forma: {Login;F/A;IdSerie}, sendo “F” para lista de
      * séries a assistir futuramente e “A” para séries já assistidas.
      * 
-     * @return matriz de Strings com todas as audiências do cliente
+     * @return array de Strings com todas as audiências do cliente
      */
     public String[] audiências() {
         int paraVerSize = this.listaParaVer.size(),
@@ -153,15 +166,20 @@ public class Cliente {
         String[] audiências = new String[sizeTotal];
 
         for (int i = 0; i < paraVerSize; i++)
-            audiências[i] = this.login + "/" + this.senha + ";" + "F" + ";" + this.listaParaVer.get(i).getID();
+            audiências[i] = this.login + ";" + "A" + ";" + this.listaParaVer.get(i).getID();
 
         for (int i = paraVerSize; i < sizeTotal; i++)
-            audiências[i] = this.login + "/" + this.senha + ";" + "A" + ";"
+            audiências[i] = this.login + ";" + "F" + ";"
                     + this.listaJáVistas.get(i - paraVerSize).getID();
 
         return audiências;
     }
 
+    /**
+     * Retorna o nome de usuário do cliente
+     * 
+     * @return nome de usuário do cliente
+     */
     public String getLogin() {
         return this.login;
     }

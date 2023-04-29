@@ -10,12 +10,12 @@ import java.util.Scanner;
 /**
  * Classe usado para ler e escrever os arquivos csv da plataforma de streaming
  */
-public class IOPlatform {
+public class IOPlataforma {
 
     /**
      * Construtor vazio.
      */
-    private IOPlatform() {
+    private IOPlataforma() {
         throw new Error("Classe não instanciável");
     }
 

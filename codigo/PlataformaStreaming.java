@@ -1,13 +1,6 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Clase que representa uma plataforma de streaming.
@@ -45,11 +38,19 @@ public class PlataformaStreaming {
     /**
      * Executa o login de um cliente.
      * 
-     * @param nome Nome de usuário do cliente.
-     * @return O cliente se o login for bem sucedido, NULL caso contrário.
+     * @param user  nome de usuário do cliente.
+     * @param senha senha do cliente.
+     * @param admin se o login ocorre como administrador.
      */
-    public Cliente login(String user) {
-        return (this.clienteAtual = this.clientes.get(user)); // se não encontrar cliente com o nome de usuário, retorna null
+    public void login(String user, String senha, boolean admin) {
+        if (admin) // loga no cliente como administrador
+            this.clienteAtual = this.clientes.get(user);
+
+        else if (this.clientes.get(user).loginPassword(senha)) // loga no cliente como usuário comum
+            this.clienteAtual = this.clientes.get(user);
+
+        else // login ou senha incorretos
+            System.out.println("Login ou senha incorretos");
     }
 
     /**
@@ -81,65 +82,80 @@ public class PlataformaStreaming {
      * Adiciona um cliente na plataforma de streaming.
      * 
      * @param cliente novo cliente a ser adicionado.
-     * @return O cliente adicionado.
      */
     public void adicionarCliente(Cliente cliente) {
         this.clientes.put(cliente.getLogin(), cliente);
     }
 
     /**
-     * Adiciona uma série a lista de séries ja assistidas pelo cliente atual e
-     * incrementa a audiência da série.
+     * Adiciona uma mídia a lista de mídias ja assistidas pelo cliente atual e
+     * incrementa a audiência da mídia.
      * 
-     * @param série     a ter a audiência incrementada.
-     * @param login     login do cliente que assistiu a série.
-     * @param senha     senha do cliente que assistiu a série.
-     * @param completou se o cliente assistiu a série por completo.
+     * @param mídia     a ter a audiência incrementada.
+     * @param completou se o cliente assistiu a mídia por completo.
      */
-    public void registrarAudiência(boolean completou, Série série) {
-        if (série == null) {
+    public void registrarAudiência(boolean completou, Mídia mídia) {
+        if (mídia == null) {
             System.out.println("Série não encontrada");
             return;
         }
         try {
             if (completou)
-                this.clienteAtual.adicionarNaLista(série);
+                this.clienteAtual.adicionarNaLista(mídia);
             else
-                this.clienteAtual.registrarAudiência(série);
+                this.clienteAtual.registrarAudiência(mídia);
         } catch (NullPointerException e) {
-            System.out.println("Login ou senha incorretos");
+            System.out.println(" Nenhum cliente logado, não é possível registrar audiência.");
         }
     }
 
     /**
-     * Retorna uma lista com todas as séries de um cliente participantes de um
+     * Retorna uma lista com todas as mídias de um cliente participantes de um
      * determinado gênero.
      * 
-     * @param gênero gênero das séries a serem filtradas
-     * @return Lista com as séries do gênero passado como parâmetro
+     * @param gênero gênero das mídias a serem filtradas
+     * @return Lista com as mídias do gênero passado como parâmetro
      */
-    public List<Série> filtarPorGênero(String gênero) {
-        if (this.clienteAtual == null) {
-            System.out.println("Nenhum cliente logado");
-            return new Stack<Série>();
-        }
-        return this.clienteAtual.filtrarPorGênero(gênero);
+    public List<Mídia> filtarPorGênero(String gênero) {
+        if (this.clienteAtual != null) // Se o cliente estiver logado, filtra as mídias dele
+            return this.clienteAtual.filtrarPorGênero(gênero);
+
+        // Se não, filtra todas as mídias da plataforma
+        List<Mídia> listaFiltrada = new Stack<Mídia>();
+        for (Mídia série : this.séries.values())
+            if (série.getGênero().equals(gênero))
+                listaFiltrada.add(série);
+        for (Mídia filme : this.filmes.values())
+            if (filme.getGênero().equals(gênero))
+                listaFiltrada.add(filme);
+
+        System.out.println(" Nenhum cliente logado, filtrando todas as mídias da plataforma.");
+        return listaFiltrada;
 
     }
 
     /**
-     * Retorna uma lista com todas as séries de um cliente que possuem um
+     * Retorna uma lista com todas as mídias de um cliente que possuem um
      * determinado idioma.
      * 
-     * @param idioma idioma das séries a serem filtradas
-     * @return Lista com as séries do idioma passado como parâmetro
+     * @param idioma idioma das mídias a serem filtradas
+     * @return Lista com as mídias do idioma passado como parâmetro
      */
-    public List<Série> filtarPorIdioma(String idioma) {
-        if (this.clienteAtual == null) {
-            System.out.println("Nenhum cliente logado");
-            return new Stack<Série>();
-        }
-        return this.clienteAtual.filtrarPorIdioma(idioma);
+    public List<Mídia> filtarPorIdioma(String idioma) {
+        if (this.clienteAtual != null) // Se o cliente estiver logado, filtra as mídias dele
+            return this.clienteAtual.filtrarPorIdioma(idioma);
+
+        // Se não, filtra todas as mídias da plataforma
+        List<Mídia> listaFiltrada = new Stack<Mídia>();
+        for (Mídia série : this.séries.values())
+            if (série.getIdioma().equals(idioma))
+                listaFiltrada.add(série);
+        for (Mídia filme : this.filmes.values())
+            if (filme.getIdioma().equals(idioma))
+                listaFiltrada.add(filme);
+
+        System.out.println(" Nenhum cliente logado, filtrando todas as mídias da plataforma.");
+        return listaFiltrada;
     }
 
     /**
@@ -152,69 +168,51 @@ public class PlataformaStreaming {
      *         parâmetro
      */
     public List<Série> filtarPorQntEpisódios(int quantidadeEpisódios) {
-        if (this.clienteAtual == null) {
-            System.out.println("Nenhum cliente logado");
-            return new Stack<Série>();
-        }
-        return this.clienteAtual.filtrarPorQntEpisódios(quantidadeEpisódios);
+        if (this.clienteAtual == null) // Se o cliente estiver logado, filtra as séries dele
+            return this.clienteAtual.filtrarPorQntEpisódios(quantidadeEpisódios);
+
+        // Se não, filtra todas as séries da plataforma
+        List<Série> listaFiltrada = new Stack<Série>();
+        for (Série série : this.séries.values())
+            if (série.getQntEp() == quantidadeEpisódios)
+                listaFiltrada.add(série);
+
+        System.out.println(" Nenhum cliente logado, filtrando todas as séries da plataforma.");
+        return listaFiltrada;
     }
 
     /**
-     * Busca uma série na plataforma de streaming pelo nome.
+     * Retorna uma lista com todos os filmes de um cliente que possuem uma
+     * determinada duração.
      * 
-     * @param nomeSérie nome da série a ser buscada.
-     * @return Série com o nome passado como parâmetro, NULL caso não exista.
+     * @param duração duração dos filmes a serem filtrados
+     * @return Lista com os filmes com a duração passada como parâmetro
      */
-    public Série buscarSérie(int idSérie) {
-        return this.séries.get(idSérie);
+    public List<Filme> filtarPorDuração(int duração) {
+        if (this.clienteAtual == null) // Se o cliente estiver logado, filtra os filmes dele
+            return this.clienteAtual.filtrarPorDuração(duração);
+
+        // Se não, filtra todos os filmes da plataforma
+        List<Filme> listaFiltrada = new Stack<Filme>();
+        for (Filme filme : this.filmes.values())
+            if (filme.getDuração() == duração)
+                listaFiltrada.add(filme);
+
+        System.out.println(" Nenhum cliente logado, filtrando todos os filmes da plataforma.");
+        return listaFiltrada;
     }
 
     /**
-     * Método principal da aplicação.
+     * Busca uma mídia na plataforma de streaming pelo nome.
      * 
-     * @param args argumentos da linha de comando
+     * @param idMídia id da mídia a ser buscada.
+     * @return Mídia com o nome passado como parâmetro, NULL caso não exista.
      */
-    public static void main(String[] args) {
-        PlataformaStreaming app = new PlataformaStreaming("Netflix");
-        app: while (true)
-            switch (Utilitários.menu()) {
-                case 1:
-                    app.lerArquivos();
-                    break;
-                case 2:
-                    app.salvarArquivos();
-                    break;
-                case 3:
-                    app.filtarPorGênero(System.console().readLine(" Gênero: ")).forEach(System.out::println);
-                    break;
-                case 4:
-                    app.filtarPorIdioma(System.console().readLine(" Idioma: ")).forEach(System.out::println);
-                    break;
-                case 5:
-                    app.filtarPorQntEpisódios(Utilitários.lerInt(" Quantidade de episódios: "))
-                            .forEach(System.out::println);
-                    break;
-                case 6:
-                    System.out.println(app);
-                    break;
-                case 7:
-                    app.login(System.console().readLine(" Login: "));
-                    break;
-                case 8:
-                    app.logOff();
-                    break;
-                case 9:
-                    System.out.println(app.buscarSérie(
-                            Utilitários.lerInt(" ID da série: ") //
-                    ));
-                    break;
-                case 10:
-                    break app;
-                default:
-                    System.out.println(" Opção inválida, tente novamente.");
-            }
-        if (System.console().readLine(" Deseja salvar os arquivos? (s/n)").contains("s"))
-            app.salvarArquivos();
+    public Mídia buscarMídia(int idMídia) {
+        Mídia mídia = this.séries.get(idMídia);
+        if (mídia == null)
+            mídia = this.filmes.get(idMídia);
+        return mídia;
     }
 
     /**
@@ -229,128 +227,114 @@ public class PlataformaStreaming {
                 + this.clientes.size() + " clientes cadastrados.";
     }
 
-    /**************************************************************************************
-     * 
-     * 
-     * 
-     * ÁREA DE LEITURA E ESCRITA DE ARQUIVOS
-     * 
-     * 
-     * 
-     **************************************************************************************/
-
     /**
-     * Lê os arquivos data/Audiência.csv, data/Séries.csv e data/Espectadores.csv e
-     * os carrega na plataforma de streaming.
+     * Método principal da aplicação.
      * 
-     * Espectadores são armazenados da forma: {Nome;Login;Senha}
-     * 
-     * Séries são armazenadas da forma: {IdSerie;Nome;DataDeLançamento}
-     * 
-     * Audiência é armazenada da forma: {Login;F/A;IdSerie}, sendo “F” para lista de
-     * séries a assistir futuramente e “A” para séries já assistidas.
+     * @param args argumentos da linha de comando
      */
-    private void lerArquivos() {
-        try {
-            /**************** Espectadores ****************/
-            Scanner leitor = new Scanner(new File("data/Espectadores.csv")).useDelimiter(";|\\n");
-
-            while (leitor.hasNextLine())
-                this.adicionarCliente(new Cliente(
-                        leitor.next(), // Nome
-                        leitor.next(), // Login
-                        leitor.next() // Senha
-                ));
-            leitor.close();
-
-            /**************** Séries ****************/
-            leitor = new Scanner(new File("data/Séries.csv")).useDelimiter(";|\\n");
-
-            while (leitor.hasNextLine())
-                this.adicionarSérie(new Série(
-                        Integer.parseInt(leitor.next()), // IdSerie
-                        "Ação", // Gênero
-                        leitor.next(), // Nome
-                        "English", // Idioma
-                        LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), // DataDeLançamento
-                        10 // Quantidade de episódios
-                ));
-            leitor.close();
-
-            /**************** Filmes ****************/
-            leitor = new Scanner(new File("data/Filmes.csv")).useDelimiter(";|\\n");
-
-            while (leitor.hasNext())
-                this.adicionarFilme(new Filme(
-                        Integer.parseInt(leitor.next()), // IdSerie
-                        "Ação", // Gênero
-                        leitor.next(), // Nome
-                        "English", // Idioma
-                        LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), // DataDeLançamento
-                        Integer.parseInt(leitor.next()) // duração
-                ));
-            leitor.close();
-
-            /**************** Audiência ****************/
-            leitor = new Scanner(new File("data/Audiência.csv")).useDelimiter(";|\\n");
-
-            while (leitor.hasNextLine()) {
-                this.clienteAtual = this.login(leitor.next());
-                this.registrarAudiência(
-                        leitor.next().charAt(0) == 'A', // Se a série já foi assistida
-                        this.buscarSérie(
-                                Integer.parseInt(leitor.next()) // Busca a série pelo ID
-                        ) //
-                );
+    public static void main(String[] args) {
+        PlataformaStreaming app = new PlataformaStreaming("Netflix");
+        app: while (true)
+            switch (Utilitários.menu()) {
+                case 1: // Ler arquivos
+                    app = IOPlataforma.lerArquivos(app);
+                    break;
+                case 2: // Salvar arquivos
+                    IOPlataforma.salvarArquivos(
+                            app.clientes.values(),
+                            app.séries.values(),
+                            app.filmes.values() //
+                    );
+                    break;
+                case 3: // Filtrar mídias por gênero
+                    app.filtarPorGênero(System.console().readLine(" Gênero: "))
+                            .forEach(System.out::println);
+                    break;
+                case 4: // Filtrar mídias por idioma
+                    app.filtarPorIdioma(System.console().readLine(" Idioma: "))
+                            .forEach(System.out::println);
+                    break;
+                case 5: // Filtrar séries por quantidade de episódios
+                    app.filtarPorQntEpisódios(Utilitários.lerInt(" Quantidade de episódios: "))
+                            .forEach(System.out::println);
+                    break;
+                case 6: // Filtrar filmes por duração
+                    app.filtarPorDuração(Utilitários.lerInt(" Duração: "))
+                            .forEach(System.out::println);
+                    break;
+                case 7: // Login
+                    app.login(
+                            System.console().readLine(" Login: "),
+                            System.console().readLine(" Senha: "),
+                            false // Não é administrador
+                    );
+                    break;
+                case 8: // Logoff
+                    app.logOff();
+                    break;
+                case 9: // Menu de adição
+                    switch (Utilitários.menuAdd()) {
+                        case 1: // Adicionar série
+                            app.adicionarSérie(new Série(
+                                    Utilitários.lerInt(" ID: "), // ID
+                                    Mídia.GENÊROS[(int) Math.round(Math.random() * Mídia.GENÊROS.length)], // Gênero
+                                    System.console().readLine(" Nome: "), // Nome
+                                    "Português", // Idioma
+                                    LocalDate.parse(
+                                            System.console().readLine(" Data de lançamento (dd/MM/yyyy): "),
+                                            DateTimeFormatter.ofPattern("dd/MM/yyyy") // Data de lançamento
+                                    ),
+                                    10 // Quantidade de episódios
+                            ));
+                            break;
+                        case 2: // Adicionar filme
+                            app.adicionarFilme(new Filme(
+                                    Utilitários.lerInt(" ID: "), // ID
+                                    Mídia.GENÊROS[(int) Math.round(Math.random() * Mídia.GENÊROS.length)], // Gênero
+                                    System.console().readLine(" Nome: "), // Nome
+                                    "Português", // Idioma
+                                    LocalDate.parse(
+                                            System.console().readLine(" Data de lançamento (dd/MM/yyyy): "),
+                                            DateTimeFormatter.ofPattern("dd/MM/yyyy") // Data de lançamento
+                                    ),
+                                    Utilitários.lerInt(" Duração (min): ") // Duração
+                            ));
+                            break;
+                        case 3: // Adicionar cliente
+                            app.adicionarCliente(new Cliente(
+                                    System.console().readLine(" Nome: "), // Nome
+                                    System.console().readLine(" Login: "), // Login
+                                    System.console().readLine(" Senha: ") // Senha
+                            ));
+                            break;
+                        case 4: // Adicionar audiência
+                            app.registrarAudiência(
+                                    System.console().readLine(" A série já foi assistida? (s/n) ").contains("s"),
+                                    app.buscarMídia(
+                                            Utilitários.lerInt(" ID da série: ") //
+                                    ));
+                            break;
+                        default: // Opção inválida
+                            System.out.println(" Opção inválida, tente novamente.");
+                        case 5: // Voltar
+                    }
+                    break;
+                case 10: // Buscar série
+                    System.out.println(app.buscarMídia(
+                            Utilitários.lerInt(" ID da série: ") //
+                    ));
+                    break;
+                case 11: 
+                    break app;
+                default:
+                    System.out.println(" Opção inválida, tente novamente.");
             }
-            this.logOff();
-            leitor.close();
-        } catch (FileNotFoundException e) {
-            System.out.println(" Arquivo data/Audiência.csv não encontrado.");
-        }
-
-    }
-
-    /**
-     * Escreve os arquivos data/Audiência.csv, data/Séries.csv e
-     * data/Espectadores.csv e os carrega na plataforma de streaming.
-     * 
-     * Espectadores são armazenados da forma: {Nome;Login;Senha}
-     * 
-     * Séries são armazenadas da forma: {IdSerie;Nome;DataDeLançamento}
-     * 
-     * Audiência é armazenada da forma: {Login;F/A;IdSerie}, sendo “F” para lista de
-     * séries a assistir futuramente e “A” para séries já assistidas.
-     */
-    private void salvarArquivos() {
-        try {
-            /**************** Espectadores ****************/
-            FileWriter espectadores = new FileWriter("data/Espectadores.csv");
-            for (Cliente cliente : this.clientes.values())
-                espectadores.write(cliente + "\n");
-            espectadores.close();
-
-            /**************** Séries ****************/
-            espectadores = new FileWriter("data/Séries.csv");
-            for (Série série : this.séries.values())
-                espectadores.write(série.toFile() + "\n");
-            espectadores.close();
-
-            /**************** Filmes ****************/
-            espectadores = new FileWriter("data/Filmes.csv");
-            for (Filme filme : this.filmes.values())
-                espectadores.write(filme.toFile() + "\n");
-            espectadores.close();
-
-            /**************** Audiência ****************/
-            espectadores = new FileWriter("data/Audiência.csv");
-            for (Cliente cliente : this.clientes.values())
-                for (String paraVerEJáVista : cliente.audiências())
-                    espectadores.write(paraVerEJáVista + "\n");
-            espectadores.close();
-        } catch (IOException e) {
-            System.out.println(" ERRO: Arquivo não encontrado." + e.getMessage());
-        }
+        if (System.console().readLine(" Deseja salvar os arquivos? (s/n)").contains("s"))
+            IOPlataforma.salvarArquivos(
+                    app.clientes.values(),
+                    app.séries.values(),
+                    app.filmes.values() //
+            );
     }
 
 }
