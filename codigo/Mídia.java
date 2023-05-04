@@ -20,7 +20,11 @@ abstract public class Mídia {
     /** Id da mídia */
     protected final int ID;
     /** Total de audiência da mídia */
-    protected int audiência;
+    protected int audiência,
+            /** Rating da mídia */
+            ratingMédio,
+            /** Quantidade de avaliações da mídia */
+            qntAvaliações;
 
     /** Data de lançamento da mídia */
     protected LocalDate dataLançamento; // @formatter:on
@@ -41,6 +45,17 @@ abstract public class Mídia {
         this.idioma = idioma;
         this.dataLançamento = dataLançamento;
         this.audiência = 0;
+        this.ratingMédio = 0;
+        this.qntAvaliações = 0;
+    }
+
+    /**
+     * Registra uma avaliação da mídia
+     * 
+     * @param avaliação avaliação da mídia
+     */
+    public void registrarAvaliação(int avaliação) {
+        this.ratingMédio = (this.ratingMédio * this.qntAvaliações + avaliação) / ++this.qntAvaliações;
     }
 
     /**
@@ -101,7 +116,7 @@ abstract public class Mídia {
     @Override
     public String toString() {
         return " ID: " + this.ID + " | Nome: " + this.nome + " | Gênero: " + this.gênero + " | Data de Lançamento: "
-                + this.dataLançamento + " | Audiência: " + this.audiência;
+                + this.dataLançamento + " | Audiência: " + this.audiência + " | Rating: " + this.ratingMédio;
     }
 
 }

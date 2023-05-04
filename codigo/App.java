@@ -1,7 +1,16 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Executa a aplicação.
+ */
 public class App {
+
+    /**
+     * Método principal da aplicação.
+     * 
+     * @param args argumentos da linha de comando
+     */
     public static void main(String[] args) {
         PlataformaStreaming app = new PlataformaStreaming("Netflix");
         app: while (true)
@@ -78,11 +87,22 @@ public class App {
                             ));
                             break;
                         case 4: // Adicionar audiência
-                            app.registrarAudiência(
-                                    System.console().readLine(" A série já foi assistida? (s/n) ").contains("s"),
-                                    app.buscarMídia(
-                                            Utilitários.lerInt(" ID da série: ") //
-                                    ));
+                            if (System.console().readLine(" A série já foi assistida? (s/n) ").contains("s"))
+                                app.registrarAudiência(
+                                        true,
+                                        app.buscarMídia(
+                                                Utilitários.lerInt(" ID da série: ") //
+                                        ),
+                                        Utilitários.lerInt(" Dê uma nota de 1 a 5 à mídia, digite 0 para ignorar") //
+                                );
+                            else
+                                app.registrarAudiência(
+                                        false,
+                                        app.buscarMídia(
+                                                Utilitários.lerInt(" ID da série: ") //
+                                        ),
+                                        0 //
+                                );
                             break;
                         default: // Opção inválida
                             System.out.println(" Opção inválida, tente novamente.");
@@ -94,7 +114,7 @@ public class App {
                             Utilitários.lerInt(" ID da série: ") //
                     ));
                     break;
-                case 11: 
+                case 11:
                     break app;
                 default:
                     System.out.println(" Opção inválida, tente novamente.");

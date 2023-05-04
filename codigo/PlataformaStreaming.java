@@ -33,15 +33,14 @@ public class PlataformaStreaming {
         this.logOff();
     }
 
-    
     public HashMap<Integer, Série> getSéries() {
         return séries;
     }
-    
+
     public HashMap<Integer, Filme> getFilmes() {
         return filmes;
     }
-    
+
     public HashMap<String, Cliente> getClientes() {
         return clientes;
     }
@@ -105,15 +104,17 @@ public class PlataformaStreaming {
      * @param mídia     a ter a audiência incrementada.
      * @param completou se o cliente assistiu a mídia por completo.
      */
-    public void registrarAudiência(boolean completou, Mídia mídia) {
+    public void registrarAudiência(boolean completou, Mídia mídia, int nota) {
         if (mídia == null) {
             System.out.println("Série não encontrada");
             return;
         }
         try {
-            if (completou)
+            if (completou) {
                 this.clienteAtual.adicionarNaLista(mídia);
-            else
+                if (nota != 0)
+                    mídia.registrarAvaliação(nota);
+            } else
                 this.clienteAtual.registrarAudiência(mídia);
         } catch (NullPointerException e) {
             System.out.println(" Nenhum cliente logado, não é possível registrar audiência.");
@@ -236,11 +237,5 @@ public class PlataformaStreaming {
     public String toString() {
         return " Há " + this.séries.size() + " séries cadastradas na plataforma " + this.nome + " e "
                 + this.clientes.size() + " clientes cadastrados.";
-    }}
-
-    /**
-     * Método principal da aplicação.
-     * 
-     * @param args argumentos da linha de comando
-     */
-    
+    }
+}
