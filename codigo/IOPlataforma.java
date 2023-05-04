@@ -55,7 +55,7 @@ public class IOPlataforma {
                         Mídia.GENÊROS[(int) Math.floor(Math.random() * Mídia.GENÊROS.length)], // Gênero
                         leitor.next(), // Nome
                         "Português", // Idioma
-                        LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), // DataDeLançamento
+                        LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), // DataDeLançamento
                         10 // Quantidade de episódios
                 ));
             }
@@ -70,7 +70,7 @@ public class IOPlataforma {
                         Mídia.GENÊROS[(int) Math.floor(Math.random() * Mídia.GENÊROS.length)], // Gênero
                         leitor.next(), // Nome
                         "Português", // Idioma
-                        LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), // DataDeLançamento
+                        LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), // DataDeLançamento
                         Integer.parseInt(leitor.next()) // duração
                 ));
             leitor.close();
