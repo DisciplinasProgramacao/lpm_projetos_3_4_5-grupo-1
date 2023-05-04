@@ -38,7 +38,7 @@ final public class Utilitários {
                 " 6 - Filtrar filmes por duração\n" +
                 " 7 - Login\n" +
                 " 8 - Logout\n" +
-                " 9 - Adicionar Mídia/Filme/Audiência\n" +
+                " 9 - Adicionar Mídia/Filme/Audiência/Para Ver\n" +
                 " 10 - Buscar Mídia\n" +
                 " 11 - Sair\n\n" +
                 " Digite uma opção: " //
