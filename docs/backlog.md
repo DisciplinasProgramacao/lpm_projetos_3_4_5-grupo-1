@@ -1,5 +1,4 @@
-| Usuário      | Requisito | Motivação     | STATUS
-| :----:        |    :----:   |          :----: |          :----: |
+| Usuário      | Requisito | Motivação     | STATUS | PROJETO/SPRINT | AUTOR DO REQUISITO
 | Como um Cliente deslogado, eu quero   | filtrar por gêneros, idioma, duração e episódios         | para facilitar a busca por conteúdo      | completo
 | Como um Cliente logado, eu quero   | filtrar por gêneros, idioma, duração e episódios         | para facilitar a busca por conteúdo dentro da minha própria lista     | completo
 | Como um Cliente, eu quero   | registrar audiência         | para facilitar as recomendações de conteúdos relevantes      | completo
