@@ -1,5 +1,3 @@
-lib
-*.jar
-*.dia
 *.zip
-*sh
+*.sh
+*.autosave
