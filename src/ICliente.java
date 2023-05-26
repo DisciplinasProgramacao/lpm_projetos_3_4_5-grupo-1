@@ -89,4 +89,11 @@ public interface ICliente {
      */
     public String getLogin();
 
+    /**
+     * Retorna a avaliacao de uma midia
+     * 
+     * @param idMidia id da midia a ser buscada
+     */
+    public int getAvaliacao(int idMidia);
+
 }

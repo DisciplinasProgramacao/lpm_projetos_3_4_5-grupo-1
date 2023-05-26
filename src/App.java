@@ -95,8 +95,8 @@ public class App {
 
             // Adicionar audiencia
             case 4 -> app.registrarAudiencia(
-                    System.console().readLine(" A serie ja foi assistida? (s/n) ").contains("s"),
-                    app.buscarMidia(App.lerInt(" ID da serie: ")),
+                    System.console().readLine(" A midia ja foi assistida? (s/n) ").contains("s"),
+                    app.buscarMidia(App.lerInt(" ID da midia: ")),
                     true // Perguntar nota
                 );
 
@@ -156,9 +156,9 @@ public class App {
                 // Menu de adicao
                 case 9 -> App.menuAdd();
 
-                // Buscar serie
+                // Buscar midia
                 case 10 -> System.out.println(app.buscarMidia(
-                        App.lerInt(" ID da serie: ") //
+                        System.console().readLine(" Nome da midia: ") //
                     ));
 
                 case 11 -> lock = false;

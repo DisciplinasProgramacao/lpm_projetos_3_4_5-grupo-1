@@ -29,6 +29,25 @@ public class Serie implements IMidia {
     private LocalDate dataLançamento;
 
     /**
+     * Construtor da classe Serie para leitura de arquivos
+     * 
+     * @param id             id da serie
+     * @param nome           nome da serie
+     * @param dataLançamento data de lançamento da serie
+     */
+    public Serie(int id, String nome, LocalDate dataLançamento) {
+        this.ID = id;
+        this.genero = IMidia.GENEROS[(int) Math.floor(Math.random() * IMidia.GENEROS.length)];
+        this.nome = nome;
+        this.idioma = IMidia.IDIOMAS[(int) Math.floor(Math.random() * IMidia.IDIOMAS.length)];
+        this.dataLançamento = dataLançamento;
+        this.audiencia = 0;
+        this.ratingMedio = 0;
+        this.qntAvaliacoes = 0;
+        this.qntEp = 10;
+    }
+
+    /**
      * Construtor da classe Serie
      * 
      * @param id             id da serie

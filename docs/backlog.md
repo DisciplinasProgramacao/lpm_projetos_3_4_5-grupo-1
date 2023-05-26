@@ -10,7 +10,7 @@ Como um Cliente, eu quero|buscar por título|para facilitar a busca por conteúd
 Como um Cliente, eu quero|adicionar mídias à lista|para separar conteúdo de interesse|completo|Sprint 4|Gabriel e Igor
 Como um Cliente, eu quero|registrar uma conta|para acessar a plataforma e seus recursos|completo|Sprint 3|João
 Como um Cliente, eu quero|executar login/logoff|para entrar e sair da conta|completo|Sprint 3|João
-Como um Cliente, eu quero|retirar mídias da lista|para facilitar a busca por conteúdo|completo|Sprint 4|Igor e Lucas
-Como um ADM, eu quero|adicionar mídia|para complementar o conteúdo na plataforma|completo|Sprint 2|Gabriel e Lucas
-Como um ADM, eu quero|salvar informações em arquivo de texto|para manter registro das informações|completo|Sprint 4|Igor e Lucas
-Como um ADM, eu quero|ler informações em arquivo de texto|para carregar registro das informações|completo|Sprint 4|Igor e Lucas
+Como um Cliente, eu quero|retirar mídias da lista|para facilitar a busca por conteúdo|completo|Sprint 4|Igor e João
+Como um ADM, eu quero|adicionar mídia|para complementar o conteúdo na plataforma|completo|Sprint 2|Gabriel e João
+Como um ADM, eu quero|salvar informações em arquivo de texto|para manter registro das informações|completo|Sprint 4|Lucas e Igor
+Como um ADM, eu quero|ler informações em arquivo de texto|para carregar registro das informações|completo|Sprint 4|Lucas e Igor

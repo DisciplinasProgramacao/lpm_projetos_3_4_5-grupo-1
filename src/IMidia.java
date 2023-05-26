@@ -7,6 +7,9 @@ public interface IMidia {
     String[] GENEROS = { "Acao", "Aventura", "Comédia", "Drama", "Ficcao Científica", "Romance",
             "Suspense", "Terror" };
 
+    /** Array de strings que armazena os idiomas da mídia */
+    String[] IDIOMAS = { "Português", "Inglês", "Espanhol", "Francês", "Alemão", "Italiano" };
+
     /**
      * Registra uma avaliacao da mídia
      * 

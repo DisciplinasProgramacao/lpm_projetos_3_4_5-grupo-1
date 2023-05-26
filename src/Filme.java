@@ -29,6 +29,26 @@ public class Filme implements IMidia {
     private LocalDate dataLançamento;
 
     /**
+     * Construtor da classe Filme para leitura de arquivos
+     * 
+     * @param id             do filme
+     * @param nome           do filme
+     * @param dataLançamento data de lançamento do filme
+     * @param duracao        do filme
+     */
+    public Filme(int id, String nome, LocalDate dataLançamento, int duracao) {
+        this.ID = id;
+        this.genero = IMidia.GENEROS[(int) Math.floor(Math.random() * IMidia.GENEROS.length)];
+        this.nome = nome;
+        this.idioma = IMidia.IDIOMAS[(int) Math.floor(Math.random() * IMidia.IDIOMAS.length)];
+        this.dataLançamento = dataLançamento;
+        this.audiencia = 0;
+        this.ratingMedio = 0;
+        this.qntAvaliacoes = 0;
+        this.duracao = duracao;
+    }
+
+    /**
      * Construtor da classe Filme
      * 
      * @param id             do filme

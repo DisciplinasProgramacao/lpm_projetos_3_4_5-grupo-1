@@ -52,11 +52,8 @@ final public class LeitorEscritor {
             while (leitor.hasNext()) {
                 app.adicionarMidia(new Serie(
                         Integer.parseInt(leitor.next()), // IdSerie
-                        IMidia.GENEROS[(int) Math.floor(Math.random() * IMidia.GENEROS.length)], // Genero
                         leitor.next(), // Nome
-                        "Portugues", // Idioma
-                        LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), // DataDeLançamento
-                        10 // Quantidade de episódios
+                        LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy")) // DataDeLançamento
                 ));
             }
             leitor.close();
@@ -67,9 +64,7 @@ final public class LeitorEscritor {
             while (leitor.hasNext())
                 app.adicionarMidia(new Filme(
                         Integer.parseInt(leitor.next()), // IdSerie
-                        IMidia.GENEROS[(int) Math.floor(Math.random() * IMidia.GENEROS.length)], // Genero
                         leitor.next(), // Nome
-                        "Portugues", // Idioma
                         LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), // DataDeLançamento
                         Integer.parseInt(leitor.next()) // duração
                 ));

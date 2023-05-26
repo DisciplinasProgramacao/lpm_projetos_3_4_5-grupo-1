@@ -11,8 +11,11 @@ public class PlataformaStreaming {
     /** Nome da plataforma de streaming */
     private String nome;
 
-    /** Series da plataforma */
+    /** Midias da plataforma */
     private HashMap<Integer, IMidia> midias;
+
+    /** Mapa que permite a busca de midias pelo nome */
+    private HashMap<String, Integer> nomes;
 
     /** Clientes da plataforma */
     private HashMap<String, ICliente> clientes;
@@ -28,6 +31,7 @@ public class PlataformaStreaming {
     public PlataformaStreaming(String nome) {
         this.nome = nome;
         this.midias = new HashMap<Integer, IMidia>();
+        this.nomes = new HashMap<String, Integer>();
         this.clientes = new HashMap<String, ICliente>();
         this.logOff();
     }
@@ -71,6 +75,7 @@ public class PlataformaStreaming {
      */
     public void adicionarMidia(IMidia midias) {
         this.midias.put(midias.getID(), midias);
+        this.nomes.put(midias.getNome(), midias.getID());
     }
 
     /**
@@ -103,10 +108,13 @@ public class PlataformaStreaming {
         }
 
         // Registra a audiencia da midia. Se o cliente se tornar especialista, atualiza a referencia ao cliente @formatter:on
-        clienteAtual = Optional.of(this.clienteAtual.get().registrarAudiencia(midia,
-                avaliacao ? App.lerInt(" De uma nota de 1 a 5 a midia, digite 0 para ignorar") : 0,
-                LocalDate.now() //
-        ));
+        clienteAtual = Optional.of(
+                this.clienteAtual.get().registrarAudiencia(
+                        midia,
+                        avaliacao ? App.lerInt(" De uma nota de 1 a 5 a midia, digite 0 para ignorar") : 0,
+                        LocalDate.now() //
+                ) //
+        );
     }
 
     /**
@@ -124,7 +132,6 @@ public class PlataformaStreaming {
         return this.midias.values().stream()
                 .filter(midia -> midia.getGenero().equals(genero))
                 .map(Object::toString);
-
     }
 
     /**
@@ -181,13 +188,26 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Busca uma midia na plataforma de streaming pelo nome.
+     * Busca uma midia na plataforma de streaming pelo id.
      * 
      * @param idMidia id da midia a ser buscada.
-     * @return IMidia com o nome passado como parâmetro, NULL caso nao exista.
+     * @return IMidia com o id passado como parâmetro, NULL caso nao exista.
      */
     public IMidia buscarMidia(int idMidia) {
         return this.midias.get(idMidia);
+    }
+
+    /**
+     * Busca uma midia na plataforma de streaming pelo nome.
+     * 
+     * @param nomeMidia nome da midia a ser buscada.
+     * @return IMidia com o nome passado como parâmetro, NULL caso nao exista.
+     */ // @formatter:off
+    public String buscarMidia(String nomeMidia) {
+        return this.midias.get(this.nomes.get(nomeMidia)) +
+                (this.clienteAtual.isPresent()
+                        ? " Sua avaliação: " + String.valueOf(this.clienteAtual.get().getAvaliacao(this.nomes.get(nomeMidia)))
+                        : "");
     }
 
     /**
@@ -196,7 +216,7 @@ public class PlataformaStreaming {
      * 
      * @return String que representa a plataforma de streaming.
      */
-    @Override // @formatter:off
+    @Override
     public String toString() {
         return " Ha " + this.midias.size() + " midias cadastradas na plataforma " + this.nome + " e " + this.clientes.size() + " clientes cadastrados.";
     }

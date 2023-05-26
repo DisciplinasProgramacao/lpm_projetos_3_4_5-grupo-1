@@ -215,4 +215,14 @@ public class Cliente implements ICliente {
         return this.login;
     }
 
+    /**
+     * Retorna a avaliacao de uma midia
+     * 
+     * @param idMidia id da midia a ser buscada
+     */
+    @Override
+    public int getAvaliacao(int idMidia) {
+        return this.avaliacoes.get(idMidia);
+    }
+
 }
