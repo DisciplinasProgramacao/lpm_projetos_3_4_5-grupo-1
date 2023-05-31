@@ -116,4 +116,7 @@ public class Filme implements IMidia {
     public String getIdioma() { return this.idioma; }
     public int getDuracao() { return this.duracao; }
     public int getQntEp() { return -1; }
+    public int getQntAvaliacoes() { return this.qntAvaliacoes; }
+    public int getRatingMedio() { return this.ratingMedio; }
+    public int getAudiencia() { return this.audiencia; }
 }

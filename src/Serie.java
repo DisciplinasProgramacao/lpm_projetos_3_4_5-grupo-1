@@ -114,4 +114,6 @@ public class Serie implements IMidia {
     public String getIdioma() { return this.idioma; }
     public int getQntEp() { return this.qntEp; }
     public int getDuracao() { return -1; }
+    public int getAudiencia() { return this.audiencia; }
+    public int getRatingMedio() { return this.ratingMedio; }
 }

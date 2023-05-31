@@ -225,4 +225,30 @@ public class Cliente implements ICliente {
         return this.avaliacoes.get(idMidia);
     }
 
+    /**
+     * Retorna lista para ver
+     * 
+     * @return quantidade de midias para ver
+     */
+    public List<IMidia> getListaParaVer() {
+        return this.listaParaVer;
+    }
+
+    /**
+     * Retorna lista ja vistas
+     * 
+     * @return quantidade de midias ja vistas
+     */
+    public List<IMidia> getListaJaVistas() {
+        return this.listaJaVistas;
+    }
+
+    /**
+     * Retorna avaliacoes
+     * 
+     * @return avaliacoes
+     */
+    public HashMap<Integer, Integer> getAvaliacoes() {
+        return this.avaliacoes;
+    }
 }

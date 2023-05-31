@@ -229,4 +229,10 @@ public class PlataformaStreaming {
      * @return clientes*/
     public HashMap<String, ICliente> getClientes() { return this.clientes; }
 
+    /**
+     * Retorna cliente atual
+     * @return clienteAtual
+     */
+    public Optional<ICliente> getClienteAtual() { return this.clienteAtual; }
+
 }
