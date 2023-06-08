@@ -19,4 +19,6 @@ Será apresentada a lista de opções:
 <br>
 -- Digite 9 e enter para adicionar filme ou mídia na lista geral, assistir mídia ou adicionar mídia na lista de desejos para assistir
 <br>
+-- O programa lê a entrada padrão, ou seja, apenas o console do sistema operacional. Excluem-se consoles de IDEs.
+<br>
 -- 
