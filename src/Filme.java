@@ -38,9 +38,9 @@ public class Filme implements IMidia {
      */
     public Filme(int id, String nome, LocalDate dataLançamento, int duracao) {
         this.ID = id;
-        this.genero = IMidia.GENEROS[(int) Math.floor(Math.random() * IMidia.GENEROS.length)];
+        this.genero = Genero.sortearGenero().getNome();
         this.nome = nome;
-        this.idioma = IMidia.IDIOMAS[(int) Math.floor(Math.random() * IMidia.IDIOMAS.length)];
+        this.idioma = Idioma.sortearIdioma().getNome();
         this.dataLançamento = dataLançamento;
         this.audiencia = 0;
         this.ratingMedio = 0;

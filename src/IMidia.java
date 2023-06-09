@@ -3,12 +3,12 @@
  */
 public interface IMidia {
 
-    /** Array de strings que armazena os generos da mídia */
-    String[] GENEROS = { "Acao", "Aventura", "Comédia", "Drama", "Ficcao Científica", "Romance",
-            "Suspense", "Terror" };
+    // /** Array de strings que armazena os generos da mídia */
+    // String[] GENEROS = { "Acao", "Aventura", "Comédia", "Drama", "Ficcao Científica", "Romance",
+    //         "Suspense", "Terror" };
 
-    /** Array de strings que armazena os idiomas da mídia */
-    String[] IDIOMAS = { "Português", "Inglês", "Espanhol", "Francês", "Alemão", "Italiano" };
+    // /** Array de strings que armazena os idiomas da mídia */
+    // String[] IDIOMAS = { "Português", "Inglês", "Espanhol", "Francês", "Alemão", "Italiano" };
 
     /**
      * Registra uma avaliacao da mídia

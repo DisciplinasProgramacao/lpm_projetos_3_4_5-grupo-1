@@ -63,7 +63,7 @@ public class App {
             // Adicionar serie
             case 1 -> app.adicionarMidia(new Serie(
                     App.lerInt(" ID: "), // ID
-                    IMidia.GENEROS[(int) Math.round(Math.random() * IMidia.GENEROS.length)], // Genero
+                    Genero.sortearGenero().getNome(), // Genero
                     System.console().readLine(" Nome: "), // Nome
                     "Portugues", // Idioma
                     LocalDate.parse(
@@ -76,7 +76,7 @@ public class App {
             // Adicionar filme
             case 2 -> app.adicionarMidia(new Filme(
                     App.lerInt(" ID: "), // ID
-                    IMidia.GENEROS[(int) Math.round(Math.random() * IMidia.GENEROS.length)], // Genero
+                    Genero.sortearGenero().getNome(), // Genero
                     System.console().readLine(" Nome: "), // Nome
                     "Portugues", // Idioma
                     LocalDate.parse(
