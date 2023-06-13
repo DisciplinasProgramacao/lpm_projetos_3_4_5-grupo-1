@@ -27,8 +27,8 @@ public enum Idioma {
         throw new IllegalArgumentException("Idioma: " + nome + "não encontrado");
     }
 
-    public static Genero sortearIdioma() {
-        Genero genero = Genero.values()[new Random().nextInt(Genero.values().length)];
-        return genero;
+    public static Idioma sortearIdioma() {
+        Idioma idioma = Idioma.values()[new Random().nextInt(Idioma.values().length)];
+        return idioma;
     }
 }

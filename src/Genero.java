@@ -30,8 +30,8 @@ public enum Genero {
         throw new IllegalArgumentException("Genero: " + nome + "não encontrado");
     }
 
-    public static Idioma sortearGenero() {
-        Idioma idioma = Idioma.values()[new Random().nextInt(Idioma.values().length)];
-        return idioma;
+    public static Genero sortearGenero() {
+        Genero genero = Genero.values()[new Random().nextInt(Genero.values().length)];
+        return genero;
     }
 }
