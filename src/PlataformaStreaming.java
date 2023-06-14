@@ -18,10 +18,10 @@ public class PlataformaStreaming {
     private HashMap<String, Integer> nomes;
 
     /** Clientes da plataforma */
-    private HashMap<String, ICliente> clientes;
+    private HashMap<String, Cliente> clientes;
 
     /** Cliente logado atualmente na plataforma */
-    private Optional<ICliente> clienteAtual;
+    private Optional<Cliente> clienteAtual;
 
     /**
      * Construtor da classe PlataformaStreaming.
@@ -32,7 +32,7 @@ public class PlataformaStreaming {
         this.nome = nome;
         this.midias = new HashMap<Integer, IMidia>();
         this.nomes = new HashMap<String, Integer>();
-        this.clientes = new HashMap<String, ICliente>();
+        this.clientes = new HashMap<String, Cliente>();
         this.logOff();
     }
 
@@ -83,7 +83,7 @@ public class PlataformaStreaming {
      * 
      * @param cliente novo cliente a ser adicionado.
      */
-    public void adicionarCliente(ICliente cliente) {
+    public void adicionarCliente(Cliente cliente) {
         this.clientes.put(cliente.getLogin(), cliente);
     }
 
@@ -93,6 +93,7 @@ public class PlataformaStreaming {
      * 
      * @param completado se o cliente assistiu a midia por completo.
      * @param midia      a ter a audiencia incrementada.
+     * @param avaliacao  define se o cliente avaliou a midia ou nao.
      */ // @formatter:off
     public void registrarAudiencia(boolean completado, IMidia midia, boolean avaliacao) {
         if (midia == null) { // Se a midia nao existir, nao e possivel registrar audiencia
@@ -108,12 +109,10 @@ public class PlataformaStreaming {
         }
 
         // Registra a audiencia da midia. Se o cliente se tornar especialista, atualiza a referencia ao cliente @formatter:on
-        clienteAtual = Optional.of(
-                this.clienteAtual.get().registrarAudiencia(
-                        midia,
-                        avaliacao ? App.lerInt(" De uma nota de 1 a 5 a midia, digite 0 para ignorar") : 0,
-                        LocalDate.now() //
-                ) //
+        this.clienteAtual.get().registrarAudiencia(
+                midia,
+                avaliacao ? App.lerInt(" De uma nota de 1 a 5 a midia, digite 0 para ignorar") : 0,
+                LocalDate.now() //
         );
     }
 
@@ -227,12 +226,12 @@ public class PlataformaStreaming {
 
     /** Retorna os clientes
      * @return clientes*/
-    public HashMap<String, ICliente> getClientes() { return this.clientes; }
+    public HashMap<String, Cliente> getClientes() { return this.clientes; }
 
     /**
      * Retorna cliente atual
      * @return clienteAtual
      */
-    public Optional<ICliente> getClienteAtual() { return this.clienteAtual; }
+    public Optional<Cliente> getClienteAtual() { return this.clienteAtual; }
 
 }

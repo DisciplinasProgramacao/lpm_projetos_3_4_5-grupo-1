@@ -110,13 +110,31 @@ public class Filme implements IMidia {
     }
 
     // @formatter:off
+    /** Retorna o nome da mídia
+     * @return nome da mídia*/
     public String getNome() { return this.nome; }
+    /** Retorna o id da mídia
+     * @return id da mídia*/
     public int getID() { return this.ID; }
+    /** Retorna o genero da mídia
+     * @return genero da mídia*/
     public String getGenero() { return this.genero; }
+    /** Retorna o idioma da mídia
+     * @return idioma da mídia*/
     public String getIdioma() { return this.idioma; }
+    /** Retorna a duracao do filme
+     * @return duracao do filme*/
     public int getDuracao() { return this.duracao; }
+    /** Retorna a quantidade de temporadas da mídia, retorna -1 pois a mídia não é uma série
+     * @return quantidade de temporadas da mídia*/
     public int getQntEp() { return -1; }
+    /** Retorna a quantidade de avaliacoes da mídia 
+     * @return quantidade de avaliacoes da mídia*/
     public int getQntAvaliacoes() { return this.qntAvaliacoes; }
+    /** Retorna o rating medio da mídia 
+     * @return rating medio da mídia*/
     public int getRatingMedio() { return this.ratingMedio; }
+    /** Retorna a data de lançamento da mídia 
+     * @return data de lançamento da mídia*/
     public int getAudiencia() { return this.audiencia; }
 }

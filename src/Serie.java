@@ -108,12 +108,28 @@ public class Serie implements IMidia {
     }
 
     // @formatter:off
+    /** Retorna o nome da mídia
+     * @return nome da mídia*/
     public String getNome() { return this.nome; }
+    /** Retorna o id da mídia
+     * @return id da mídia*/
     public int getID() { return this.ID; }
+    /** Retorna o genero da mídia
+     * @return genero da mídia*/
     public String getGenero() { return this.genero; }
+    /** Retorna o idioma da mídia
+     * @return idioma da mídia*/
     public String getIdioma() { return this.idioma; }
+    /** Retorna a quantidade de episodios da serie
+     * @return quantidade de episodios da serie*/
     public int getQntEp() { return this.qntEp; }
+    /** Retorna a duração da mídia, retorna -1 pois a mídia não é um filme
+     * @return duração da mídia*/
     public int getDuracao() { return -1; }
+    /** Retorna o total de audiencias da mídia
+     * @return total de audiencias da mídia*/
     public int getAudiencia() { return this.audiencia; }
+    /** Retorna o rating medio da mídia 
+     * @return rating medio da mídia*/
     public int getRatingMedio() { return this.ratingMedio; }
 }

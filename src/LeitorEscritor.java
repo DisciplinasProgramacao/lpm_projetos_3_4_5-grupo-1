@@ -8,7 +8,8 @@ import java.util.Collection;
 import java.util.Scanner;
 
 /**
- * Classe usado para ler e escrever os arquivos csv da plataforma de streaming, não instanciável.
+ * Classe usado para ler e escrever os arquivos csv da plataforma de streaming,
+ * não instanciável.
  */
 final public class LeitorEscritor {
 
@@ -103,16 +104,15 @@ final public class LeitorEscritor {
      * Audiencia e armazenada da forma: {Login;F/A;IdSerie}, sendo “F” para lista de
      * series a assistir futuramente e “A” para series já assistidas.
      * 
-     * @param clientes Lista de clientes
-     * @param series   Lista de series
-     * @param filmes   Lista de filmes
+     * @param clientes coleção de clientes da plataforma de streaming
+     * @param midias   coleção de midias da plataforma de streaming
      */
-    public static void escreverArquivos(Collection<ICliente> clientes, Collection<IMidia> midias) {
+    public static void escreverArquivos(Collection<Cliente> clientes, Collection<IMidia> midias) {
         try {
             /**************** Espectadores ****************/
             FileWriter espectadores = new FileWriter("data/Espectadores.csv");
 
-            for (ICliente cliente : clientes)
+            for (Cliente cliente : clientes)
                 espectadores.write(cliente + "\n");
             espectadores.close();
 
@@ -129,7 +129,7 @@ final public class LeitorEscritor {
 
             /**************** Audiencia ****************/
             FileWriter audiencia = new FileWriter("data/Audiencia.csv");
-            for (ICliente cliente : clientes)
+            for (Cliente cliente : clientes)
                 for (String paraVerEJáVista : cliente.audiencias())
                     audiencia.write(paraVerEJáVista + "\n");
             audiencia.close();
