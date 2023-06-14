@@ -1,11 +1,13 @@
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Stream;
 
-public class Cliente implements ICliente {
+/**
+ * Classe que representa um cliente da plataforma de streaming
+ */
+public class Cliente {
     /** Nome de usuario do cliente */
     private String nomeDeUsuario,
 
@@ -22,7 +24,10 @@ public class Cliente implements ICliente {
             listaJaVistas;
 
     /** Avaliacoes do cliente */
-    private HashMap<Integer, Integer> avaliacoes;
+    //private HashMap<Integer, IAvaliacao> avaliacoes;
+
+    /** Avaliacoes do cliente */
+    private IAvaliacoes avaliacoes;
 
     /** Quantidade de avaliacoes feitas pelo cliente no ultimo mes */
     private int avaliacoesAtuais;
@@ -40,19 +45,16 @@ public class Cliente implements ICliente {
         this.senha = senha;
         this.listaParaVer = new Stack<IMidia>();
         this.listaJaVistas = new Stack<IMidia>();
-        this.avaliacoes = new HashMap<Integer, Integer>();
+        this.avaliacoes = new AvaliacaoComum();
         this.avaliacoesAtuais = 0;
     }
 
     /**
      * Caso o cliente passe a ter 5 avaliacoes no ultimo mes, ele se torna um
      * especialista
-     * 
-     * @return Cliente especialista
      */
-    public ClienteEspecialista tornarEspecialista() {
-        return new ClienteEspecialista(this.nomeDeUsuario, this.login, this.senha, this.listaParaVer,
-                this.listaJaVistas, this.avaliacoes);
+    public void tornarEspecialista() {
+        this.avaliacoes = this.avaliacoes.goNext();
     }
 
     /**
@@ -60,7 +62,6 @@ public class Cliente implements ICliente {
      * 
      * @param midia a ser adicionada
      */
-    @Override
     public void adicionarNaLista(IMidia midia) {
         this.listaParaVer.add(midia);
     }
@@ -73,17 +74,16 @@ public class Cliente implements ICliente {
      * @param avaliacao avaliacao da midia
      * @param data      data de visualizacao
      */
-    @Override
-    public ICliente registrarAudiencia(IMidia midia, int avaliacao, LocalDate data) {
+    public void registrarAudiencia(IMidia midia, int avaliacao, LocalDate data) {
         this.listaJaVistas.add(midia);
         midia.registrarAudiencia();
         if (avaliacao != 0) {
-            this.avaliacoes.put(midia.getID(), avaliacao);
+            // this.avaliacoes.put(midia.getID(), avaliacao); deprecated
+            this.avaliacoes.avaliar(midia.getID(),avaliacao);
             midia.registrarAvaliacao(avaliacao);
         }
         if (ChronoUnit.DAYS.between(data, LocalDate.now()) <= 30 && ++this.avaliacoesAtuais == 5)
-            return this.tornarEspecialista();
-        return this;
+            this.tornarEspecialista();
     }
 
     /**
@@ -91,7 +91,6 @@ public class Cliente implements ICliente {
      * 
      * @param nomeMidia nome da midia a ser removida
      */
-    @Override
     public void retirarDaLista(String nomeMidia) {
         this.listaParaVer.removeIf(midia -> midia.getNome().equals(nomeMidia));
     }
@@ -102,12 +101,11 @@ public class Cliente implements ICliente {
      * @param genero a ser filtrado
      * @return lista de series filtrada
      */
-    @Override
     public Stream<String> filtrarPorGenero(String genero) {
         return this.listaJaVistas.stream()
                 .filter(midia -> midia.getGenero().equals(genero))
                 .map(midia -> {
-                    Integer rating = this.avaliacoes.get(midia.getID());
+                    String rating = this.avaliacoes.get(midia.getID());
                     return midia + " | Seu rating: " + (rating == null ? "Voce nao deu rating" : rating);
                 });
     }
@@ -118,12 +116,11 @@ public class Cliente implements ICliente {
      * @param idioma a ser filtrado
      * @return lista de series filtrada
      */
-    @Override
     public Stream<String> filtrarPorIdioma(String idioma) {
         return this.listaJaVistas.stream()
                 .filter(midia -> midia.getIdioma().equals(idioma))
                 .map(i -> {
-                    Integer rating = this.avaliacoes.get(i.getID());
+                    String rating = this.avaliacoes.get(i.getID());
                     return i + " | Seu rating: " + (rating == null ? "Voce nao deu rating" : rating);
                 });
     }
@@ -134,12 +131,11 @@ public class Cliente implements ICliente {
      * @param qntsEpisodios quantidade de episodios a ser filtrada
      * @return lista de series filtrada
      */
-    @Override
     public Stream<String> filtrarPorQntEpisodios(int qntsEpisodios) {
         return this.listaJaVistas.stream()
                 .filter(midia -> midia.getQntEp() == qntsEpisodios)
                 .map(i -> {
-                    Integer rating = this.avaliacoes.get(i.getID());
+                    String rating = this.avaliacoes.get(i.getID());
                     return i + " | Seu rating: " + (rating == null ? "Voce nao deu rating" : rating);
                 });
     }
@@ -150,12 +146,11 @@ public class Cliente implements ICliente {
      * @param duracao a ser filtrada
      * @return lista de filmes filtrada
      */
-    @Override
     public Stream<String> filtrarPorDuracao(int duracao) {
         return this.listaJaVistas.stream()
                 .filter(midia -> midia.getDuracao() == duracao)
                 .map(i -> {
-                    Integer rating = this.avaliacoes.get(i.getID());
+                    String rating = this.avaliacoes.get(i.getID());
                     return i + " | Seu rating: " + (rating == null ? "Voce nao deu rating" : rating);
                 });
     }
@@ -166,7 +161,6 @@ public class Cliente implements ICliente {
      * @param senha a ser verificada
      * @return TRUE se a senha esta correta, FALSE caso contrario
      */
-    @Override
     public boolean loginPassword(String senha) {
         return this.senha.equals(senha);
     }
@@ -176,7 +170,6 @@ public class Cliente implements ICliente {
      * 
      * @return String com os dados do cliente
      */
-    @Override
     public String toString() {
         return this.nomeDeUsuario + ";" + this.login + ";" + this.senha;
     }
@@ -190,7 +183,6 @@ public class Cliente implements ICliente {
      * 
      * @return array de Strings com todas as audiencias do cliente
      */
-    @Override
     public String[] audiencias() {
         int paraVerSize = this.listaParaVer.size(),
                 sizeTotal = paraVerSize + this.listaJaVistas.size();
@@ -210,7 +202,6 @@ public class Cliente implements ICliente {
      * 
      * @return nome de usuario do cliente
      */
-    @Override
     public String getLogin() {
         return this.login;
     }
@@ -219,9 +210,9 @@ public class Cliente implements ICliente {
      * Retorna a avaliacao de uma midia
      * 
      * @param idMidia id da midia a ser buscada
+     * @return avaliacao da midia em String
      */
-    @Override
-    public int getAvaliacao(int idMidia) {
+    public String getAvaliacao(int idMidia) {
         return this.avaliacoes.get(idMidia);
     }
 
@@ -248,7 +239,7 @@ public class Cliente implements ICliente {
      * 
      * @return avaliacoes
      */
-    public HashMap<Integer, Integer> getAvaliacoes() {
+    public IAvaliacoes getAvaliacoes() {
         return this.avaliacoes;
     }
 }
