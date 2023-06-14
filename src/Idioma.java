@@ -1,34 +1,59 @@
 import java.util.Random;
 
+/**
+ * Enumeração de idiomas disponíveis para as mídias
+ */
 public enum Idioma {
-    PORTUGUÊS("Português"), 
-    INGLÊS("Inglês"), 
-    ESPANHOL("Espanhol"), 
-    FRANCÊS("Francês"), 
-    ALEMÃO("Alemão"), 
+    /** Português */
+    PORTUGUÊS("Português"),
+    /** Inglês */
+    INGLÊS("Inglês"),
+    /** Espanhol */ 
+    ESPANHOL("Espanhol"),
+    /** Francês */ 
+    FRANCÊS("Francês"),
+    /** Alemão */ 
+    ALEMÃO("Alemão"),
+    /** Italiano */ 
     ITALIANO("Italiano");
 
+    /** Nome do idioma */
     private String nome;
 
+    /**
+     * Construtor
+     * 
+     * @param nome do idioma
+     */
     Idioma(String nome) {
         this.nome = nome;
     }
 
+    /**
+     * Permite obter o nome do idioma
+     * 
+     * @return nome do idioma
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Pesquisa um idioma pelo nome
+     * 
+     * @param nome do idioma
+     * @return idioma
+     */
     public static Idioma pesquisaIdioma(String nome) {
-        for (Idioma idioma : Idioma.values()) {
-            if (idioma.nome.equalsIgnoreCase(nome)) {
-                return idioma;
-            }
-        }
-        throw new IllegalArgumentException("Idioma: " + nome + "não encontrado");
+        return Idioma.valueOf(nome.toUpperCase());
     }
 
+    /**
+     * Usado ao criar midias, sorteia um idioma
+     * 
+     * @return idioma aleatório
+     */
     public static Idioma sortearIdioma() {
-        Idioma idioma = Idioma.values()[new Random().nextInt(Idioma.values().length)];
-        return idioma;
+        return Idioma.values()[new Random().nextInt(Idioma.values().length)];
     }
 }
