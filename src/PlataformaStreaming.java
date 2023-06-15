@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -12,7 +13,7 @@ public class PlataformaStreaming {
     private String nome;
 
     /** Midias da plataforma */
-    private HashMap<Integer, IMidia> midias;
+    private HashMap<Integer, Midia> midias;
 
     /** Mapa que permite a busca de midias pelo nome */
     private HashMap<String, Integer> nomes;
@@ -30,7 +31,7 @@ public class PlataformaStreaming {
      */
     public PlataformaStreaming(String nome) {
         this.nome = nome;
-        this.midias = new HashMap<Integer, IMidia>();
+        this.midias = new HashMap<Integer, Midia>();
         this.nomes = new HashMap<String, Integer>();
         this.clientes = new HashMap<String, Cliente>();
         this.logOff();
@@ -73,7 +74,7 @@ public class PlataformaStreaming {
      * 
      * @param midias nova midias a ser adicionada.
      */
-    public void adicionarMidia(IMidia midias) {
+    public void adicionarMidia(Midia midias) {
         this.midias.put(midias.getID(), midias);
         this.nomes.put(midias.getNome(), midias.getID());
     }
@@ -95,7 +96,7 @@ public class PlataformaStreaming {
      * @param midia      a ter a audiencia incrementada.
      * @param avaliacao  define se o cliente avaliou a midia ou nao.
      */ // @formatter:off
-    public void registrarAudiencia(boolean completado, IMidia midia, boolean avaliacao) {
+    public void registrarAudiencia(boolean completado, Midia midia, boolean avaliacao) {
         if (midia == null) { // Se a midia nao existir, nao e possivel registrar audiencia
             System.out.println("IMidia nao encontrada"); return;
         }
@@ -187,12 +188,108 @@ public class PlataformaStreaming {
     }
 
     /**
+     * Retorna o cliente que assistiu mais midias na plataforma.
+     * 
+     * @return cliente viciado
+     */
+    public Cliente clienteViciado() {
+        return this.clientes.values().stream()
+                .max(Comparator.comparingInt(Cliente::getQntMidiasAssistidas))
+                .orElse(null);
+    }
+
+    /**
+     * Retorna o cliente que avaliou mais midias na plataforma.
+     * 
+     * @return cliente viciado
+     */
+    public Cliente maiorAvaliador() {
+        return this.clientes.values().stream()
+                .max(Comparator.comparingInt(
+                        cliente -> cliente.getAvaliacoes().size() //
+                ))
+                .orElse(null);
+    }
+
+    /**
+     * Retorna a porcentagem de clientes que avaliaram pelo menos 15 midias.
+     * 
+     * @return porcentagem de clientes.
+     */
+    public double porcentagemClientesCom15Avaliacoes() {
+        return this.clientes.values().stream()
+                .filter(cliente -> cliente.getAvaliacoes().size() >= 15)
+                .count() / this.clientes.size();
+    }
+
+    /**
+     * Retorna as 10 mídias de melhor avaliação, com pelo menos 2 avaliações, em ordem decrescente.
+     * 
+     * @return Stream com 10 melhores midias.
+     */
+    public Stream<String> melhoresAvaliacoes() {
+        return this.midias.values().stream()
+                .filter(midia -> midia.getQntAvaliacoes() >= 2)
+                .sorted(Comparator.comparingInt(
+                        midia -> midia.getRatingMedio()
+                ))
+                .limit(10)
+                .map(Object::toString);
+    }
+
+    /**
+     * Retorna as 10 mídias de um determinado genero com melhor avaliação, com pelo menos 100 avaliações, em ordem decrescente.
+     * 
+     * @param genero genero das midias a serem filtradas
+     * @return Stream com 10 melhores midias.
+     */
+    public Stream<String> melhoresAvaliacoes(String genero) {
+        return this.midias.values().stream()
+                .filter(midia -> midia.getQntAvaliacoes() >= 100 && midia.getGenero().equals(genero))
+                .sorted(Comparator.comparingInt(
+                        midia -> midia.getRatingMedio()
+                ))
+                .limit(10)
+                .map(Object::toString);
+    }
+
+    /**
+     * Retorna as 10 mídias com mais visualizações, em ordem decrescente.
+     * 
+     * @return Stream com 10 midias mais visualizadas.
+     */
+    public Stream<String> maisVisualizadas() {
+        return this.midias.values().stream()
+                .sorted(Comparator.comparingInt(
+                        midia -> midia.getAudiencia()
+                ))
+                .limit(10)
+                .map(Object::toString);
+    }
+
+    /**
+     * Retorna as 10 mídias de um determinado genero com mais visualizações, em ordem decrescente.
+     * 
+     * @param genero genero das midias a serem filtradas
+     * @return Stream com 10 midias mais visualizadas.
+     */
+    public Stream<String> maisVisualizadas(String genero) {
+        return this.midias.values().stream()
+                .filter(midia -> midia.getGenero().equals(genero))
+                .sorted(Comparator.comparingInt(
+                        midia -> midia.getAudiencia()
+                ))
+                .limit(10)
+                .map(Object::toString);
+    }
+
+    /**
      * Busca uma midia na plataforma de streaming pelo id.
      * 
      * @param idMidia id da midia a ser buscada.
      * @return IMidia com o id passado como parâmetro, NULL caso nao exista.
      */
-    public IMidia buscarMidia(int idMidia) {
+    public Midia buscarMidia(int idMidia) {
         return this.midias.get(idMidia);
     }
 
@@ -222,7 +319,7 @@ public class PlataformaStreaming {
 
     /** Retorna as midias
      * @return midias*/
-    public HashMap<Integer, IMidia> getMidia() { return this.midias; }
+    public HashMap<Integer, Midia> getMidia() { return this.midias; }
 
     /** Retorna os clientes
      * @return clientes*/

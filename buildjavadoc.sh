@@ -1,0 +1,1 @@
+javadoc -private -d doc src/*.java
