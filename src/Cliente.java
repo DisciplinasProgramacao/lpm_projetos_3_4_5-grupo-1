@@ -18,7 +18,7 @@ public class Cliente {
             senha;
 
     /** Lista de series para ver */
-    private List<IMidia> listaParaVer,
+    private List<Midia> listaParaVer,
 
             /** Lista de series vistas */
             listaJaVistas;
@@ -43,8 +43,8 @@ public class Cliente {
         this.nomeDeUsuario = nomeDeUsuario;
         this.login = login;
         this.senha = senha;
-        this.listaParaVer = new Stack<IMidia>();
-        this.listaJaVistas = new Stack<IMidia>();
+        this.listaParaVer = new Stack<Midia>();
+        this.listaJaVistas = new Stack<Midia>();
         this.avaliacoes = new AvaliacaoComum();
         this.avaliacoesAtuais = 0;
     }
@@ -62,7 +62,7 @@ public class Cliente {
      * 
      * @param midia a ser adicionada
      */
-    public void adicionarNaLista(IMidia midia) {
+    public void adicionarNaLista(Midia midia) {
         this.listaParaVer.add(midia);
     }
 
@@ -74,7 +74,7 @@ public class Cliente {
      * @param avaliacao avaliacao da midia
      * @param data      data de visualizacao
      */
-    public void registrarAudiencia(IMidia midia, int avaliacao, LocalDate data) {
+    public void registrarAudiencia(Midia midia, int avaliacao, LocalDate data) {
         this.listaJaVistas.add(midia);
         midia.registrarAudiencia();
         if (avaliacao != 0) {
@@ -170,6 +170,7 @@ public class Cliente {
      * 
      * @return String com os dados do cliente
      */
+    @Override
     public String toString() {
         return this.nomeDeUsuario + ";" + this.login + ";" + this.senha;
     }
@@ -221,7 +222,7 @@ public class Cliente {
      * 
      * @return quantidade de midias para ver
      */
-    public List<IMidia> getListaParaVer() {
+    public List<Midia> getListaParaVer() {
         return this.listaParaVer;
     }
 
@@ -230,7 +231,7 @@ public class Cliente {
      * 
      * @return quantidade de midias ja vistas
      */
-    public List<IMidia> getListaJaVistas() {
+    public List<Midia> getListaJaVistas() {
         return this.listaJaVistas;
     }
 
@@ -241,5 +242,14 @@ public class Cliente {
      */
     public IAvaliacoes getAvaliacoes() {
         return this.avaliacoes;
+    }
+
+    /**
+     * Retorna o total de midias assistidas pelo cliente
+     * 
+     * @return total de midias assistidas
+     */
+    public Integer getQntMidiasAssistidas() {
+        return this.listaJaVistas.size();
     }
 }

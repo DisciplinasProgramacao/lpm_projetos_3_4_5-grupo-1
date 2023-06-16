@@ -60,6 +60,11 @@ public class AvaliacaoEspecialista implements IAvaliacoes {
     }
 
     @Override
+    public int size() {
+        return avaliacoes.size();
+    }
+
+    @Override
     public IAvaliacoes goPrev() {
         return new AvaliacaoComum(this.avaliacoes.keySet().stream()
                 .collect(

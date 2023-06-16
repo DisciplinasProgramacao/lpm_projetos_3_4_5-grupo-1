@@ -20,6 +20,13 @@ public interface IAvaliacoes {
     public void avaliar(int idMidia, int avaliacao);
 
     /**
+     * Retorna o total de midias avaliadas
+     * 
+     * @return total de midias avaliadas
+     */
+    public int size();
+
+    /**
      * Retorna um novo contexto de avaliacao
      * 
      * @return novo objeto

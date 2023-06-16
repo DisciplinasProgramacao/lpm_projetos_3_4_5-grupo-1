@@ -35,6 +35,11 @@ public class AvaliacaoComum implements IAvaliacoes {
     }
 
     @Override
+    public int size() {
+        return avaliacoes.size();
+    }
+
+    @Override
     public IAvaliacoes goNext() {
         return new AvaliacaoEspecialista(this.avaliacoes);
     }

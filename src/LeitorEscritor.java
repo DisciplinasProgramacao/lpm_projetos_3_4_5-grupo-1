@@ -107,7 +107,7 @@ final public class LeitorEscritor {
      * @param clientes coleção de clientes da plataforma de streaming
      * @param midias   coleção de midias da plataforma de streaming
      */
-    public static void escreverArquivos(Collection<Cliente> clientes, Collection<IMidia> midias) {
+    public static void escreverArquivos(Collection<Cliente> clientes, Collection<Midia> midias) {
         try {
             /**************** Espectadores ****************/
             FileWriter espectadores = new FileWriter("data/Espectadores.csv");
@@ -119,7 +119,7 @@ final public class LeitorEscritor {
             /**************** Midia ****************/
             FileWriter series = new FileWriter("data/Series.csv");
             FileWriter filmes = new FileWriter("data/Filmes.csv");
-            for (IMidia midia : midias)
+            for (Midia midia : midias)
                 if (midia instanceof Filme)
                     filmes.write(midia.toFile() + "\n");
                 else
