@@ -17,7 +17,7 @@ public class App {
     /**
      * Metodo que le uma string do console.
      * 
-     * @param mensagem
+     * @param mensagem a ser exibida ao usuario.
      * @return string lida do console.
      */
     public static String lerStr(String mensagem) {
@@ -39,24 +39,81 @@ public class App {
     }
 
     /**
-     * Printa um menu de usuario no console.
+     * Printa um menu de usuario no console voltado a leiura de relatorios.
      * 
      * @return opcao lida do console.
      */
-    public static int menu() {
-        return lerInt("\n 1 - Ler Arquivos\n" +
-                " 2 - Salvar Arquivos\n" +
-                " 3 - Filtrar por Genero\n" +
-                " 4 - Filtrar por Idioma\n" +
-                " 5 - Filtrar por Quantidade de Episodios\n" +
-                " 6 - Filtrar filmes por duracao\n" +
-                " 7 - Login\n" +
-                " 8 - Logout\n" +
-                " 9 - Adicionar Midia//Audiencia/Para Ver\n" +
-                " 10 - Buscar Midia\n" +
-                " 11 - Sair\n\n" +
-                " Digite uma opcao: " //
+    public static int menuRelatoriosPrint() {
+        return lerInt("\n 1 - Mostrar cliente viciado\n" +
+                " 2 - Mostrar maior avaliador\n" +
+                " 3 - Mostrar a porcentagem dos clientes com pelo menos 15 avaliações\n" +
+                " 4 - Mostrar as 10 mídias de melhor avaliação, com pelo menos 100 avaliações, em ordem decrescente\n" +
+                " 5 - Mostrar as 10 mídias com mais visualizações, em ordem decrescente\n" +
+                " 0 - Voltar" +
+                "\n\n Digite uma opcao: " //
         );
+    }
+
+    /**
+     * Opções para o menu acima.
+     */
+    public static void menuRelatorios() {
+        switch (App.menuRelatoriosPrint()) {
+            case 1 -> System.out.println(" " + app.clienteViciado());
+
+            case 2 -> System.out.println(" " + app.maiorAvaliador());
+
+            case 3 -> System.out.println(" " + app.porcentagemClientesCom15Avaliacoes());
+
+            case 4 -> {
+                if (App.lerStr("Deseja filtrar por genero?").equals("s"))
+                    app.melhoresAvaliacoes(App.lerStr("Genero: ")).forEach(System.out::println);
+                else
+                    app.melhoresAvaliacoes().forEach(System.out::println);
+            }
+
+            case 5 -> {
+                if (App.lerStr("Deseja filtrar por genero?").equals("s"))
+                    app.maisVisualizadas(App.lerStr("Genero: ")).forEach(System.out::println);
+                else
+                    app.maisVisualizadas().forEach(System.out::println);
+            }
+        }
+    }
+
+    /**
+     * Printa um menu de usuario no console voltado a leiura de filtros.
+     * 
+     * @return opcao lida do console.
+     */
+    public static int menuFiltrosPrint() {
+        return lerInt("\n 1 - Filtrar por Genero\n" +
+                " 2 - Filtrar por Idioma\n" +
+                " 3 - Filtrar por Quantidade de Episodios\n" +
+                " 4 - Filtrar filmes por duracao\n" +
+                " 0 - Voltar" +
+                "\n\n Digite uma opcao: " //
+        );
+    }
+
+    /**
+     * Opções para o menu acima.
+     */
+    public static void menuFiltros() {
+        switch (App.menuFiltrosPrint()) {
+            // Filtrar midias por genero
+            case 1 -> app.filtrarPorGenero(App.lerStr(" Genero: ")).forEach(System.out::println);
+
+            // Filtrar midias por idioma
+            case 2 -> app.filtrarPorIdioma(App.lerStr(" Idioma: ")).forEach(System.out::println);
+
+            // Filtrar series por quantidade de episodios
+            case 3 -> app.filtrarPorQntEpisodios(App.lerInt(" Quantidade de episodios: "))
+                    .forEach(System.out::println);
+
+            // Filtrar filmes por duracao
+            case 4 -> app.filtrarPorDuracao(App.lerInt(" Duracao: ")).forEach(System.out::println);
+        }
     }
 
     /**
@@ -64,21 +121,21 @@ public class App {
      * 
      * @return opcao lida do console.
      */
-    public static int menuAddString() {
+    public static int menuAddPrint() {
         return lerInt("\n 1 - Adicionar Serie\n" +
                 " 2 - Adicionar Filme\n" +
-                " 3 - Adicionar \n" +
+                " 3 - Adicionar Cliente\n" +
                 " 4 - Adicionar Audiencia\n" +
-                " 5 - Voltar\n\n" +
-                " Digite uma opcao: " //
+                " 5 - Voltar" +
+                "\n\n Digite uma opcao: " //
         );
     }
 
     /**
-     * Opções do menu.
+     * Opções para o menu acima.
      */
     public static void menuAdd() {
-        switch (App.menuAddString()) {
+        switch (App.menuAddPrint()) {
             // Adicionar serie
             case 1 -> app.adicionarMidia(new Serie(
                     App.lerInt(" ID: "), // ID
@@ -129,14 +186,31 @@ public class App {
     }
 
     /**
-     * Metodo principal da aplicacao.
+     * Printa um menu de usuario no console.
      * 
-     * @param args argumentos da linha de comando
+     * @return opcao lida do console.
      */
-    public static void main(String[] args) {
+    public static int menuPrint() {
+        return lerInt("\n 1 - Ler Arquivos\n" +
+                " 2 - Salvar Arquivos\n" +
+                " 3 - Login\n" +
+                " 4 - Logout\n" +
+                " 5 - Buscar Midia\n" +
+                " 6 - Adicionar Midia/Audiencia/Cliente\n" +
+                " 7 - Acessar filtros\n" +
+                " 8 - Acessar relatorios\n" +
+                " 0 - Sair\n\n" +
+                " Digite uma opcao: " //
+        );
+    }
+
+    /**
+     * Opções para o menu acima.
+     */
+    public static void menu() {
         boolean lock = true;
         while (lock)
-            switch (App.menu()) {
+            switch (App.menuPrint()) {
                 // Ler arquivos
                 case 1 -> app = LeitorEscritor.lerArquivos(app);
 
@@ -146,41 +220,48 @@ public class App {
                         app.getMidia().values() //
                     );
 
-                // Filtrar midias por genero
-                case 3 -> app.filtrarPorGenero(App.lerStr(" Genero: ")).forEach(System.out::println);
-
-                // Filtrar midias por idioma
-                case 4 -> app.filtrarPorIdioma(App.lerStr(" Idioma: ")).forEach(System.out::println);
-
-                // Filtrar series por quantidade de episodios
-                case 5 -> app.filtrarPorQntEpisodios(App.lerInt(" Quantidade de episodios: "))
-                        .forEach(System.out::println);
-
-                // Filtrar filmes por duracao
-                case 6 -> app.filtrarPorDuracao(App.lerInt(" Duracao: ")).forEach(System.out::println);
-
                 // Login
-                case 7 -> app.login(
+                case 3 -> app.login(
                         App.lerStr(" Login: "),
                         App.lerStr(" Senha: "),
                         false // Não e administrador
                     );
 
                 // Logoff
-                case 8 -> app.logOff();
-
-                // Menu de adicao
-                case 9 -> App.menuAdd();
+                case 4 -> app.logOff();
 
                 // Buscar midia
-                case 10 -> System.out.println(app.buscarMidia(
-                        App.lerStr(" Nome da midia: ") //
-                    ));
+                case 5 -> System.out.println(app.buscarMidia(App.lerStr(" Nome da midia: ")));
 
-                case 11 -> lock = false;
+                // Menu de adicao
+                case 6 -> App.menuAdd();
+
+                // Filtrar midias por genero
+                case 7 -> App.menuFiltros();
+
+                // Relatorios
+                case 8 -> {
+                    if (app.getClienteAtual().isPresent())
+                        System.out.println(" Voce não pode estar logado como cliente e acessar os relatorios.");
+                    else
+                        App.menuRelatorios();
+                }
+
+                case 0 -> lock = false;
 
                 default -> System.out.println(" Opcao invalida, tente novamente.");
             }
+    }
+
+    /**
+     * Metodo principal da aplicacao.
+     * 
+     * @param args argumentos da linha de comando
+     */
+    public static void main(String[] args) {
+
+        // Menu
+        App.menu();
 
         if (App.lerStr(" Deseja salvar os arquivos? (s/n)").contains("s"))
             LeitorEscritor.escreverArquivos(
