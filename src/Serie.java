@@ -5,6 +5,8 @@ import java.time.LocalDate;
  */
 public class Serie extends Midia {
 
+    public static final String ARQUIVO = "data/Series.csv";
+
     /** Quantidade de episodios da serie */
     private int qntEp;
 
@@ -40,7 +42,7 @@ public class Serie extends Midia {
      */
     @Override
     public String toString() {
-        return super.toString() + "| Quantidade de episodios: " + this.qntEp;
+        return super.toString() + " | Quantidade de episodios: " + this.qntEp + " |";
     }
 
     /**

@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
  */
 public abstract class Midia {
 
+    /** Arquivo de avaliacao */
+    public static final String ARQUIVO = "data/Audiencia.csv";
+
     /** Nome da mídia */
     private String nome,
             /** Genero da mídia */
@@ -14,10 +17,9 @@ public abstract class Midia {
             idioma;
 
     /** Id da mídia */
-    private final int ID;
-
-    /** Total de audiencia da mídia */
-    private int audiencia,
+    private int id,
+            /** Total de audiencia da mídia */
+            audiencia,
             /** Rating da mídia */
             ratingMedio,
             /** Quantidade de avaliacoes da mídia */
@@ -34,7 +36,7 @@ public abstract class Midia {
      * @param dataLançamento data de lançamento da midia
      */
     public Midia(int id, String nome, LocalDate dataLançamento) {
-        this.ID = id;
+        this.id = id;
         this.genero = Genero.sortearGenero().getNome();
         this.nome = nome;
         this.idioma = Idioma.sortearIdioma().getNome();
@@ -54,7 +56,7 @@ public abstract class Midia {
      * @param dataLançamento data de lançamento da midia
      */
     public Midia(int id, String genero, String nome, String idioma, LocalDate dataLançamento) {
-        this.ID = id;
+        this.id = id;
         this.genero = genero;
         this.nome = nome;
         this.idioma = idioma;
@@ -86,7 +88,7 @@ public abstract class Midia {
      * @return String no formato: {IdSerie;Nome;DataDeLançamento}
      */
     public String toFile() {
-        return this.ID + ";" + this.nome + ";" + this.dataLançamento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return this.id + ";" + this.nome + ";" + this.dataLançamento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     /**
@@ -94,7 +96,7 @@ public abstract class Midia {
      */
     @Override
     public String toString() {
-        return " ID: " + this.ID + " | Nome: " + this.nome + " | Genero: " + this.genero + " | Data de Lançamento: "
+        return " id: " + this.id + " | Nome: " + this.nome + " | Genero: " + this.genero + " | Data de Lançamento: "
                 + this.dataLançamento + " | Audiencia: " + this.audiencia + "| Avaliacoes: " + this.qntAvaliacoes
                 + " | Rating: " + this.ratingMedio;
     }
@@ -105,7 +107,7 @@ public abstract class Midia {
     public String getNome() { return this.nome; }
     /** Retorna o id da mídia
      * @return id da mídia*/
-    public int getID() { return this.ID; }
+    public int getID() { return this.id; }
     /** Retorna o genero da mídia
      * @return genero da mídia*/
     public String getGenero() { return this.genero; }

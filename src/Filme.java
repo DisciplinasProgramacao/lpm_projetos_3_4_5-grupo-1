@@ -5,6 +5,8 @@ import java.time.LocalDate;
  */
 public class Filme extends Midia {
 
+    public static final String ARQUIVO = "data/Filmes.csv";
+
     /** Duracao do filme em minutos */
     private int duracao;
 

@@ -72,7 +72,8 @@ public abstract class Avaliacoes {
      * @return avaliacao da midia
      */
     public String get(int idMidia) {
-        return avaliacoes.get(idMidia).toString();
+        Comentario comentario = avaliacoes.get(idMidia);
+        return comentario == null ? "Voce ainda nao avaliou esta midia" : comentario.toString();
     }
 
     /**

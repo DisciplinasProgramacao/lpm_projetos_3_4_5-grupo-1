@@ -38,6 +38,13 @@ public enum Idioma {
         return nome;
     }
 
+    public static String getIdiomas() {
+        StringBuilder sb = new StringBuilder();
+        for (Idioma idioma : Idioma.values())
+            sb.append(" ").append(idioma.getNome()).append("\n");
+        return new String(sb);
+    }
+
     /**
      * Pesquisa um idioma pelo nome
      * 

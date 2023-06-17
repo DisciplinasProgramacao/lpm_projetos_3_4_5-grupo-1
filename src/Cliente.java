@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Stream;
@@ -8,18 +9,21 @@ import java.util.stream.Stream;
  * Classe que representa um cliente da plataforma de streaming
  */
 public class Cliente {
+    /** Quantidade de avaliacoes necessarias para se tornar um especialista */
+    private static final int AVALIACOES_PARA_ESPECIALISTA = 5;
+
+    /** Arquivo de clientes */
+    public static final String ARQUIVO = "data/Espectadores.csv";
+
     /** Nome de usuario do cliente */
     private String nomeDeUsuario,
-
             /** Login do cliente */
             login,
-
             /** Senha do cliente */
             senha;
 
     /** Lista de series para ver */
     private List<Midia> listaParaVer,
-
             /** Lista de series vistas */
             listaJaVistas;
 
@@ -72,10 +76,11 @@ public class Cliente {
      * @param midia a ser adicionada
      */
     public void registrarAudiencia(Midia midia) {
-        this.listaJaVistas.add(midia);
-
-        if (!this.listaJaVistas.contains(midia))
+        if (!this.listaJaVistas.contains(midia)) {
+            this.listaJaVistas.add(midia);
             midia.registrarAudiencia();
+        } else
+            System.out.println("Você já assistiu a essa série!: " + midia.getNome() + "cliente: " + this.nomeDeUsuario);
     }
 
     /**
@@ -91,7 +96,8 @@ public class Cliente {
         if (!this.listaJaVistas.contains(midia))
             midia.registrarAudiencia();
 
-        if (ChronoUnit.DAYS.between(data, LocalDate.now()) <= 30 && ++this.avaliacoesAtuais == 5)
+        if (ChronoUnit.DAYS.between(data, LocalDate.now()) <= 30
+                && ++this.avaliacoesAtuais == AVALIACOES_PARA_ESPECIALISTA)
             this.tornarEspecialista();
     }
 
@@ -260,5 +266,8 @@ public class Cliente {
      */
     public Integer getQntMidiasAssistidas() {
         return this.listaJaVistas.size();
+    }
+
+    public static void escrever(Collection<Object> obj) {
     }
 }
