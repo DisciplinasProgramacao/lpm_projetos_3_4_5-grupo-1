@@ -4,48 +4,32 @@ import java.util.HashMap;
  * Avaliação inicial que o cliente pode fazer, armaena apenas a nota de uma
  * midia
  */
-public class AvaliacaoComum implements IAvaliacoes {
-    /** Avaliacoes do cliente */
-    private HashMap<Integer, Integer> avaliacoes;
+public class AvaliacaoComum extends Avaliacoes {
 
     /**
      * Primeira avaliação
      */
     public AvaliacaoComum() {
-        this.avaliacoes = new HashMap<Integer, Integer>();
+        super();
     }
 
     /**
-     * Voltando de especialista
+     * Alterando o estado de avaliação
      * 
-     * @param avaliacoes notas antigas
+     * @param avaliacoes avaliacoes do cliente anterior
      */
-    public AvaliacaoComum(HashMap<Integer, Integer> avaliacoes) {
-        this.avaliacoes = avaliacoes;
-    }
-
-    @Override
-    public String get(int idMidia) {
-        return avaliacoes.get(idMidia).toString();
+    public AvaliacaoComum(HashMap<Integer, Comentario> avaliacoes) {
+        super(avaliacoes);
     }
 
     @Override
     public void avaliar(int idMidia, int avaliacao) {
-        avaliacoes.put(idMidia, avaliacao);
+        super.put(idMidia, new Comentario(avaliacao, new String()));
     }
 
     @Override
-    public int size() {
-        return avaliacoes.size();
+    public Avaliacoes goPrev() {
+        throw new UnsupportedOperationException("Não há avaliação anterior");
     }
 
-    @Override
-    public IAvaliacoes goNext() {
-        return new AvaliacaoEspecialista(this.avaliacoes);
-    }
-
-    @Override
-    public IAvaliacoes goPrev() {
-        throw new UnsupportedOperationException();
-    }
 }
