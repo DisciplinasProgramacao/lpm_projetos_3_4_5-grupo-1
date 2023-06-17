@@ -1,7 +1,7 @@
 import java.util.HashMap;
 
 /**
- * Interface que define o comportamento de avaliacao de um cliente, state
+ * Classe abstrata que define o comportamento de avaliacao de um cliente, state
  */
 public abstract class Avaliacoes {
     /**
@@ -98,7 +98,7 @@ public abstract class Avaliacoes {
      * 
      * @return total de midias avaliadas
      */
-    public int size() {
+    public int total() {
         return avaliacoes.size();
     }
 

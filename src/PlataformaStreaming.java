@@ -151,9 +151,9 @@ public class PlataformaStreaming {
             return this.clienteAtual.get().filtrarPorGenero(genero);
 
         // Se nao, filtra todas as midias da plataforma
-        return this.midias.values().stream()
-                .filter(midia -> midia.getGenero().equals(genero))
-                .map(Object::toString);
+        return this.midias.values().stream() // Stream<Midia>
+                .filter(midia -> midia.getGenero().equals(genero)) // Stream<Midia> filtrada por genero
+                .map(Object::toString); // Stream<String> com as midias filtradas para impressão
     }
 
     /**
@@ -168,9 +168,9 @@ public class PlataformaStreaming {
             return this.clienteAtual.get().filtrarPorIdioma(idioma);
 
         // Se nao, filtra todas as midias da plataforma
-        return this.midias.values().stream()
-                .filter(midia -> midia.getIdioma().equals(idioma))
-                .map(Object::toString);
+        return this.midias.values().stream() // Stream<Midia>
+                .filter(midia -> midia.getIdioma().equals(idioma)) // Stream<Midia> filtrada por idioma
+                .map(Object::toString); // Stream<String> com as midias filtradas para impressão
     }
 
     /**
@@ -187,9 +187,9 @@ public class PlataformaStreaming {
             return this.clienteAtual.get().filtrarPorQntEpisodios(quantidadeEpisodios);
 
         // Se nao, filtra todas as midias da plataforma
-        return this.midias.values().stream()
-                .filter(midia -> midia.getQntEp() == quantidadeEpisodios)
-                .map(Object::toString);
+        return this.midias.values().stream() // Stream<Midia>
+                .filter(midia -> midia.getQntEp() == quantidadeEpisodios) // Stream<Midia> filtrada por qntEp
+                .map(Object::toString); // Stream<String> com as series filtradas para impressão
     }
 
     /**
@@ -204,9 +204,9 @@ public class PlataformaStreaming {
             return this.clienteAtual.get().filtrarPorDuracao(duracao);
 
         // Se nao, filtra todos os filmes da plataforma
-        return this.midias.values().stream()
-                .filter(midia -> midia.getDuracao() == duracao)
-                .map(Object::toString);
+        return this.midias.values().stream() // Stream<Midia>
+                .filter(midia -> midia.getDuracao() == duracao) // Stream<Midia> filtrada por duracao
+                .map(Object::toString); // Stream<String> com os filmes filtrados para impressão
     }
 
     /**
@@ -215,9 +215,9 @@ public class PlataformaStreaming {
      * @return cliente viciado
      */
     public Cliente clienteViciado() {
-        return this.clientes.values().stream()
-                .max(Comparator.comparingInt(Cliente::getQntMidiasAssistidas))
-                .orElse(null);
+        return this.clientes.values().stream() // Stream<Cliente>
+                .max(Comparator.comparingInt(Cliente::getQntMidiasAssistidas)) // Cliente com mais midias assistidas
+                .orElse(null); // Se nao houver cliente, retorna null
     }
 
     /**
@@ -226,11 +226,9 @@ public class PlataformaStreaming {
      * @return cliente viciado
      */
     public Cliente maiorAvaliador() {
-        return this.clientes.values().stream()
-                .max(Comparator.comparingInt(
-                        cliente -> cliente.getAvaliacoes().size() //
-                ))
-                .orElse(null);
+        return this.clientes.values().stream() // Stream<Cliente>
+                .max(Comparator.comparingInt(cliente -> cliente.getAvaliacoes().total())) // Cliente com mais avaliacoes
+                .orElse(null); // Se nao houver cliente, retorna null
     }
 
     /**
@@ -238,10 +236,11 @@ public class PlataformaStreaming {
      * 
      * @return porcentagem de clientes.
      */
-    public double porcentagemClientesCom15Avaliacoes() {
-        return this.clientes.values().stream()
-                .filter(cliente -> cliente.getAvaliacoes().size() >= 15)
-                .count() / this.clientes.size();
+    public double clientesCom15Avaliacoes() {
+        return this.clientes.values().stream() // Stream<Cliente>
+                .filter(cliente -> cliente.getAvaliacoes().total() >= 15) // Stream<Cliente> filtrada
+                .count() // Total de clientes
+                / this.clientes.size() * 100.0; // Porcentagem
     }
 
     /**
@@ -251,12 +250,11 @@ public class PlataformaStreaming {
      * @return Stream com 10 melhores midias.
      */
     public Stream<String> melhoresAvaliacoes() {
-        return this.midias.values().stream()
-                .filter(midia -> midia.getQntAvaliacoes() >= 2)
-                .sorted(Comparator.comparingInt(
-                        midia -> midia.getRatingMedio()))
-                .limit(10)
-                .map(Object::toString);
+        return this.midias.values().stream() // Stream<Midia>
+                .filter(midia -> midia.getQntAvaliacoes() >= 2) // Stream<Midia> filtrada
+                .sorted(Comparator.comparingInt(Midia::getRatingMedio)) // Stream<Midia> ordenada por rating
+                .limit(10) // Stream<Midia> com apenas 10 elementos, os 10 melhores
+                .map(Object::toString); // Stream<String> para impressão
     }
 
     /**
@@ -265,15 +263,14 @@ public class PlataformaStreaming {
      * 
      * @param genero genero das midias a serem filtradas
      * @return Stream com 10 melhores midias.
-     */
+     */ // @formatter:off
     public Stream<String> melhoresAvaliacoes(String genero) {
-        return this.midias.values().stream()
-                .filter(midia -> midia.getQntAvaliacoes() >= 100 && midia.getGenero().equals(genero))
-                .sorted(Comparator.comparingInt(
-                        midia -> midia.getRatingMedio()))
-                .limit(10)
-                .map(Object::toString);
-    }
+        return this.midias.values().stream() // Stream<Midia>
+                .filter(midia -> midia.getQntAvaliacoes() >= 100 && midia.getGenero().equals(genero)) // Stream<Midia> filtrada por genero e qntAvaliacoes maior ou igual a 100
+                .sorted(Comparator.comparingInt(Midia::getRatingMedio)) // Stream<Midia> ordenada por rating
+                .limit(10) // Stream<Midia> com apenas 10 elementos, os 10 melhores
+                .map(Object::toString); // Stream<String> para impressão
+    } // @formatter:on
 
     /**
      * Retorna as 10 mídias com mais visualizações, em ordem decrescente.
@@ -281,11 +278,10 @@ public class PlataformaStreaming {
      * @return Stream com 10 midias mais visualizadas.
      */
     public Stream<String> maisVisualizadas() {
-        return this.midias.values().stream()
-                .sorted(Comparator.comparingInt(
-                        midia -> midia.getAudiencia()))
-                .limit(10)
-                .map(Object::toString);
+        return this.midias.values().stream() // Stream<Midia>
+                .sorted(Comparator.comparingInt(Midia::getAudiencia)) // Stream<Midia> ordenada por audiencia
+                .limit(10) // Stream<Midia> com apenas 10 elementos, os 10 melhores
+                .map(Object::toString); // Stream<String> para impressão
     }
 
     /**
@@ -296,12 +292,11 @@ public class PlataformaStreaming {
      * @return Stream com 10 midias mais visualizadas.
      */
     public Stream<String> maisVisualizadas(String genero) {
-        return this.midias.values().stream()
-                .filter(midia -> midia.getGenero().equals(genero))
-                .sorted(Comparator.comparingInt(
-                        midia -> midia.getAudiencia()))
-                .limit(10)
-                .map(Object::toString);
+        return this.midias.values().stream() // Stream<Midia>
+                .filter(midia -> midia.getGenero().equals(genero)) // Stream<Midia> filtrada
+                .sorted(Comparator.comparingInt(Midia::getAudiencia)) // Stream<Midia> ordenada por audiencia
+                .limit(10) // Stream<Midia> com apenas 10 elementos, os 10 melhores
+                .map(Object::toString); // Stream<String> para impressão
     }
 
     /**

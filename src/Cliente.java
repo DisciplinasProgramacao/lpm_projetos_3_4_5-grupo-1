@@ -245,9 +245,9 @@ public class Cliente {
     }
 
     /**
-     * Retorna avaliacoes
+     * Retorna a classe Avaliacoes
      * 
-     * @return avaliacoes
+     * @return avaliacoes do cliente
      */
     public Avaliacoes getAvaliacoes() {
         return this.avaliacoes;

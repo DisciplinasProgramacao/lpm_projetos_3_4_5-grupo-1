@@ -2,11 +2,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Executa a aplicacao.
+ * Executa a aplicação.
  */
 public class App {
 
-    /** Plataforma de streaming e seus nome */
+    /** Plataforma de streaming e seu nome */
     private static PlataformaStreaming app = new PlataformaStreaming("Plataforma");
 
     /** Construtor não instanciável */
@@ -15,9 +15,9 @@ public class App {
     }
 
     /**
-     * Metodo que le uma string do console.
+     * Meéodo que lê uma string do console através do {@link System#console()}.
      * 
-     * @param mensagem a ser exibida ao usuario.
+     * @param mensagem a ser exibida ao usuário.
      * @return string lida do console.
      */
     public static String lerStr(String mensagem) {
@@ -25,9 +25,9 @@ public class App {
     }
 
     /**
-     * Metodo que le um inteiro do console.
+     * Meéodo que lê um inteiro do console.
      * 
-     * @param mensagem a ser exibida ao usuario.
+     * @param mensagem a ser exibida ao usuário.
      * @return inteiro lido do console.
      */
     public static int lerInt(String mensagem) {
@@ -39,9 +39,9 @@ public class App {
     }
 
     /**
-     * Printa um menu de usuario no console voltado a leiura de relatorios.
+     * Printa um menu de usuário no console voltado a leiura de relatórios.
      * 
-     * @return opcao lida do console.
+     * @return opção lida do console.
      */
     public static int menuRelatoriosPrint() {
         return lerInt("\n 1 - Mostrar cliente viciado\n" +
@@ -63,18 +63,20 @@ public class App {
 
             case 2 -> System.out.println(" " + app.maiorAvaliador());
 
-            case 3 -> System.out.println(" " + app.porcentagemClientesCom15Avaliacoes());
+            case 3 -> System.out.println(" " + app.clientesCom15Avaliacoes());
 
             case 4 -> {
-                if (App.lerStr("Deseja filtrar por genero?").equals("s"))
-                    app.melhoresAvaliacoes(App.lerStr("Genero: ")).forEach(System.out::println);
+                if (App.lerStr(" Deseja filtrar por genero? (s/n) ").toLowerCase().contains("s"))
+                    app.melhoresAvaliacoes(App.lerStr(Genero.getGeneros() + " Genero: ").toUpperCase())
+                            .forEach(System.out::println);
                 else
                     app.melhoresAvaliacoes().forEach(System.out::println);
             }
 
             case 5 -> {
-                if (App.lerStr("Deseja filtrar por genero?").equals("s"))
-                    app.maisVisualizadas(App.lerStr("Genero: ")).forEach(System.out::println);
+                if (App.lerStr(" Deseja filtrar por genero? (s/n) ").toLowerCase().contains("s"))
+                    app.maisVisualizadas(App.lerStr(Genero.getGeneros() + " Genero: ").toUpperCase())
+                            .forEach(System.out::println);
                 else
                     app.maisVisualizadas().forEach(System.out::println);
             }
@@ -82,9 +84,9 @@ public class App {
     }
 
     /**
-     * Printa um menu de usuario no console voltado a leiura de filtros.
+     * Printa um menu de usuário no console voltado a leiura de filtros.
      * 
-     * @return opcao lida do console.
+     * @return opção lida do console.
      */
     public static int menuFiltrosPrint() {
         return lerInt("\n 1 - Filtrar por Genero\n" +
@@ -114,7 +116,7 @@ public class App {
             // Filtrar filmes por duracao
             case 4 -> app.filtrarPorDuracao(App.lerInt(" Duracao: ")).forEach(System.out::println);
 
-            // Opcao invalida
+            // Opcão invalida
             default -> System.out.println(" Opcao invalida, tente novamente.");
 
             // Voltar
@@ -124,9 +126,9 @@ public class App {
     }
 
     /**
-     * Printa um menu de usuario no console voltado para adicionar midia.
+     * Printa um menu de usuário no console voltado para adicionar midia.
      * 
-     * @return opcao lida do console.
+     * @return opção lida do console.
      */
     public static int menuAddPrint() {
         return lerInt("\n 1 - Adicionar Serie\n" +
@@ -179,7 +181,7 @@ public class App {
 
             // Adicionar audiencia
             case 4 -> app.registrarAudiencia(
-                    App.lerStr(" A midia ja foi assistida? (s/n) ").contains("s"),
+                    App.lerStr(" A midia ja foi assistida? (s/n) ").toLowerCase().contains("s"),
                     app.buscarMidia(App.lerInt(" ID da midia: ")) //
                 );
 
@@ -189,7 +191,7 @@ public class App {
                     lerInt(" Nota: ") //
                 );
 
-            // Opcao invalida
+            // Opção invalida
             default -> System.out.println(" Opcao invalida, tente novamente.");
 
             // Voltar
@@ -199,9 +201,9 @@ public class App {
     }
 
     /**
-     * Printa um menu de usuario no console.
+     * Printa um menu de usuário no console.
      * 
-     * @return opcao lida do console.
+     * @return opção lida do console.
      */
     public static int menuPrint() {
         return lerInt("\n 1 - Ler Arquivos\n" +
@@ -252,10 +254,10 @@ public class App {
                 // Filtrar midias por genero
                 case 7 -> App.menuFiltros();
 
-                // Relatorios
+                // Relatórios
                 case 8 -> {
                     if (app.getClienteAtual().isPresent())
-                        System.out.println(" Voce não pode estar logado como cliente e acessar os relatorios.");
+                        System.out.println(" Voce não pode estar logado como cliente e acessar os relatórios.");
                     else
                         App.menuRelatorios();
                 }
@@ -267,7 +269,7 @@ public class App {
     }
 
     /**
-     * Metodo principal da aplicacao.
+     * Meéodo principal da aplicacao.
      * 
      * @param args argumentos da linha de comando
      */
@@ -276,7 +278,7 @@ public class App {
         // Menu
         App.menu();
 
-        if (App.lerStr(" Deseja salvar os arquivos? (s/n)").contains("s"))
+        if (App.lerStr(" Deseja salvar os arquivos? (s/n)").toLowerCase().contains("s"))
             LeitorEscritor.escreverArquivos(
                     app.getClientes().values(),
                     app.getMidia().values() //

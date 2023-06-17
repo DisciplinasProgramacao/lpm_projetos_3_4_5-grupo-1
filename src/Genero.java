@@ -4,24 +4,24 @@ import java.util.Random;
  * Enumeração de gêneros disponíveis para as mídias
  */
 public enum Genero {
-    /** Ação */
-    AÇÃO("Ação"),
-    /** Anime */
-    ANIME("Anime"),
-    /** Aventura */
-    AVENTURA("Aventura"),
-    /** Comédia */
-    COMÉDIA("Comédia"),
-    /** Documentário */
-    DOCUMENTÁRIO("Documentário"),
-    /** Drama */
-    DRAMA("Drama"),
-    /** Policial */
-    POLICIAL("Policial"),
-    /** Romance */
-    ROMANCE("Romance"),
-    /** Suspense */
-    SUSPENSE("Suspense");
+    /** AÇÃO */
+    AÇÃO("AÇÃO"),
+    /** ANIME */
+    ANIME("ANIME"),
+    /** AVENTURA */
+    AVENTURA("AVENTURA"),
+    /** COMÉDIA */
+    COMÉDIA("COMÉDIA"),
+    /** DOCUMENTÁRIO */
+    DOCUMENTÁRIO("DOCUMENTÁRIO"),
+    /** DRAMA */
+    DRAMA("DRAMA"),
+    /** POLICIAL */
+    POLICIAL("POLICIAL"),
+    /** ROMANCE */
+    ROMANCE("ROMANCE"),
+    /** SUSPENSE */
+    SUSPENSE("SUSPENSE");
 
     /** Nome do gênero */
     private String nome;
@@ -42,6 +42,18 @@ public enum Genero {
      */
     public String getNome() {
         return nome;
+    }
+
+    /**
+     * Constrói uma string com os gêneros disponíveis usando StringBuilder
+     * 
+     * @return string com os gêneros
+     */
+    public static String getGeneros() {
+        StringBuilder sb = new StringBuilder();
+        for (Genero genero : Genero.values())
+            sb.append(" ").append(genero.getNome()).append("\n");
+        return new String(sb);
     }
 
     /**
