@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class App {
 
-    /** Plataforma de streaming e seu nome */
-    private static PlataformaStreaming app = new PlataformaStreaming("Plataforma");
+    /** Plataforma de streaming singleton */
+    private static PlataformaStreaming app = PlataformaStreaming.getInstance();
 
     /** Construtor não instanciável */
     private App() {
@@ -104,10 +104,10 @@ public class App {
     public static void menuFiltros() {
         switch (App.menuFiltrosPrint()) {
             // Filtrar midias por genero
-            case 1 -> app.filtrarPorGenero(App.lerStr(" Genero: ")).forEach(System.out::println);
+            case 1 -> app.filtrarPorGenero(App.lerStr(Genero.getGeneros() +" Genero: ")).forEach(System.out::println);
 
             // Filtrar midias por idioma
-            case 2 -> app.filtrarPorIdioma(App.lerStr(" Idioma: ")).forEach(System.out::println);
+            case 2 -> app.filtrarPorIdioma(App.lerStr(Idioma.getIdiomas() +" Idioma: ")).forEach(System.out::println);
 
             // Filtrar series por quantidade de episodios
             case 3 -> app.filtrarPorQntEpisodios(App.lerInt(" Quantidade de episodios: "))

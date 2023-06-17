@@ -24,17 +24,31 @@ public class PlataformaStreaming {
     /** Cliente logado atualmente na plataforma */
     private Optional<Cliente> clienteAtual;
 
+    /** Instancia unica da plataforma de streaming */
+    private static PlataformaStreaming instance;
+
     /**
      * Construtor da classe PlataformaStreaming.
      * 
      * @param nome Nome da plataforma de streaming.
      */
-    public PlataformaStreaming(String nome) {
+    private PlataformaStreaming(String nome) {
         this.nome = nome;
         this.midias = new HashMap<Integer, Midia>();
         this.nomes = new HashMap<String, Integer>();
         this.clientes = new HashMap<String, Cliente>();
         this.logOff();
+    }
+
+    /**
+     * Padrão de projeto Singleton.
+     * 
+     * @return instancia unica da plataforma de streaming.
+     */
+    public static PlataformaStreaming getInstance() {
+        if (instance == null)
+            instance = new PlataformaStreaming("Platform");
+        return instance;
     }
 
     /**

@@ -2,8 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Scanner;
 
@@ -36,43 +34,39 @@ final public class LeitorEscritor {
      */
     public static PlataformaStreaming lerArquivos(PlataformaStreaming app) {
         try {
+            Fabrica fabrica = new FabricaCliente();
             /**************** Espectadores ****************/
-            Scanner leitor = new Scanner(new File("data/Espectadores.csv")).useDelimiter(";|\\n");
+            Scanner leitor = new Scanner(new File(Cliente.ARQUIVO)).useDelimiter(";|\\n");
 
             while (leitor.hasNext())
-                app.adicionarCliente(new Cliente(
-                        leitor.next(), // Nome
-                        leitor.next(), // Login
-                        leitor.next() // Senha
+                app.adicionarCliente((Cliente) fabrica.criar(
+                        new String[] { leitor.next(), leitor.next(), leitor.next() } //
                 ));
             leitor.close();
 
+            fabrica = new FabricaSerie();
             /**************** Series ****************/
-            leitor = new Scanner(new File("data/Series.csv")).useDelimiter(";|\\n");
+            leitor = new Scanner(new File(Serie.ARQUIVO)).useDelimiter(";|\\n");
 
             while (leitor.hasNext()) {
-                app.adicionarMidia(new Serie(
-                        Integer.parseInt(leitor.next()), // IdSerie
-                        leitor.next(), // Nome
-                        LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy")) // DataDeLançamento
+                app.adicionarMidia((Serie) fabrica.criar(
+                        new String[] { leitor.next(), leitor.next(), leitor.next() } //
                 ));
             }
             leitor.close();
 
+            fabrica = new FabricaFilme();
             /**************** Filmes ****************/
-            leitor = new Scanner(new File("data/Filmes.csv")).useDelimiter(";|\\n");
+            leitor = new Scanner(new File(Filme.ARQUIVO)).useDelimiter(";|\\n");
 
             while (leitor.hasNext())
-                app.adicionarMidia(new Filme(
-                        Integer.parseInt(leitor.next()), // IdSerie
-                        leitor.next(), // Nome
-                        LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), // DataDeLançamento
-                        Integer.parseInt(leitor.next()) // duração
+                app.adicionarMidia((Filme) fabrica.criar(
+                        new String[] { leitor.next(), leitor.next(), leitor.next(), leitor.next() } //
                 ));
             leitor.close();
 
             /**************** Audiencia ****************/
-            leitor = new Scanner(new File("data/Audiencia.csv")).useDelimiter(";|\\n");
+            leitor = new Scanner(new File(Midia.ARQUIVO)).useDelimiter(";|\\n");
 
             while (leitor.hasNext()) {
                 app.login(leitor.next(), null, true);
@@ -86,7 +80,7 @@ final public class LeitorEscritor {
             app.logOff();
             leitor.close();
         } catch (FileNotFoundException e) {
-            System.out.println(" Arquivo data/Audiencia.csv não encontrado.");
+            System.out.println(" ERRO: Arquivo não encontrado." + e.getMessage());
         }
 
         return app;
@@ -108,23 +102,12 @@ final public class LeitorEscritor {
      */
     public static void escreverArquivos(Collection<Cliente> clientes, Collection<Midia> midias) {
         try {
-            /**************** Espectadores ****************/
-            FileWriter espectadores = new FileWriter("data/Espectadores.csv");
-
-            for (Cliente cliente : clientes)
-                espectadores.write(cliente + "\n");
-            espectadores.close();
-
-            /**************** Midia ****************/
-            FileWriter series = new FileWriter("data/Series.csv");
-            FileWriter filmes = new FileWriter("data/Filmes.csv");
-            for (Midia midia : midias)
-                if (midia instanceof Filme)
-                    filmes.write(midia.toFile() + "\n");
-                else
-                    series.write(midia.toFile() + "\n");
-            series.close();
-            filmes.close();
+            Fabrica fabrica = new FabricaCliente();
+            fabrica.escrever(clientes.stream().map(cliente -> (Object) cliente));
+            fabrica = new FabricaSerie();
+            fabrica.escrever(midias.stream().filter(midia -> midia instanceof Serie).map(midia -> (Object) midia));
+            fabrica = new FabricaFilme();
+            fabrica.escrever(midias.stream().filter(midia -> midia instanceof Filme).map(midia -> (Object) midia));
 
             /**************** Audiencia ****************/
             FileWriter audiencia = new FileWriter("data/Audiencia.csv");
