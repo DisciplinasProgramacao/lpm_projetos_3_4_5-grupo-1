@@ -113,6 +113,13 @@ public class App {
 
             // Filtrar filmes por duracao
             case 4 -> app.filtrarPorDuracao(App.lerInt(" Duracao: ")).forEach(System.out::println);
+
+            // Opcao invalida
+            default -> System.out.println(" Opcao invalida, tente novamente.");
+
+            // Voltar
+            case 0 -> {
+            }
         }
     }
 
@@ -126,7 +133,8 @@ public class App {
                 " 2 - Adicionar Filme\n" +
                 " 3 - Adicionar Cliente\n" +
                 " 4 - Adicionar Audiencia\n" +
-                " 5 - Voltar" +
+                " 5 - Adicionar Avaliacao\n" +
+                " 0 - Voltar" +
                 "\n\n Digite uma opcao: " //
         );
     }
@@ -172,15 +180,20 @@ public class App {
             // Adicionar audiencia
             case 4 -> app.registrarAudiencia(
                     App.lerStr(" A midia ja foi assistida? (s/n) ").contains("s"),
+                    app.buscarMidia(App.lerInt(" ID da midia: ")) //
+                );
+
+            // Adicionar avaliacao
+            case 5 -> app.registrarAvaliacao(
                     app.buscarMidia(App.lerInt(" ID da midia: ")),
-                    true // Perguntar nota
+                    lerInt(" Nota: ") //
                 );
 
             // Opcao invalida
             default -> System.out.println(" Opcao invalida, tente novamente.");
 
             // Voltar
-            case 5 -> {
+            case 0 -> {
             }
         }
     }

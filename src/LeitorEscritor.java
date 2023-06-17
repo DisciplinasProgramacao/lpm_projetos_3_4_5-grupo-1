@@ -80,8 +80,7 @@ final public class LeitorEscritor {
                         leitor.next().charAt(0) == 'A', // Se a serie já foi assistida
                         app.buscarMidia(
                                 Integer.parseInt(leitor.next()) // Busca a serie pelo ID
-                        ),
-                        false // Nao ha nota na leiura do arquivo
+                        ) //
                 );
             }
             app.logOff();

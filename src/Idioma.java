@@ -8,13 +8,13 @@ public enum Idioma {
     PORTUGUÊS("Português"),
     /** Inglês */
     INGLÊS("Inglês"),
-    /** Espanhol */ 
+    /** Espanhol */
     ESPANHOL("Espanhol"),
-    /** Francês */ 
+    /** Francês */
     FRANCÊS("Francês"),
-    /** Alemão */ 
+    /** Alemão */
     ALEMÃO("Alemão"),
-    /** Italiano */ 
+    /** Italiano */
     ITALIANO("Italiano");
 
     /** Nome do idioma */

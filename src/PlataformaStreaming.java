@@ -89,14 +89,12 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Adiciona uma midia a lista de midias ja assistidas pelo cliente atual e
-     * incrementa a audiencia da midia.
+     * Adiciona uma midia a lista de midias ja assistidas pelo cliente atual.
      * 
      * @param completado se o cliente assistiu a midia por completo.
-     * @param midia      a ter a audiencia incrementada.
-     * @param avaliacao  define se o cliente avaliou a midia ou nao.
+     * @param midia      a ser adicionada a lista de midias assistidas.
      */ // @formatter:off
-    public void registrarAudiencia(boolean completado, Midia midia, boolean avaliacao) {
+    public void registrarAudiencia(boolean completado, Midia midia) {
         if (midia == null) { // Se a midia nao existir, nao e possivel registrar audiencia
             System.out.println("IMidia nao encontrada"); return;
         }
@@ -110,11 +108,35 @@ public class PlataformaStreaming {
         }
 
         // Registra a audiencia da midia. Se o cliente se tornar especialista, atualiza a referencia ao cliente @formatter:on
-        this.clienteAtual.get().registrarAudiencia(
-                midia,
-                avaliacao ? App.lerInt(" De uma nota de 1 a 5 a midia, digite 0 para ignorar") : 0,
-                LocalDate.now() //
-        );
+        this.clienteAtual.get().registrarAudiencia(midia);
+    }
+
+    /**
+     * Adiciona uma avaliacao a midia caso o cliente ja tenha assistido a midia.
+     * 
+     * @param midia     a ter uma avaliacao adicionada.
+     * @param avaliacao define se o cliente avaliou a midia ou nao.
+     */ // @formatter:off
+    public void registrarAvaliacao(Midia midia, int avaliacao) {
+        if (midia == null) { // Se a midia nao existir, nao e possivel registrar audiencia
+            System.out.println("IMidia nao encontrada"); return;
+        }
+
+        if (this.clienteAtual.isEmpty()) { // Se nao houver cliente logado, nao e possivel registrar audiencia
+            System.out.println("Nenhum cliente logado, nao e possivel registrar audiencia."); return;
+        }
+
+        // Registra a audiencia da midia. Se o cliente se tornar especialista, atualiza a referencia ao cliente @formatter:on
+        if (this.clienteAtual.get().getAvaliacoes().midiaAvaliada(midia.getID())) {
+            clienteAtual.get().registrarAvaliacao(
+                    midia,
+                    avaliacao,
+                    LocalDate.now() //
+            );
+            return;
+        }
+
+        System.out.println("Midia nao assistida, nao e possivel avaliar");
     }
 
     /**
@@ -223,7 +245,8 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Retorna as 10 mídias de melhor avaliação, com pelo menos 2 avaliações, em ordem decrescente.
+     * Retorna as 10 mídias de melhor avaliação, com pelo menos 2 avaliações, em
+     * ordem decrescente.
      * 
      * @return Stream com 10 melhores midias.
      */
@@ -231,14 +254,14 @@ public class PlataformaStreaming {
         return this.midias.values().stream()
                 .filter(midia -> midia.getQntAvaliacoes() >= 2)
                 .sorted(Comparator.comparingInt(
-                        midia -> midia.getRatingMedio()
-                ))
+                        midia -> midia.getRatingMedio()))
                 .limit(10)
                 .map(Object::toString);
     }
 
     /**
-     * Retorna as 10 mídias de um determinado genero com melhor avaliação, com pelo menos 100 avaliações, em ordem decrescente.
+     * Retorna as 10 mídias de um determinado genero com melhor avaliação, com pelo
+     * menos 100 avaliações, em ordem decrescente.
      * 
      * @param genero genero das midias a serem filtradas
      * @return Stream com 10 melhores midias.
@@ -247,8 +270,7 @@ public class PlataformaStreaming {
         return this.midias.values().stream()
                 .filter(midia -> midia.getQntAvaliacoes() >= 100 && midia.getGenero().equals(genero))
                 .sorted(Comparator.comparingInt(
-                        midia -> midia.getRatingMedio()
-                ))
+                        midia -> midia.getRatingMedio()))
                 .limit(10)
                 .map(Object::toString);
     }
@@ -261,14 +283,14 @@ public class PlataformaStreaming {
     public Stream<String> maisVisualizadas() {
         return this.midias.values().stream()
                 .sorted(Comparator.comparingInt(
-                        midia -> midia.getAudiencia()
-                ))
+                        midia -> midia.getAudiencia()))
                 .limit(10)
                 .map(Object::toString);
     }
 
     /**
-     * Retorna as 10 mídias de um determinado genero com mais visualizações, em ordem decrescente.
+     * Retorna as 10 mídias de um determinado genero com mais visualizações, em
+     * ordem decrescente.
      * 
      * @param genero genero das midias a serem filtradas
      * @return Stream com 10 midias mais visualizadas.
@@ -277,8 +299,7 @@ public class PlataformaStreaming {
         return this.midias.values().stream()
                 .filter(midia -> midia.getGenero().equals(genero))
                 .sorted(Comparator.comparingInt(
-                        midia -> midia.getAudiencia()
-                ))
+                        midia -> midia.getAudiencia()))
                 .limit(10)
                 .map(Object::toString);
     }

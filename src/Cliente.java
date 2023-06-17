@@ -24,10 +24,10 @@ public class Cliente {
             listaJaVistas;
 
     /** Avaliacoes do cliente */
-    //private HashMap<Integer, IAvaliacao> avaliacoes;
+    // private HashMap<Integer, IAvaliacao> avaliacoes;
 
     /** Avaliacoes do cliente */
-    private IAvaliacoes avaliacoes;
+    private Avaliacoes avaliacoes;
 
     /** Quantidade de avaliacoes feitas pelo cliente no ultimo mes */
     private int avaliacoesAtuais;
@@ -67,21 +67,30 @@ public class Cliente {
     }
 
     /**
-     * Adiciona uma midia na lista de series ja vistas, como o cliente comum nao
-     * pode dar avaliacao, o comentario e vazio
+     * Adiciona uma midia na lista de series ja vistas.
+     * 
+     * @param midia a ser adicionada
+     */
+    public void registrarAudiencia(Midia midia) {
+        this.listaJaVistas.add(midia);
+
+        if (!this.listaJaVistas.contains(midia))
+            midia.registrarAudiencia();
+    }
+
+    /**
+     * Adiciona um comentario a uma midia
      * 
      * @param midia     a ser adicionada
      * @param avaliacao avaliacao da midia
      * @param data      data de visualizacao
      */
-    public void registrarAudiencia(Midia midia, int avaliacao, LocalDate data) {
+    public void registrarAvaliacao(Midia midia, int avaliacao, LocalDate data) {
         this.listaJaVistas.add(midia);
-        midia.registrarAudiencia();
-        if (avaliacao != 0) {
-            // this.avaliacoes.put(midia.getID(), avaliacao); deprecated
-            this.avaliacoes.avaliar(midia.getID(),avaliacao);
-            midia.registrarAvaliacao(avaliacao);
-        }
+
+        if (!this.listaJaVistas.contains(midia))
+            midia.registrarAudiencia();
+
         if (ChronoUnit.DAYS.between(data, LocalDate.now()) <= 30 && ++this.avaliacoesAtuais == 5)
             this.tornarEspecialista();
     }
@@ -240,7 +249,7 @@ public class Cliente {
      * 
      * @return avaliacoes
      */
-    public IAvaliacoes getAvaliacoes() {
+    public Avaliacoes getAvaliacoes() {
         return this.avaliacoes;
     }
 

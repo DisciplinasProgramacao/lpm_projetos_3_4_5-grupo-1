@@ -1,6 +1,5 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 /**
  * Interface Mídia, permite uniformizar o acesso aos dados de um tipo de mídia.
@@ -86,7 +85,7 @@ public abstract class Midia {
      * 
      * @return String no formato: {IdSerie;Nome;DataDeLançamento}
      */
-    public String toFile(){
+    public String toFile() {
         return this.ID + ";" + this.nome + ";" + this.dataLançamento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
