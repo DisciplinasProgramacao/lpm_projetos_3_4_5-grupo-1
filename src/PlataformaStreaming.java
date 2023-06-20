@@ -330,10 +330,14 @@ public class PlataformaStreaming {
      * @return IMidia com o nome passado como parâmetro, NULL caso nao exista.
      */ // @formatter:off
     public String buscarMidia(String nomeMidia) {
-        return this.midias.get(this.nomes.get(nomeMidia)) +
-                (this.clienteAtual.isPresent()
-                        ? " Sua avaliação: " + String.valueOf(this.clienteAtual.get().getAvaliacao(this.nomes.get(nomeMidia)))
-                        : "");
+        try {
+            return this.midias.get(this.nomes.get(nomeMidia)) +
+                    (this.clienteAtual.isPresent()
+                            ? " Sua avaliação: " + String.valueOf(this.clienteAtual.get().getAvaliacao(this.nomes.get(nomeMidia)))
+                            : "");
+        } catch (NullPointerException e) {
+            return "NULL";
+        }
     }
 
     /**
