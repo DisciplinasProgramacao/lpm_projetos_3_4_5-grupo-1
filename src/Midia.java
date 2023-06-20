@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 /**
  * Interface Mídia, permite uniformizar o acesso aos dados de um tipo de mídia.
@@ -8,6 +9,9 @@ public abstract class Midia {
 
     /** Arquivo de avaliacao */
     public static final String ARQUIVO = "data/Audiencia.csv";
+
+    /** Random */
+    public static final Random RANDOM = new Random();
 
     /** Nome da mídia */
     private String nome,
@@ -26,24 +30,28 @@ public abstract class Midia {
             qntAvaliacoes;
 
     /** Data de lançamento da mídia */
-    private LocalDate dataLançamento;
+    private LocalDate dataLancamento;
+
+    /** Define se a mídia é um lançamento */
+    private boolean lancamento;
 
     /**
      * Construtor da classe Midia para leitura de arquivos
      * 
      * @param id             da midia
      * @param nome           da midia
-     * @param dataLançamento data de lançamento da midia
+     * @param dataLancamento data de lançamento da midia
      */
-    public Midia(int id, String nome, LocalDate dataLançamento) {
+    public Midia(int id, String nome, LocalDate dataLancamento) {
         this.id = id;
         this.genero = Genero.sortearGenero().getNome();
         this.nome = nome;
         this.idioma = Idioma.sortearIdioma().getNome();
-        this.dataLançamento = dataLançamento;
+        this.dataLancamento = dataLancamento;
         this.audiencia = 0;
         this.ratingMedio = 0;
         this.qntAvaliacoes = 0;
+        this.lancamento = false;
     }
 
     /**
@@ -53,17 +61,18 @@ public abstract class Midia {
      * @param genero         da midia
      * @param nome           da midia
      * @param idioma         da midia
-     * @param dataLançamento data de lançamento da midia
+     * @param dataLancamento data de lançamento da midia
      */
-    public Midia(int id, String genero, String nome, String idioma, LocalDate dataLançamento) {
+    public Midia(int id, String genero, String nome, String idioma, LocalDate dataLancamento, boolean lancamento) {
         this.id = id;
         this.genero = genero;
         this.nome = nome;
         this.idioma = idioma;
-        this.dataLançamento = dataLançamento;
+        this.dataLancamento = dataLancamento;
         this.audiencia = 0;
         this.ratingMedio = 0;
         this.qntAvaliacoes = 0;
+        this.lancamento = lancamento;
     }
 
     /**
@@ -88,7 +97,7 @@ public abstract class Midia {
      * @return String no formato: {IdSerie;Nome;DataDeLançamento}
      */
     public String toFile() {
-        return this.id + ";" + this.nome + ";" + this.dataLançamento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return this.id + ";" + this.nome + ";" + this.dataLancamento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     /**
@@ -97,7 +106,7 @@ public abstract class Midia {
     @Override
     public String toString() {
         return " id: " + this.id + " | Nome: " + this.nome + " | Genero: " + this.genero + " | Data de Lançamento: "
-                + this.dataLançamento + " | Audiencia: " + this.audiencia + "| Avaliacoes: " + this.qntAvaliacoes
+                + this.dataLancamento + " | Audiencia: " + this.audiencia + "| Avaliacoes: " + this.qntAvaliacoes
                 + " | Rating: " + this.ratingMedio;
     }
 
@@ -129,5 +138,8 @@ public abstract class Midia {
     /** Retorna a data de lançamento da mídia 
      * @return data de lançamento da mídia*/
     public int getAudiencia() { return this.audiencia; }
+    /** Retorna se a mídia é lançamento 
+     * @return se a mídia é lançamento*/
+    public boolean isLancamento() { return this.lancamento; }
 
 }

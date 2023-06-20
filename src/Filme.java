@@ -33,8 +33,8 @@ public class Filme extends Midia {
      * @param dataLançamento data de lançamento do filme
      * @param duracao        do filme
      */
-    public Filme(int id, String genero, String nome, String idioma, LocalDate dataLançamento, int duracao) {
-        super(id, genero, nome, idioma, dataLançamento);
+    public Filme(int id, String genero, String nome, String idioma, LocalDate dataLançamento, int duracao, boolean lancamento) {
+        super(id, genero, nome, idioma, dataLançamento, lancamento);
         this.duracao = duracao;
     }
 

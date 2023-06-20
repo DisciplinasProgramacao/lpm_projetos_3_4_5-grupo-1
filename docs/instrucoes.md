@@ -30,3 +30,5 @@ Será apresentada a lista de opções:
 -- Digite 9 e enter para adicionar filme ou mídia na lista geral, assistir mídia ou adicionar mídia na lista de desejos para assistir
 
 -- O programa lê a entrada padrão, ou seja, apenas o console do sistema operacional. Excluem-se consoles de IDEs salvo Visual Studio/ Visual Studio Code.
+
+-- Os arquivos de teste são escritos de forma irregular pelo git, caso ao ler os arquivos de teste, o programa apresente erro, por favor, baixe a pasta data/ diretamente pelo github e substitua a pasta data/ do projeto.

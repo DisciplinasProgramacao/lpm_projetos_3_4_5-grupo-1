@@ -14,7 +14,7 @@ class PlataformaStreamingTest {
 
     @BeforeEach
     void setUp() {
-        plataforma = new PlataformaStreaming("Netflix");
+        plataforma = PlataformaStreaming.getInstance();
         cliente = new Cliente("username", "login", "password");
         filme = new Filme(1, "Filme teste", LocalDate.now(), 120);
         serie = new Serie(2, "Series 1", LocalDate.now());

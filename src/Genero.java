@@ -1,5 +1,3 @@
-import java.util.Random;
-
 /**
  * Enumeração de gêneros disponíveis para as mídias
  */
@@ -72,6 +70,6 @@ public enum Genero {
      * @return gênero aleatório
      */
     public static Genero sortearGenero() {
-        return Genero.values()[new Random().nextInt(Genero.values().length)];
+        return Genero.values()[Midia.RANDOM.nextInt(Genero.values().length)];
     }
 }

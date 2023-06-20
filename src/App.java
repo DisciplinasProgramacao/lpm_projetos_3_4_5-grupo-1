@@ -67,7 +67,7 @@ public class App {
 
             case 4 -> {
                 if (App.lerStr(" Deseja filtrar por genero? (s/n) ").toLowerCase().contains("s"))
-                    app.melhoresAvaliacoes(App.lerStr(Genero.getGeneros() + " Genero: ").toUpperCase())
+                    app.melhoresAvaliacoes(App.lerStr(Genero.getGeneros() + " Genero: ").toUpperCase().trim())
                             .forEach(System.out::println);
                 else
                     app.melhoresAvaliacoes().forEach(System.out::println);
@@ -75,7 +75,7 @@ public class App {
 
             case 5 -> {
                 if (App.lerStr(" Deseja filtrar por genero? (s/n) ").toLowerCase().contains("s"))
-                    app.maisVisualizadas(App.lerStr(Genero.getGeneros() + " Genero: ").toUpperCase())
+                    app.maisVisualizadas(App.lerStr(Genero.getGeneros() + " Genero: ").toUpperCase().trim())
                             .forEach(System.out::println);
                 else
                     app.maisVisualizadas().forEach(System.out::println);
@@ -104,10 +104,10 @@ public class App {
     public static void menuFiltros() {
         switch (App.menuFiltrosPrint()) {
             // Filtrar midias por genero
-            case 1 -> app.filtrarPorGenero(App.lerStr(Genero.getGeneros() +" Genero: ")).forEach(System.out::println);
+            case 1 -> app.filtrarPorGenero(App.lerStr(Genero.getGeneros() +" Genero: ").toUpperCase().trim()).forEach(System.out::println);
 
             // Filtrar midias por idioma
-            case 2 -> app.filtrarPorIdioma(App.lerStr(Idioma.getIdiomas() +" Idioma: ")).forEach(System.out::println);
+            case 2 -> app.filtrarPorIdioma(App.lerStr(Idioma.getIdiomas() +" Idioma: ").toUpperCase().trim()).forEach(System.out::println);
 
             // Filtrar series por quantidade de episodios
             case 3 -> app.filtrarPorQntEpisodios(App.lerInt(" Quantidade de episodios: "))
@@ -156,7 +156,8 @@ public class App {
                             App.lerStr(" Data de lançamento (dd/MM/yyyy): "),
                             DateTimeFormatter.ofPattern("dd/MM/yyyy") // Data de lançamento
                     ),
-                    10 // Quantidade de episodios
+                    10, // Quantidade de episodios
+                    App.lerStr(" A midia e lancamento? (s/n) ").toLowerCase().contains("s") //
                 ));
 
             // Adicionar filme
@@ -169,7 +170,8 @@ public class App {
                             App.lerStr(" Data de lançamento (dd/MM/yyyy): "),
                             DateTimeFormatter.ofPattern("dd/MM/yyyy") // Data de lançamento
                     ),
-                    App.lerInt(" Duracao (min): ") // Duracao
+                    App.lerInt(" Duracao (min): "), // Duracao
+                    App.lerStr(" A midia e lancamento? (s/n) ").toLowerCase().contains("s") //
                 ));
 
             // Adicionar cliente
@@ -188,7 +190,7 @@ public class App {
             // Adicionar avaliacao
             case 5 -> app.registrarAvaliacao(
                     app.buscarMidia(App.lerInt(" ID da midia: ")),
-                    lerInt(" Nota: ") //
+                    lerInt(" Nota (1 a 5): ") //
                 );
 
             // Opção invalida
@@ -246,7 +248,7 @@ public class App {
                 case 4 -> app.logOff();
 
                 // Buscar midia
-                case 5 -> System.out.println(app.buscarMidia(App.lerStr(" Nome da midia: ")));
+                case 5 -> System.out.println(app.buscarMidia(App.lerStr(" Nome da midia: ").trim()));
 
                 // Menu de adicao
                 case 6 -> App.menuAdd();

@@ -1,5 +1,3 @@
-import java.util.Random;
-
 /**
  * Enumeração de idiomas disponíveis para as mídias
  */
@@ -61,6 +59,6 @@ public enum Idioma {
      * @return idioma aleatório
      */
     public static Idioma sortearIdioma() {
-        return Idioma.values()[new Random().nextInt(Idioma.values().length)];
+        return Idioma.values()[Midia.RANDOM.nextInt(Idioma.values().length)];
     }
 }

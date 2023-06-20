@@ -117,7 +117,7 @@ public class PlataformaStreaming {
             System.out.println("Nenhum cliente logado, nao e possivel registrar audiencia."); return;
         }
 
-        if (!completado) { // Atualiza o cliente caso ele se torne especialista
+        if (!completado) { // Se o cliente nao assistiu a midia por completo, adiciona a midia a lista de midias para assistir
             this.clienteAtual.get().adicionarNaLista(midia); return;
         }
 

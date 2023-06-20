@@ -1,6 +1,5 @@
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Collection;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Stream;
@@ -36,6 +35,9 @@ public class Cliente {
     /** Quantidade de avaliacoes feitas pelo cliente no ultimo mes */
     private int avaliacoesAtuais;
 
+    /** Se o cliente é um especialista */
+    private boolean especialista;
+
     /**
      * Construtor da classe Cliente
      * 
@@ -51,6 +53,7 @@ public class Cliente {
         this.listaJaVistas = new Stack<Midia>();
         this.avaliacoes = new AvaliacaoComum();
         this.avaliacoesAtuais = 0;
+        this.especialista = false;
     }
 
     /**
@@ -59,23 +62,32 @@ public class Cliente {
      */
     public void tornarEspecialista() {
         this.avaliacoes = this.avaliacoes.goNext();
+        this.especialista = true;
     }
 
     /**
-     * Adiciona uma midia na lista de series para ver
+     * Adiciona uma midia na lista de midias para ver
      * 
      * @param midia a ser adicionada
      */
     public void adicionarNaLista(Midia midia) {
+        if (midia.isLancamento() && !this.especialista) {
+            System.out.println(" Midia em lancamento, voce precisa se tornar um cliente especilista para interagir.");
+            return;
+        }
         this.listaParaVer.add(midia);
     }
 
     /**
-     * Adiciona uma midia na lista de series ja vistas.
+     * Adiciona uma midia na lista de midias ja vistas.
      * 
      * @param midia a ser adicionada
      */
     public void registrarAudiencia(Midia midia) {
+        if (midia.isLancamento() && !this.especialista) {
+            System.out.println(" Midia em lancamento, voce precisa se tornar um cliente especilista para interagir.");
+            return;
+        }
         if (!this.listaJaVistas.contains(midia)) {
             this.listaJaVistas.add(midia);
             midia.registrarAudiencia();
@@ -91,6 +103,11 @@ public class Cliente {
      * @param data      data de visualizacao
      */
     public void registrarAvaliacao(Midia midia, int avaliacao, LocalDate data) {
+        if (midia.isLancamento() && !this.especialista) {
+            System.out.println(" Midia em lancamento, voce precisa se tornar um cliente especilista para interagir.");
+            return;
+        }
+
         this.listaJaVistas.add(midia);
 
         if (!this.listaJaVistas.contains(midia))
@@ -102,7 +119,7 @@ public class Cliente {
     }
 
     /**
-     * Remove uma midia da lista de series para ver
+     * Remove uma midia da lista de midias para ver
      * 
      * @param nomeMidia nome da midia a ser removida
      */
@@ -111,10 +128,10 @@ public class Cliente {
     }
 
     /**
-     * Filtra a lista de series para ver por genero
+     * Filtra a lista de midias para ver por genero
      * 
      * @param genero a ser filtrado
-     * @return lista de series filtrada
+     * @return lista de midias filtrada
      */
     public Stream<String> filtrarPorGenero(String genero) {
         return this.listaJaVistas.stream()
@@ -126,10 +143,10 @@ public class Cliente {
     }
 
     /**
-     * Filtra a lista de series para ver por idioma
+     * Filtra a lista de midias para ver por idioma
      * 
      * @param idioma a ser filtrado
-     * @return lista de series filtrada
+     * @return lista de midias filtrada
      */
     public Stream<String> filtrarPorIdioma(String idioma) {
         return this.listaJaVistas.stream()
@@ -268,6 +285,4 @@ public class Cliente {
         return this.listaJaVistas.size();
     }
 
-    public static void escrever(Collection<Object> obj) {
-    }
 }
