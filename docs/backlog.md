@@ -4,8 +4,11 @@ Usuário|Requisito|Motivação|STATUS|PROJETO/SPRINT|AUTOR DO REQUISITO
 :---:|:---:|:---:|:---:|:---:|:---:
 Como um Cliente deslogado, eu quero|filtrar por gêneros, idioma, duração e episódios|para facilitar a busca por conteúdo|completo|Sprint 5|Henrique
 Como um Cliente logado, eu quero|filtrar por gêneros, idioma, duração e episódios|para facilitar a busca por conteúdo dentro da minha própria lista|completo|Sprint 5|Henrique
+Como um Cliente, eu quero|acessar relátorios de mídias|para visualizar dados sobre o conteúdo|completo|Sprint 5|Gabriel
 Como um Cliente, eu quero|registrar audiência|para facilitar as recomendações de conteúdos relevantes|completo|Sprint 5|Henrique e Igor
-Como um Cliente, eu quero|registrar rating|para possibilitar a avaliação da mídias de 1 à 5 estrelas|completo|Sprint 5|Henrique e Igor
+Como um Cliente, eu quero|registrar avaliação|para possibilitar a avaliação da mídias de 1 à 5 estrelas|completo|Sprint 5|Henrique e Igor
+Como um Cliente, eu quero|registrar comentário|para avaliar a mídia perante um comentário|completo|Sprint 5|Henrique e Igor
+Como um Cliente especialista, eu quero|registrar comentário especializado|para avaliar a mídia perante um comentário especializado|completo|Sprint 5|Igor e João
 Como um Cliente, eu quero|buscar por título|para facilitar a busca por conteúdo|completo|Sprint 5|Gabriel e Lucas
 Como um Cliente, eu quero|adicionar mídias à lista|para separar conteúdo de interesse|completo|Sprint 4|Gabriel e Igor
 Como um Cliente, eu quero|registrar uma conta|para acessar a plataforma e seus recursos|completo|Sprint 3|João
