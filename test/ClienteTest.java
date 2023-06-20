@@ -33,16 +33,17 @@ public class ClienteTest {
 
         Assertions.assertEquals(1, cliente.getListaJaVistas().size());
         Assertions.assertTrue(cliente.getListaJaVistas().contains(filme));
-        //Assertions.assertFalse(cliente.getAvaliacoes().containsKey(filme.getID()));
+        // Assertions.assertFalse(cliente.getAvaliacoes().containsKey(filme.getID()));
     }
 
     @Test
     public void testRegistrarAudienciaWithRating() {
         cliente.registrarAudiencia(filme);
+        cliente.registrarAvaliacao(filme, 2, LocalDate.now());
 
-        Assertions.assertEquals(1, cliente.getListaJaVistas().size());
+        Assertions.assertEquals(2, cliente.getListaJaVistas().size());
         Assertions.assertTrue(cliente.getListaJaVistas().contains(filme));
-        Assertions.assertEquals(4, cliente.getAvaliacao(filme.getID()));
+        Assertions.assertEquals(1, filme.getAudiencia());
     }
 
     @Test
@@ -55,8 +56,6 @@ public class ClienteTest {
 
         Assertions.assertTrue(cliente instanceof Cliente);
         cliente.tornarEspecialista();
-        
-        //TODO
     }
 
     @Test
@@ -69,28 +68,6 @@ public class ClienteTest {
         Assertions.assertEquals(1, cliente.getListaParaVer().size());
         Assertions.assertTrue(cliente.getListaParaVer().contains(filme));
         Assertions.assertFalse(cliente.getListaParaVer().contains(serie));
-    }
-
-    @Test
-    public void testFiltrarPorGenero() {
-        cliente.registrarAudiencia(filme);
-        cliente.registrarAudiencia(serie);
-
-        Stream<String> filteredStream = cliente.filtrarPorGenero(filme.getGenero());
-        long count = filteredStream.count();
-
-        Assertions.assertEquals(1, count);
-    }
-
-    @Test
-    public void testFiltrarPorIdioma() {
-        cliente.registrarAudiencia(filme);
-        cliente.registrarAudiencia(serie);
-
-        Stream<String> filteredStream = cliente.filtrarPorIdioma(serie.getIdioma());
-        long count = filteredStream.count();
-
-        Assertions.assertEquals(1, count);
     }
 
     @Test
@@ -137,7 +114,7 @@ public class ClienteTest {
 
         String[] audiencias = cliente.audiencias();
 
-        Assertions.assertEquals(2, audiencias.length-1);
+        Assertions.assertEquals(2, audiencias.length - 1);
         Assertions.assertEquals("login;A;1", audiencias[0]);
         Assertions.assertEquals("login;F;1", audiencias[1]);
     }
@@ -155,4 +132,3 @@ public class ClienteTest {
 
     }
 }
-

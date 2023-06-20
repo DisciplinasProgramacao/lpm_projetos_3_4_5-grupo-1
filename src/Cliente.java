@@ -285,4 +285,13 @@ public class Cliente {
         return this.listaJaVistas.size();
     }
 
+    /**
+     * Retorna o nome de usuario do cliente
+     * 
+     * @return nome de usuario do cliente
+     */
+    public String getNome() {
+        return this.nomeDeUsuario;
+    }
+
 }
