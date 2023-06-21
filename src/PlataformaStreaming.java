@@ -110,7 +110,7 @@ public class PlataformaStreaming {
      */ // @formatter:off
     public void registrarAudiencia(boolean completado, Midia midia) {
         if (midia == null) { // Se a midia nao existir, nao e possivel registrar audiencia
-            System.out.println("IMidia nao encontrada"); return;
+            System.out.println("Midia nao encontrada"); return;
         }
 
         if (this.clienteAtual.isEmpty()) { // Se nao houver cliente logado, nao e possivel registrar audiencia
@@ -132,15 +132,15 @@ public class PlataformaStreaming {
      * @param avaliacao define se o cliente avaliou a midia ou nao.
      */ // @formatter:off
     public void registrarAvaliacao(Midia midia, int avaliacao) {
-        if (midia == null) { // Se a midia nao existir, nao e possivel registrar audiencia
-            System.out.println("IMidia nao encontrada"); return;
+        if (midia == null) { // Se a midia nao existir, nao e possivel registrar avaliacao
+            System.out.println("Midia nao encontrada"); return;
         }
 
-        if (this.clienteAtual.isEmpty()) { // Se nao houver cliente logado, nao e possivel registrar audiencia
-            System.out.println("Nenhum cliente logado, nao e possivel registrar audiencia."); return;
+        if (this.clienteAtual.isEmpty()) { // Se nao houver cliente logado, nao e possivel registrar avaliacao
+            System.out.println("Nenhum cliente logado, nao e possivel registrar avaliacao."); return;
         }
 
-        // Registra a audiencia da midia. Se o cliente se tornar especialista, atualiza a referencia ao cliente @formatter:on
+        // Registra a avaliacao da midia. Se o cliente se tornar especialista, atualiza a referencia ao cliente @formatter:on
         if (this.clienteAtual.get().getAvaliacoes().midiaAvaliada(midia.getID())) {
             clienteAtual.get().registrarAvaliacao(
                     midia,
