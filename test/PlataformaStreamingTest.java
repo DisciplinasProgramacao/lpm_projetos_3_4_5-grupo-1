@@ -9,8 +9,8 @@ class PlataformaStreamingTest {
 
     PlataformaStreaming plataforma;
     Cliente cliente;
-    Filme filme;
-    Serie serie;
+    Midia filme;
+    Midia serie;
 
     @BeforeEach
     void setUp() {
@@ -89,57 +89,59 @@ class PlataformaStreamingTest {
     @Test
     void testFiltrarPorIdioma() {
         adicionaMidia();
-        
+
         adicionaCliente();
         efetuaLogin();
-    
+
         Stream<String> midiasDoIdioma = plataforma.filtrarPorIdioma("Inglês");
         assertFalse(midiasDoIdioma.anyMatch(midia -> midia.equals(filme.toString())));
-    
+
         cliente.adicionarNaLista(filme);
         midiasDoIdioma = plataforma.filtrarPorIdioma("Inglês");
         assertFalse(midiasDoIdioma.anyMatch(midia -> midia.equals(filme.toString())));
     }
-    
+
     @Test
     void testFiltrarPorQntEpisodios() {
         adicionaMidia();
         Stream<String> midiasPorQntEpisodios = plataforma.filtrarPorQntEpisodios(3);
         assertFalse(midiasPorQntEpisodios.anyMatch(midia -> midia.equals(serie.toString())));
-    
+
         midiasPorQntEpisodios = plataforma.filtrarPorQntEpisodios(10);
         assertTrue(midiasPorQntEpisodios.anyMatch(midia -> midia.equals(serie.toString())));
     }
-    
+
     @Test
     void testFiltrarPorDuracao() {
         adicionaMidia();
-    
+
         Stream<String> midiasPorDuracao = plataforma.filtrarPorDuracao(90);
         assertFalse(midiasPorDuracao.anyMatch(midia -> midia.equals(filme.toString())));
-    
+
         midiasPorDuracao = plataforma.filtrarPorDuracao(120);
         assertTrue(midiasPorDuracao.anyMatch(midia -> midia.equals(filme.toString())));
     }
-    
+
     @Test
     void testBuscarMidia() {
         adicionaMidia();
-        
-    
-        assertEquals(filme.toString(), plataforma.buscarMidia("Filme teste"));
-        assertEquals(serie.toString(), plataforma.buscarMidia("Series 1"));
-        assertEquals(plataforma.buscarMidia("Midia Inexistente"), "null");
+        cliente.adicionarNaLista(filme);
+
+        assertEquals(filme.toString() + " Sua avaliação: Voce ainda nao avaliou esta midia",
+                plataforma.buscarMidia("Filme teste"));
+        assertEquals(serie.toString() + " Sua avaliação: Voce ainda nao avaliou esta midia",
+                plataforma.buscarMidia("Series 1"));
+        assertEquals(plataforma.buscarMidia("Midia Inexistente"), "NULL");
     }
-    
+
     @Test
     void testToString() {
         adicionaMidia();
         adicionaCliente();
-        assertEquals(" Ha " + plataforma.getMidia().size() + " midias cadastradas na plataforma Netflix e " + plataforma.getClientes().size() + " clientes cadastrados.", plataforma.toString());
+        assertEquals(" Ha " + plataforma.getMidia().size() + " midias cadastradas na plataforma Platform e "
+                + plataforma.getClientes().size() + " clientes cadastrados.", plataforma.toString());
     }
-    
+
     // Outros testes...
-    
+
 }
-    
