@@ -15,13 +15,23 @@ public class AvaliacaoEspecialista extends Avaliacoes {
         super(avaliacoes);
     }
 
+    /**
+     * avalia uma midia
+     * 
+     * @idMidia id da midia a ser avaliada
+     * @avaliacao nota da midia
+     */
     @Override
     public void avaliar(int idMidia, int avaliacao) {
-        super.put(idMidia, new Comentario(avaliacao, App.lerStr("Digite um comentário: ")));
+        super.put(idMidia, new Comentario(avaliacao, App.lerStr("Digite um comentario: ")));
     }
 
+    /**
+     * Não há próximo estado de avaliador, tentar seguir adiante resulta em uma
+     * throw de exceção
+     */
     public Avaliacoes goNext() {
-        throw new UnsupportedOperationException("Não há avaliação posterior");
+        throw new UnsupportedOperationException("Nao ha avaliacao posterior");
     }
 
 }

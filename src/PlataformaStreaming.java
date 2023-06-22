@@ -333,7 +333,7 @@ public class PlataformaStreaming {
         try {
             return this.midias.get(this.nomes.get(nomeMidia)) +
                     (this.clienteAtual.isPresent()
-                            ? " Sua avaliação: " + String.valueOf(this.clienteAtual.get().getAvaliacao(this.nomes.get(nomeMidia)))
+                            ? " Sua avaliacao: " + String.valueOf(this.clienteAtual.get().getAvaliacao(this.nomes.get(nomeMidia)))
                             : "");
         } catch (NullPointerException e) {
             return "NULL";

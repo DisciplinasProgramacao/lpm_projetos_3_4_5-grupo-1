@@ -105,7 +105,7 @@ public abstract class Midia {
      */
     @Override
     public String toString() {
-        return " id: " + this.id + " | Nome: " + this.nome + " | Genero: " + this.genero + " | Data de Lançamento: "
+        return " id: " + this.id + " | Nome: " + this.nome + " | Genero: " + this.genero + " | Data de Lancamento: "
                 + this.dataLancamento + " | Audiencia: " + this.audiencia + "| Avaliacoes: " + this.qntAvaliacoes
                 + " | Rating: " + this.ratingMedio;
     }

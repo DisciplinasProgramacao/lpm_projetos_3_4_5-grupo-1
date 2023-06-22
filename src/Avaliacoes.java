@@ -39,7 +39,7 @@ public abstract class Avaliacoes {
     private HashMap<Integer, Comentario> avaliacoes;
 
     /**
-     * Primeira avaliação
+     * Construtor acionado apenas na Primeira avaliação
      */
     public Avaliacoes() {
         this.avaliacoes = new HashMap<Integer, Comentario>();
@@ -55,7 +55,7 @@ public abstract class Avaliacoes {
     }
 
     /**
-     * Adiciona uma avaliacao, só pode ser usado por {@link AvaliacaoComum#avaliar}
+     * Adiciona uma avaliacao no HashMap, só pode ser usado por {@link AvaliacaoComum#avaliar}
      * e {@link AvaliacaoEspecialista#avaliar}
      * 
      * @param idMidia    id da midia a ser avaliada
@@ -104,7 +104,7 @@ public abstract class Avaliacoes {
     }
 
     /**
-     * Retorna um novo contexto de avaliacao
+     * Retorna um novo contexto/estado de avaliacao
      * 
      * @return novo objeto
      */
@@ -113,7 +113,7 @@ public abstract class Avaliacoes {
     }
 
     /**
-     * Retorna um novo contexto de avaliacao
+     * Retorna um novo contexto/estado de avaliacao
      * 
      * @return novo objeto
      */

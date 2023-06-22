@@ -53,7 +53,7 @@ public class Filme extends Midia {
      */
     @Override
     public String toString() {
-        return super.toString() + "| Duração: " + this.duracao + " minutos";
+        return super.toString() + "| Duracao: " + this.duracao + " minutos";
     }
 
     /**

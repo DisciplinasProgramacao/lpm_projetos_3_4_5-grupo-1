@@ -15,7 +15,7 @@ final public class LeitorEscritor {
      * Construtor vazio.
      */
     private LeitorEscritor() {
-        throw new InstantiationError("Classe não instanciável");
+        throw new InstantiationError("Classe nao instanciavel");
     }
 
     /**
@@ -80,7 +80,7 @@ final public class LeitorEscritor {
             app.logOff();
             leitor.close();
         } catch (FileNotFoundException e) {
-            System.out.println(" ERRO: Arquivo não encontrado." + e.getMessage());
+            System.out.println(" ERRO: Arquivo nao encontrado." + e.getMessage());
         }
 
         return app;
@@ -116,7 +116,7 @@ final public class LeitorEscritor {
                     audiencia.write(paraVerEJáVista + "\n");
             audiencia.close();
         } catch (IOException e) {
-            System.out.println(" ERRO: Arquivo não encontrado." + e.getMessage());
+            System.out.println(" ERRO: Arquivo nao encontrado." + e.getMessage());
         }
     }
 

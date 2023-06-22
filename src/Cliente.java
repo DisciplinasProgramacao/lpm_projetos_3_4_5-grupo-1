@@ -92,7 +92,7 @@ public class Cliente {
             this.listaJaVistas.add(midia);
             midia.registrarAudiencia();
         } else
-            System.out.println("Você já assistiu a essa série!: " + midia.getNome() + "cliente: " + this.nomeDeUsuario);
+            System.out.println("Voce ja assistiu a essa serie!: " + midia.getNome() + "cliente: " + this.nomeDeUsuario);
     }
 
     /**
@@ -209,10 +209,10 @@ public class Cliente {
 
     /**
      * Retorna um array de Strings com as audiencias do cliente, a primeira parte do
-     * array para series a ver e a segunda para series ja vistas
+     * array para midias a ver e a segunda para midias ja vistas
      *
-     * Audiencia e armazenada da forma: {Login;F/A;IdSerie}, sendo “F” para lista de
-     * series a assistir futuramente e “A” para series ja assistidas.
+     * Audiencia e armazenada da forma: {Login;F/A;IdMidia}, sendo “A” para lista de
+     * midias a assistir e “F” para midias ja finalizadas.
      * 
      * @return array de Strings com todas as audiencias do cliente
      */

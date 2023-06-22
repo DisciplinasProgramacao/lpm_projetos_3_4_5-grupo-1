@@ -9,13 +9,13 @@ public class App {
     /** Plataforma de streaming singleton */
     private static PlataformaStreaming app = PlataformaStreaming.getInstance();
 
-    /** Construtor não instanciável */
+    /** Construtor para garantir classe não instanciável */
     private App() {
-        throw new InstantiationError("Classe não instanciável");
+        throw new InstantiationError("Classe nao instanciavel");
     }
 
     /**
-     * Meéodo que lê uma string do console através do {@link System#console()}.
+     * Método que lê uma string do console através do {@link System#console()}.
      * 
      * @param mensagem a ser exibida ao usuário.
      * @return string lida do console.
@@ -25,7 +25,7 @@ public class App {
     }
 
     /**
-     * Meéodo que lê um inteiro do console.
+     * Método que lê um inteiro do console.
      * 
      * @param mensagem a ser exibida ao usuário.
      * @return inteiro lido do console.
@@ -46,25 +46,26 @@ public class App {
     public static int menuRelatoriosPrint() {
         return lerInt("\n 1 - Mostrar cliente viciado\n" +
                 " 2 - Mostrar maior avaliador\n" +
-                " 3 - Mostrar a porcentagem dos clientes com pelo menos 15 avaliações\n" +
-                " 4 - Mostrar as 10 mídias de melhor avaliação, com pelo menos 100 avaliações, em ordem decrescente\n" +
-                " 5 - Mostrar as 10 mídias com mais visualizações, em ordem decrescente\n" +
+                " 3 - Mostrar a porcentagem dos clientes com pelo menos 15 avaliacoes\n" +
+                " 4 - Mostrar as 10 midias de melhor avaliacao, com pelo menos 100 avaliacoes, em ordem decrescente\n" +
+                " 5 - Mostrar as 10 midias com mais visualizacoes, em ordem decrescente\n" +
                 " 0 - Voltar" +
                 "\n\n Digite uma opcao: " //
         );
     }
 
     /**
-     * Opções para o menu acima.
+     * Opções para o menu de Relatórios.
      */
     public static void menuRelatorios() {
         switch (App.menuRelatoriosPrint()) {
+            // Mostrar cliente viciado
             case 1 -> System.out.println(" " + app.clienteViciado());
-
+            // Mostrar maior avaliador
             case 2 -> System.out.println(" " + app.maiorAvaliador());
-
+            // Mostrar a porcentagem dos clientes com pelo menos 15 avaliações
             case 3 -> System.out.println(" " + app.clientesCom15Avaliacoes());
-
+            // Mostrar as 10 mídias de melhor avaliação, com pelo menos 100 avaliações, em ordem decrescente
             case 4 -> {
                 if (App.lerStr(" Deseja filtrar por genero? (s/n) ").toLowerCase().contains("s"))
                     app.melhoresAvaliacoes(App.lerStr(Genero.getGeneros() + " Genero: ").toUpperCase().trim())
@@ -72,7 +73,7 @@ public class App {
                 else
                     app.melhoresAvaliacoes().forEach(System.out::println);
             }
-
+            // Mostrar as 10 mídias com mais visualizações, em ordem decrescente
             case 5 -> {
                 if (App.lerStr(" Deseja filtrar por genero? (s/n) ").toLowerCase().contains("s"))
                     app.maisVisualizadas(App.lerStr(Genero.getGeneros() + " Genero: ").toUpperCase().trim())
@@ -99,7 +100,7 @@ public class App {
     }
 
     /**
-     * Opções para o menu acima.
+     * Opções para o menu de Filtros
      */
     public static void menuFiltros() {
         switch (App.menuFiltrosPrint()) {
@@ -126,7 +127,7 @@ public class App {
     }
 
     /**
-     * Printa um menu de usuário no console voltado para adicionar midia.
+     * Printa um menu de usuário no console voltado para adicionar.
      * 
      * @return opção lida do console.
      */
@@ -142,7 +143,7 @@ public class App {
     }
 
     /**
-     * Opções para o menu acima.
+     * Opções para o menu de Adicionar.
      */
     public static void menuAdd() {
         switch (App.menuAddPrint()) {
@@ -203,7 +204,7 @@ public class App {
     }
 
     /**
-     * Printa um menu de usuário no console.
+     * Printa um menu Principal do usuário no console.
      * 
      * @return opção lida do console.
      */
@@ -222,7 +223,7 @@ public class App {
     }
 
     /**
-     * Opções para o menu acima.
+     * Opções para o menu Principal do usuário no console.
      */
     public static void menu() {
         boolean lock = true;
@@ -259,7 +260,7 @@ public class App {
                 // Relatórios
                 case 8 -> {
                     if (app.getClienteAtual().isPresent())
-                        System.out.println(" Voce não pode estar logado como cliente e acessar os relatórios.");
+                        System.out.println(" Voce nao pode estar logado como cliente e acessar os relatorios.");
                     else
                         App.menuRelatorios();
                 }
@@ -271,7 +272,7 @@ public class App {
     }
 
     /**
-     * Meéodo principal da aplicacao.
+     * Método principal da aplicacao.
      * 
      * @param args argumentos da linha de comando
      */
@@ -280,6 +281,7 @@ public class App {
         // Menu
         App.menu();
 
+        // Disponibiliza a opção de Salvar arquivos
         if (App.lerStr(" Deseja salvar os arquivos? (s/n)").toLowerCase().contains("s"))
             LeitorEscritor.escreverArquivos(
                     app.getClientes().values(),
