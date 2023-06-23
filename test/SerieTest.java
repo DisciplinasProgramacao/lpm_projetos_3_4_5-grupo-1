@@ -64,7 +64,7 @@ class SerieTest {
         String dataLancamento = "2020-01-01";
         int audiencia = serie.getAudiencia();
         int qntEp = serie.getQntEp();
-        String expected = " id: " + id + " | Nome: " + nome + " | Genero: " + genero + " | Data de Lançamento: "
+        String expected = " id: " + id + " | Nome: " + nome + " | Genero: " + genero + " | Data de Lancamento: "
                 + dataLancamento + " | Audiencia: " + audiencia + "| Avaliacoes: 0 | Rating: 0 " + "| Quantidade de episodios: " + qntEp + " |";
 
         // Act

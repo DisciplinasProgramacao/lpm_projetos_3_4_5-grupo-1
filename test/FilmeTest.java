@@ -48,7 +48,7 @@ public class FilmeTest {
     @Test
     public void testToString() {
         String expected = " id: 1 | Nome: Filme Teste | Genero: " + filme.getGenero() +
-                " | Data de Lançamento: 2021-01-01 | Audiencia: 0| Avaliacoes: 0 | Rating: 0| Duração: 120 minutos";
+                " | Data de Lancamento: 2021-01-01 | Audiencia: 0| Avaliacoes: 0 | Rating: 0| Duracao: 120 minutos| Idioma: " + filme.getIdioma() +".";
         String actual = filme.toString();
         Assertions.assertEquals(expected, actual);
     }
