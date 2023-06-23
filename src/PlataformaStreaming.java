@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Optional;
@@ -49,6 +50,14 @@ public class PlataformaStreaming {
         if (instance == null)
             instance = new PlataformaStreaming("Platform");
         return instance;
+    }
+
+    /**
+     * Reseta a plataforma, uso apenas para testes.
+     */
+    public static void reset() {
+        instance = new PlataformaStreaming("Platform");
+        System.out.println(" Plataforma resetada");
     }
 
     /**
@@ -141,7 +150,7 @@ public class PlataformaStreaming {
         }
 
         // Registra a avaliacao da midia. Se o cliente se tornar especialista, atualiza a referencia ao cliente @formatter:on
-        if (this.clienteAtual.get().getAvaliacoes().midiaAvaliada(midia.getID())) {
+        if (this.clienteAtual.get().midiaJaVista(midia)) {
             clienteAtual.get().registrarAvaliacao(
                     midia,
                     avaliacao,
@@ -228,10 +237,12 @@ public class PlataformaStreaming {
      * 
      * @return cliente viciado
      */
-    public Cliente clienteViciado() {
-        return this.clientes.values().stream() // Stream<Cliente>
+    public String clienteViciado() {
+        Cliente out = this.clientes.values().stream() // Stream<Cliente>
                 .max(Comparator.comparingInt(Cliente::getQntMidiasAssistidas)) // Cliente com mais midias assistidas
                 .orElse(null); // Se nao houver cliente, retorna null
+        return out.getNome() + " " + out.getQntMidiasAssistidas(); // Retorna o nome do cliente e quantidade de midias
+        // assistidas
     }
 
     /**
@@ -239,10 +250,12 @@ public class PlataformaStreaming {
      * 
      * @return cliente viciado
      */
-    public Cliente maiorAvaliador() {
-        return this.clientes.values().stream() // Stream<Cliente>
-                .max(Comparator.comparingInt(cliente -> cliente.getAvaliacoes().total())) // Cliente com mais avaliacoes
+    public String maiorAvaliador() {
+        Cliente out = this.clientes.values().stream() // Stream<Cliente>
+                .max(Comparator.comparingInt(cliente -> cliente.avaliacoes().total())) // Cliente com mais avaliacoes
                 .orElse(null); // Se nao houver cliente, retorna null
+        return out.getNome() + " " + out.avaliacoes().total(); // Retorna o nome do cliente e quantidade de
+                                                               // avaliacoes
     }
 
     /**
@@ -251,21 +264,21 @@ public class PlataformaStreaming {
      * @return porcentagem de clientes.
      */
     public double clientesCom15Avaliacoes() {
-        return this.clientes.values().stream() // Stream<Cliente>
-                .filter(cliente -> cliente.getAvaliacoes().total() >= 15) // Stream<Cliente> filtrada
-                .count() // Total de clientes
-                / this.clientes.size() * 100.0; // Porcentagem
+        double total = this.clientes.values().stream() // Stream<Cliente>
+                .filter(cliente -> cliente.avaliacoes().total() >= 15) // Stream<Cliente> filtrada
+                .count(); // Total de clientes
+        return total / this.clientes.size(); // Porcentagem
     }
 
     /**
-     * Retorna as 10 mídias de melhor avaliação, com pelo menos 2 avaliações, em
+     * Retorna as 10 mídias de melhor avaliação, com pelo menos 100 avaliações, em
      * ordem decrescente.
      * 
      * @return Stream com 10 melhores midias.
      */
     public Stream<String> melhoresAvaliacoes() {
         return this.midias.values().stream() // Stream<Midia>
-                .filter(midia -> midia.getQntAvaliacoes() >= 2) // Stream<Midia> filtrada
+                .filter(midia -> midia.getQntAvaliacoes() >= 100) // Stream<Midia> filtrada
                 .sorted(Comparator.comparingInt(Midia::getRatingMedio)) // Stream<Midia> ordenada por rating
                 .limit(10) // Stream<Midia> com apenas 10 elementos, os 10 melhores
                 .map(Object::toString); // Stream<String> para impressão
@@ -293,7 +306,7 @@ public class PlataformaStreaming {
      */
     public Stream<String> maisVisualizadas() {
         return this.midias.values().stream() // Stream<Midia>
-                .sorted(Comparator.comparingInt(Midia::getAudiencia)) // Stream<Midia> ordenada por audiencia
+                .sorted(Comparator.comparingInt(Midia::getAudiencia).reversed()) // Stream<Midia> ordenada por audiencia
                 .limit(10) // Stream<Midia> com apenas 10 elementos, os 10 melhores
                 .map(Object::toString); // Stream<String> para impressão
     }

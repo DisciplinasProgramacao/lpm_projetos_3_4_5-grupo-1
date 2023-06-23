@@ -7,14 +7,14 @@ import java.util.stream.Stream;
 
 class PlataformaStreamingTest {
 
-    PlataformaStreaming plataforma;
+    PlataformaStreaming plataforma = PlataformaStreaming.getInstance();
     Cliente cliente;
     Midia filme;
     Midia serie;
 
     @BeforeEach
     void setUp() {
-        plataforma = PlataformaStreaming.getInstance();
+        PlataformaStreaming.reset();
         cliente = new Cliente("username", "login", "password");
         filme = new Filme(1, "Filme teste", LocalDate.now(), 120);
         serie = new Serie(2, "Series 1", LocalDate.now());
@@ -127,11 +127,11 @@ class PlataformaStreamingTest {
         adicionaMidia();
         cliente.adicionarNaLista(filme);
 
-        assertEquals(filme.toString() + " Sua avaliação: Voce ainda nao avaliou esta midia",
+        assertEquals(filme.toString(),
                 plataforma.buscarMidia("Filme teste"));
-        assertEquals(serie.toString() + " Sua avaliação: Voce ainda nao avaliou esta midia",
+        assertEquals(serie.toString(),
                 plataforma.buscarMidia("Series 1"));
-        assertEquals(plataforma.buscarMidia("Midia Inexistente"), "NULL");
+        assertEquals("null", plataforma.buscarMidia("Midia Inexistente"));
     }
 
     @Test

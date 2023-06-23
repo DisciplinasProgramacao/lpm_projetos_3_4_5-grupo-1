@@ -16,7 +16,7 @@ public class AvaliacaoEspecialista extends Avaliacoes {
     }
 
     /**
-     * avalia uma midia
+     * Avalia uma midia
      * 
      * @idMidia id da midia a ser avaliada
      * @avaliacao nota da midia
@@ -24,6 +24,17 @@ public class AvaliacaoEspecialista extends Avaliacoes {
     @Override
     public void avaliar(int idMidia, int avaliacao) {
         super.put(idMidia, new Comentario(avaliacao, App.lerStr("Digite um comentario: ")));
+    }
+
+    /**
+     * Avalia uma midia, MÉTODO APENAS PARA TESTES
+     * Método foi criado pois não é possível inserir input pelo terminal nos testes
+     * 
+     * @idMidia id da midia a ser avaliada
+     * @avaliacao comentário da midia
+     */
+    void avaliar(int idMidia, int avaliacao, String comentario) {
+        super.put(idMidia, new Comentario(avaliacao, comentario));
     }
 
     /**

@@ -107,15 +107,15 @@ public class Cliente {
             System.out.println(" Midia em lancamento, voce precisa se tornar um cliente especilista para interagir.");
             return;
         }
-
-        this.listaJaVistas.add(midia);
-
-        if (!this.listaJaVistas.contains(midia))
-            midia.registrarAudiencia();
-
-        if (ChronoUnit.DAYS.between(data, LocalDate.now()) <= 30
-                && ++this.avaliacoesAtuais == AVALIACOES_PARA_ESPECIALISTA)
-            this.tornarEspecialista();
+        if (this.listaJaVistas.contains(midia)) {
+            this.avaliacoes.avaliar(midia.getID(), avaliacao);
+            midia.registrarAvaliacao(avaliacao);
+            if (ChronoUnit.DAYS.between(data, LocalDate.now()) <= 30
+                    && ++this.avaliacoesAtuais == AVALIACOES_PARA_ESPECIALISTA)
+                this.tornarEspecialista();
+        } else
+            System.out
+                    .println("Voce nao assistiu a essa serie!: " + midia.getNome() + "cliente: " + this.nomeDeUsuario);
     }
 
     /**
@@ -272,7 +272,7 @@ public class Cliente {
      * 
      * @return avaliacoes do cliente
      */
-    public Avaliacoes getAvaliacoes() {
+    public Avaliacoes avaliacoes() {
         return this.avaliacoes;
     }
 
@@ -292,6 +292,16 @@ public class Cliente {
      */
     public String getNome() {
         return this.nomeDeUsuario;
+    }
+
+    /**
+     * Retorna se uma midia já foi avaliada pelo cliente
+     * 
+     * @param idMidia id da midia a ser verificada
+     * @return TRUE se a midia ja foi avaliada, FALSE caso contrario
+     */
+    public boolean midiaJaVista(Midia midia) {
+        return this.listaJaVistas.contains(midia);
     }
 
 }

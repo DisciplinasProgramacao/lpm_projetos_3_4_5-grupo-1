@@ -41,7 +41,7 @@ public class ClienteTest {
         cliente.registrarAudiencia(filme);
         cliente.registrarAvaliacao(filme, 2, LocalDate.now());
 
-        Assertions.assertEquals(2, cliente.getListaJaVistas().size());
+        Assertions.assertEquals(1, cliente.getListaJaVistas().size());
         Assertions.assertTrue(cliente.getListaJaVistas().contains(filme));
         Assertions.assertEquals(1, filme.getAudiencia());
     }

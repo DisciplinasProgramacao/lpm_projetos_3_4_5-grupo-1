@@ -56,7 +56,8 @@ public abstract class Avaliacoes {
 
     /**
      * Adiciona uma avaliacao no HashMap, só pode ser usado por {@link AvaliacaoComum#avaliar}
-     * e {@link AvaliacaoEspecialista#avaliar}
+     * e {@link AvaliacaoEspecialista#avaliar}.
+     * <br>~~~~ NÂO DEVE SER USADO POR OUTRAS CLASSES ~~~~
      * 
      * @param idMidia    id da midia a ser avaliada
      * @param comentario avaliacao da midia
