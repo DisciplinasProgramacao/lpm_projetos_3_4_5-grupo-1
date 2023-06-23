@@ -65,9 +65,9 @@ public abstract class Midia {
      */
     public Midia(int id, String genero, String nome, String idioma, LocalDate dataLancamento, boolean lancamento) {
         this.id = id;
-        this.genero = genero;
+        this.genero = genero.toUpperCase();
         this.nome = nome;
-        this.idioma = idioma;
+        this.idioma = idioma.toUpperCase();
         this.dataLancamento = dataLancamento;
         this.audiencia = 0;
         this.ratingMedio = 0;

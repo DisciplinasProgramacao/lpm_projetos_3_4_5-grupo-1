@@ -133,10 +133,12 @@ public class App {
      */
     public static int menuAddPrint() {
         return lerInt("\n 1 - Adicionar Serie\n" +
-                " 2 - Adicionar Filme\n" +
-                " 3 - Adicionar Cliente\n" +
-                " 4 - Adicionar Audiencia\n" +
-                " 5 - Adicionar Avaliacao\n" +
+                " 2 - Adicionar Série Detalhada\n" +
+                " 3 - Adicionar Filme\n" +
+                " 4 - Adicionar Filme Detalhado\n" +
+                " 5 - Adicionar Cliente\n" +
+                " 6 - Adicionar Audiencia\n" +
+                " 7 - Adicionar Avaliacao\n" +
                 " 0 - Voltar" +
                 "\n\n Digite uma opcao: " //
         );
@@ -160,9 +162,21 @@ public class App {
                     10, // Quantidade de episodios
                     App.lerStr(" A midia e lancamento? (s/n) ").toLowerCase().contains("s") //
                 ));
+            case 2 -> app.adicionarMidia(new Serie(
+                    App.lerInt(" ID: "), // ID
+                    App.lerStr(" Genero: "), // Genero
+                    App.lerStr(" Idioma: "), // Idioma
+                    "Portugues", // Idioma
+                    LocalDate.parse(
+                            App.lerStr(" Data de lançamento (dd/MM/yyyy): "),
+                            DateTimeFormatter.ofPattern("dd/MM/yyyy") // Data de lançamento
+                    ),
+                    App.lerInt(" Qtd de Episodios: "), // Quantidade de episodios
+                    App.lerStr(" A midia e lancamento? (s/n) ").toLowerCase().contains("s") //
+                ));
 
             // Adicionar filme
-            case 2 -> app.adicionarMidia(new Filme(
+            case 3 -> app.adicionarMidia(new Serie(
                     App.lerInt(" ID: "), // ID
                     Genero.sortearGenero().getNome(), // Genero
                     App.lerStr(" Nome: "), // Nome
@@ -174,22 +188,34 @@ public class App {
                     App.lerInt(" Duracao (min): "), // Duracao
                     App.lerStr(" A midia e lancamento? (s/n) ").toLowerCase().contains("s") //
                 ));
+            case 4 -> app.adicionarMidia(new Filme(
+                    App.lerInt(" ID: "), // ID
+                    App.lerStr(" Genero: "), // Genero
+                    App.lerStr(" Nome: "), // Nome
+                    App.lerStr(" Idioma: "), // Idioma
+                    LocalDate.parse(
+                            App.lerStr(" Data de lançamento (dd/MM/yyyy): "),
+                            DateTimeFormatter.ofPattern("dd/MM/yyyy") // Data de lançamento
+                    ),
+                    App.lerInt(" Duracao (min): "), // Duracao
+                    App.lerStr(" A midia e lancamento? (s/n) ").toLowerCase().contains("s") //
+                ));
 
             // Adicionar cliente
-            case 3 -> app.adicionarCliente(new Cliente(
+            case 5 -> app.adicionarCliente(new Cliente(
                     App.lerStr(" Nome: "), // Nome
                     App.lerStr(" Login: "), // Login
                     App.lerStr(" Senha: ") // Senha
                 ));
 
             // Adicionar audiencia
-            case 4 -> app.registrarAudiencia(
+            case 6 -> app.registrarAudiencia(
                     App.lerStr(" A midia ja foi assistida? (s/n) ").toLowerCase().contains("s"),
                     app.buscarMidia(App.lerInt(" ID da midia: ")) //
                 );
 
             // Adicionar avaliacao
-            case 5 -> app.registrarAvaliacao(
+            case 7 -> app.registrarAvaliacao(
                     app.buscarMidia(App.lerInt(" ID da midia: ")),
                     lerInt(" Nota (1 a 5): ") //
                 );
