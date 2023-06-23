@@ -83,6 +83,19 @@ public class RelatoriosPlataformaStreaming {
 
     @Test
     public void testMaisVisualizadas() {
+        Midia midia = plataforma.buscarMidia(11),
+                midia2 = plataforma.buscarMidia(5);
+        for (int i = 0; i <= 101; i++) {
+            midia.registrarAudiencia();
+            midia2.registrarAudiencia();
+        }
+            midia.registrarAudiencia();
+
+        String maisVisualizadas = plataforma.maisVisualizadas()
+                .map(a -> a.substring(5, 7))
+                .collect(Collectors.joining("\n"));
+
+        assertEquals("11\n5 \n1 \n2 \n3 \n4 \n6 \n7 \n8 \n9 ", maisVisualizadas);
     }
 
 }
