@@ -14,11 +14,13 @@ public abstract class Midia {
     public static final Random RANDOM = new Random();
 
     /** Nome da mídia */
-    private String nome,
-            /** Genero da mídia */
-            genero,
-            /** Idioma da mídia */
-            idioma;
+    private String nome;
+
+    /** Genero da mídia */
+    private Genero genero;
+
+    /** Idioma da mídia */
+    private Idioma idioma;
 
     /** Id da mídia */
     private int id,
@@ -44,9 +46,9 @@ public abstract class Midia {
      */
     public Midia(int id, String nome, LocalDate dataLancamento) {
         this.id = id;
-        this.genero = Genero.sortearGenero().getNome();
+        this.genero = Genero.sortearGenero();
         this.nome = nome;
-        this.idioma = Idioma.sortearIdioma().getNome();
+        this.idioma = Idioma.sortearIdioma();
         this.dataLancamento = dataLancamento;
         this.audiencia = 0;
         this.ratingMedio = 0;
@@ -65,9 +67,9 @@ public abstract class Midia {
      */
     public Midia(int id, String genero, String nome, String idioma, LocalDate dataLancamento, boolean lancamento) {
         this.id = id;
-        this.genero = genero.toUpperCase();
+        this.genero = Genero.valueOf(genero.toUpperCase());
         this.nome = nome;
-        this.idioma = idioma.toUpperCase();
+        this.idioma = Idioma.valueOf(idioma.toUpperCase());
         this.dataLancamento = dataLancamento;
         this.audiencia = 0;
         this.ratingMedio = 0;
@@ -119,10 +121,10 @@ public abstract class Midia {
     public int getID() { return this.id; }
     /** Retorna o genero da mídia
      * @return genero da mídia*/
-    public String getGenero() { return this.genero; }
+    public String getGenero() { return this.genero.toString(); }
     /** Retorna o idioma da mídia
      * @return idioma da mídia*/
-    public String getIdioma() { return this.idioma; }
+    public String getIdioma() { return this.idioma.toString(); }
     /** Retorna a duracao do filme, sobrescrito na classe Filme
      * @return duracao do filme*/
     public int getDuracao() { return -1; }
