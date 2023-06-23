@@ -152,18 +152,6 @@ public class App {
             // Adicionar serie
             case 1 -> app.adicionarMidia(new Serie(
                     App.lerInt(" ID: "), // ID
-                    Genero.sortearGenero().getNome(), // Genero
-                    App.lerStr(" Nome: "), // Nome
-                    "Portugues", // Idioma
-                    LocalDate.parse(
-                            App.lerStr(" Data de lançamento (dd/MM/yyyy): "),
-                            DateTimeFormatter.ofPattern("dd/MM/yyyy") // Data de lançamento
-                    ),
-                    10, // Quantidade de episodios
-                    App.lerStr(" A midia e lancamento? (s/n) ").toLowerCase().contains("s") //
-                ));
-            case 2 -> app.adicionarMidia(new Serie(
-                    App.lerInt(" ID: "), // ID
                     App.lerStr(" Genero: "), // Genero
                     App.lerStr(" Idioma: "), // Idioma
                     "Portugues", // Idioma
@@ -176,19 +164,7 @@ public class App {
                 ));
 
             // Adicionar filme
-            case 3 -> app.adicionarMidia(new Serie(
-                    App.lerInt(" ID: "), // ID
-                    Genero.sortearGenero().getNome(), // Genero
-                    App.lerStr(" Nome: "), // Nome
-                    "Portugues", // Idioma
-                    LocalDate.parse(
-                            App.lerStr(" Data de lançamento (dd/MM/yyyy): "),
-                            DateTimeFormatter.ofPattern("dd/MM/yyyy") // Data de lançamento
-                    ),
-                    App.lerInt(" Duracao (min): "), // Duracao
-                    App.lerStr(" A midia e lancamento? (s/n) ").toLowerCase().contains("s") //
-                ));
-            case 4 -> app.adicionarMidia(new Filme(
+            case 2 -> app.adicionarMidia(new Filme(
                     App.lerInt(" ID: "), // ID
                     App.lerStr(" Genero: "), // Genero
                     App.lerStr(" Nome: "), // Nome
@@ -202,20 +178,20 @@ public class App {
                 ));
 
             // Adicionar cliente
-            case 5 -> app.adicionarCliente(new Cliente(
+            case 3 -> app.adicionarCliente(new Cliente(
                     App.lerStr(" Nome: "), // Nome
                     App.lerStr(" Login: "), // Login
                     App.lerStr(" Senha: ") // Senha
                 ));
 
             // Adicionar audiencia
-            case 6 -> app.registrarAudiencia(
+            case 4 -> app.registrarAudiencia(
                     App.lerStr(" A midia ja foi assistida? (s/n) ").toLowerCase().contains("s"),
                     app.buscarMidia(App.lerInt(" ID da midia: ")) //
                 );
 
             // Adicionar avaliacao
-            case 7 -> app.registrarAvaliacao(
+            case 5 -> app.registrarAvaliacao(
                     app.buscarMidia(App.lerInt(" ID da midia: ")),
                     lerInt(" Nota (1 a 5): ") //
                 );
