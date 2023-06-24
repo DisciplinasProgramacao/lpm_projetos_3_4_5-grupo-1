@@ -133,12 +133,10 @@ public class App {
      */
     public static int menuAddPrint() {
         return lerInt("\n 1 - Adicionar Serie\n" +
-                " 2 - Adicionar Série Detalhada\n" +
-                " 3 - Adicionar Filme\n" +
-                " 4 - Adicionar Filme Detalhado\n" +
-                " 5 - Adicionar Cliente\n" +
-                " 6 - Adicionar Audiencia\n" +
-                " 7 - Adicionar Avaliacao\n" +
+                " 2 - Adicionar Filme\n" +
+                " 3 - Adicionar Cliente\n" +
+                " 4 - Adicionar Audiencia\n" +
+                " 5 - Adicionar Avaliacao\n" +
                 " 0 - Voltar" +
                 "\n\n Digite uma opcao: " //
         );
